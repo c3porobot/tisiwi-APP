@@ -1,0 +1,64 @@
+//
+//  TSW-prefic.pch
+//  tianshiwan
+//
+//  Created by zhouhai on 15/9/6.
+//  Copyright (c) 2015年 tianshiwan. All rights reserved.
+//
+
+#ifndef tianshiwan_TSW_prefic_pch
+#define tianshiwan_TSW_prefic_pch
+
+#import <Availability.h>
+//#import "AFNetworking.h"
+
+#ifndef __IPHONE_7_0
+#warning "This project uses features only available in iOS SDK 7.0 and later."
+#endif
+
+#ifdef __OBJC__
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import <Security/Security.h>
+#import <MessageUI/MessageUI.h>
+#endif
+
+
+#define RGBA(r,g,b,a) [UIColor colorWithRed:r/255.0f green:g/255.0f blue:b/255.0f alpha:a]
+#define MAIN_COLOR [UIColor colorWithRed:228.0f/255.0f green:82.0f/255.0f blue:80.0f/255.0f alpha:1.0f]
+#define RGB(r,g,b) RGBA(r,g,b,1.0f)
+
+#pragma mark - NotificationName
+#define kUserLoginSuccessNotificationName @"UserLoginSuccessNotification"
+
+#ifdef DEBUG
+#define GETUI_APPID @"MGb0u82jEOAd06NHFiU9c2"
+#define GETUI_APPSECRET @"29qXmSdjOC6bsqLp6JoZC9"
+#define GETUI_APPKEY @"xwvWeXC4rw807blc1QIaH2"
+#else
+#define GETUI_APPID @"KCg929gJP56ToGbC9uo3P"
+#define GETUI_APPSECRET @"uvA1nDR4oXAbtY5PaXHUH4"
+#define GETUI_APPKEY @"sKKlIpsRik8A6pPqIe0peA"
+#endif
+
+#ifdef DEBUG
+
+#define TSW_API_BASE_URL1 [NSURL URLWithString:@"http://api.ihomefnt.com/"]
+#define TSW_API_BASE_URL  [NSURL URLWithString:@"http://120.132.70.218/"]
+#define TSW_API_BASE_URL2  [NSURL URLWithString:@"http://test.ihomefnt.com:8090/o2o-api/"]
+#define TSW_API_BASE_URL3  [NSURL URLWithString:@"http://192.168.1.103:8080/o2o-api/"]
+
+
+#else
+
+#define TSW_API_BASE_URL2 [NSURL URLWithString:@"http://api.ihomefnt.com/"]
+#define TSW_API_BASE_URL  [NSURL URLWithString:@"http://120.132.70.218/"]
+#define TSW_API_BASE_URL3  [NSURL URLWithString:@"http://test.ihomefnt.com:8090/o2o-api/"]
+
+
+
+#endif
+
+
+#endif
+
