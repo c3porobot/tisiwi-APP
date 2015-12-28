@@ -195,7 +195,7 @@ static NSString * const reuseIdentifier = @"Cell";
     btnsView.backgroundColor = RGB(255, 255, 255);
     //_phoneBtn = [[UIButton alloc]initWithFrame:CGRectMake(0.0f, 0.0f, width/3-2, 60.0f)];
 //    _phoneBtn = [[UIButton alloc] initWithFrame:CGRectMake(width *2/3+3, 0, width/3-1, 60)];
-    _phoneBtn = [[UIButton alloc] initWithFrame:CGRectMake(width/2+3, 0, width/2-1, 60)];
+    _phoneBtn = [[UIButton alloc] initWithFrame:CGRectMake(width *2/3+3, 0, width/3-1, 60)];
 
     _phoneBtn.backgroundColor = RGB(234, 234, 234);
     [_phoneBtn setImage:[UIImage imageNamed:@"phone_disabled"] forState:UIControlStateNormal];
@@ -203,7 +203,7 @@ static NSString * const reuseIdentifier = @"Cell";
     [btnsView addSubview:_phoneBtn];
     
 //    _emailBtn = [[UIButton alloc]initWithFrame:CGRectMake(width/3+1, 0.0f, width/3-2, 60.0f)];
-    _emailBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0.0f, width/2-2, 60.0f)];
+    _emailBtn = [[UIButton alloc]initWithFrame:CGRectMake(width/3+1, 0.0f, width/3-2, 60.0f)];
 
     _emailBtn.backgroundColor = RGB(234, 234, 234);
     [_emailBtn setImage:[UIImage imageNamed:@"download_disabled"] forState:UIControlStateNormal];
@@ -220,7 +220,7 @@ static NSString * const reuseIdentifier = @"Cell";
     _checkBtn.backgroundColor = RGB(234, 234, 234);
     [_checkBtn setImage:[UIImage imageNamed:@"download_disabled"] forState:UIControlStateNormal];
     [_checkBtn addTarget:self action:@selector(handleCheck:) forControlEvents:UIControlEventTouchUpInside];
-    //[btnsView addSubview:_checkBtn];
+    [btnsView addSubview:_checkBtn];
     
     [self.view addSubview:btnsView];
     
