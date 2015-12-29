@@ -9,5 +9,5 @@
 #import <QuickLook/QuickLook.h>
 
 @interface TSWTalentCheckViewController : QLPreviewController
-
+@property (nonatomic ,strong) NSString *PDFid; //PDF的唯一标识
 @end

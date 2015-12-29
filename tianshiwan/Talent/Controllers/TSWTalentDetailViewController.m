@@ -226,6 +226,9 @@ static NSString * const reuseIdentifier = @"Cell";
     
     
     _scrollView.contentSize = CGSizeMake(width, 22.0f+CGRectGetHeight(_headerView.frame)+28.0f+4*(12.0f+5.0f)+2*(12.0f+15.0f)+titleSize.height+15.0f+60.0f);
+    /**
+     *发送邮件
+     */
     
     self.sendEmail = [[TSWSendEmail alloc] initWithBaseURL:TSW_API_BASE_URL path:[[[[EMAIL stringByAppendingString:@"personnel"] stringByAppendingString:@"/"] stringByAppendingString:self.sid] stringByAppendingString:@"/mail_attachment"]];
     
@@ -243,10 +246,6 @@ static NSString * const reuseIdentifier = @"Cell";
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
-    //    if (!self.contactDetail.isLoaded) {
-    //        [self.contactDetail loadDataWithRequestMethodType:kHttpRequestMethodTypeGet parameters:nil];
-    //    }
 }
 
 - (void) refreshData{
@@ -326,8 +325,10 @@ static NSString * const reuseIdentifier = @"Cell";
     _jianLabel2.numberOfLines = 0;
     CGSize titleSize = [talentDetail.introduction boundingRectWithSize:CGSizeMake(width - 20*2, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12]} context:nil].size;
     _jianLabel2.frame = CGRectMake(20.0f, CGRectGetMaxY(self.directLabel2.frame) + 10 + 12 + 5, titleSize.width, titleSize.height);
-    
-    _scrollView.contentSize = CGSizeMake(width, 22.0f+CGRectGetHeight(_headerView.frame)+28.0f+4*(12.0f+5.0f)+2*(12.0f+15.0f)+titleSize.height+15.0f+60.0f);
+    /**
+     *添加了一个按钮的高度,不然按钮会把内容覆盖掉
+     */
+    _scrollView.contentSize = CGSizeMake(width, 22.0f+CGRectGetHeight(_headerView.frame)+28.0f+4*(12.0f+5.0f)+2*(12.0f+15.0f)+titleSize.height+15.0f+60.0f + self.wechatBtn.frame.size.height);
     
     if(_talentDetail.tel!=nil && ![_talentDetail.tel isEqualToString:@""]){
         [_phoneBtn setImage:[UIImage imageNamed:@"phone"] forState:UIControlStateNormal];
@@ -340,11 +341,8 @@ static NSString * const reuseIdentifier = @"Cell";
 }
 #pragma mark -- 按钮响应事件
 - (void)handleCheck:(UIButton *)sender {
-//    LHBTalentCheckController *lhbTalentCheckController = [[LHBTalentCheckController alloc] init];
-//    lhbTalentCheckController.talentSid = self.sid;
-//    NSLog(@"******************%@", lhbTalentCheckController.talentSid);
-//    [self.navigationController pushViewController:lhbTalentCheckController animated:YES];
     TSWTalentCheckViewController *talentCheckViewController = [[TSWTalentCheckViewController alloc] init];
+    talentCheckViewController.PDFid = self.sid; //赋值
     [self.navigationController pushViewController:talentCheckViewController animated:YES];
 }
 
