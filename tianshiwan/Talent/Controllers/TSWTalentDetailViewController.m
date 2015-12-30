@@ -37,6 +37,7 @@
 @property (nonatomic, strong) UIButton *emailBtn;  //邮箱按钮
 @property (nonatomic, strong) UIButton *wechatBtn; //微信按钮
 @property (nonatomic, strong) UIButton *checkBtn;  //查看简历按钮
+@property (nonatomic, copy) NSString *attachment;
 @end
 
 @implementation TSWTalentDetailViewController
@@ -195,31 +196,30 @@ static NSString * const reuseIdentifier = @"Cell";
     btnsView.backgroundColor = RGB(255, 255, 255);
     //_phoneBtn = [[UIButton alloc]initWithFrame:CGRectMake(0.0f, 0.0f, width/3-2, 60.0f)];
 //    _phoneBtn = [[UIButton alloc] initWithFrame:CGRectMake(width *2/3+3, 0, width/3-1, 60)];
-    _phoneBtn = [[UIButton alloc] initWithFrame:CGRectMake(width *2/3+3, 0, width/3-1, 60)];
+    _phoneBtn = [[UIButton alloc] initWithFrame:CGRectMake(width *2/3, 0, width/3, 60)];
 
     _phoneBtn.backgroundColor = RGB(234, 234, 234);
-    [_phoneBtn setImage:[UIImage imageNamed:@"phone_disabled"] forState:UIControlStateNormal];
+    [_phoneBtn setImage:[UIImage imageNamed:@"btn_phone_disale"] forState:UIControlStateNormal];
     
     [btnsView addSubview:_phoneBtn];
     
 //    _emailBtn = [[UIButton alloc]initWithFrame:CGRectMake(width/3+1, 0.0f, width/3-2, 60.0f)];
-    _emailBtn = [[UIButton alloc]initWithFrame:CGRectMake(width/3+1, 0.0f, width/3-2, 60.0f)];
+    _emailBtn = [[UIButton alloc]initWithFrame:CGRectMake(width/3, 0.0f, width/3, 60.0f)];
 
     _emailBtn.backgroundColor = RGB(234, 234, 234);
-    [_emailBtn setImage:[UIImage imageNamed:@"download_disabled"] forState:UIControlStateNormal];
+    [_emailBtn setImage:[UIImage imageNamed:@"btn_download_disable"] forState:UIControlStateNormal];
     [btnsView addSubview:_emailBtn];
     
-    _wechatBtn = [UIButton buttonWithType:UIButtonTypeSystem];
-    _wechatBtn.frame = CGRectMake(width/2+2, 0, width/4-2, 60);
+    _wechatBtn = [[UIButton alloc] initWithFrame:CGRectMake(width/2, 0, width/4, 60)];
     _wechatBtn.backgroundColor = RGB(234, 234, 234);
     [_wechatBtn setImage:[UIImage imageNamed:@"wechat_disabled"] forState:UIControlStateNormal];
     //[btnsView addSubview:_wechatBtn];
-    
-    _checkBtn = [UIButton buttonWithType:UIButtonTypeSystem];
-    _checkBtn.frame = CGRectMake(0.0f, 0.0f, width/3-2, 60.0f);
+    /**
+     *查找按钮
+     */
+    self.checkBtn = [[UIButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, width/3, 60.0f)];
     _checkBtn.backgroundColor = RGB(234, 234, 234);
-    [_checkBtn setImage:[UIImage imageNamed:@"download_disabled"] forState:UIControlStateNormal];
-    [_checkBtn addTarget:self action:@selector(handleCheck:) forControlEvents:UIControlEventTouchUpInside];
+    [_checkBtn setImage:[UIImage imageNamed:@"btn_resume_disable"] forState:UIControlStateNormal];
     [btnsView addSubview:_checkBtn];
     
     [self.view addSubview:btnsView];
@@ -319,6 +319,8 @@ static NSString * const reuseIdentifier = @"Cell";
     _mapImageView.frame = CGRectMake(width - 15.0f - size.width - size2.width - 6.0f - 2.0f - 15.0f - 15.0f, 2.0f, 11.0f, 15.0f);
     
     _baseLabel2.text = [NSString stringWithFormat:@"工作年限: %@",talentDetail.seniority];
+    
+    //_baseLabel2.text = [NSString stringWithFormat:@"工作年限: %@", talentDetail.attachment];
     _baseLabel3.text = [NSString stringWithFormat:@"月薪要求: %@元",talentDetail.salary];
     _directLabel2.text = talentDetail.titles;
     _jianLabel2.text = talentDetail.introduction;
@@ -331,18 +333,27 @@ static NSString * const reuseIdentifier = @"Cell";
     _scrollView.contentSize = CGSizeMake(width, 22.0f+CGRectGetHeight(_headerView.frame)+28.0f+4*(12.0f+5.0f)+2*(12.0f+15.0f)+titleSize.height+15.0f+60.0f + self.wechatBtn.frame.size.height);
     
     if(_talentDetail.tel!=nil && ![_talentDetail.tel isEqualToString:@""]){
-        [_phoneBtn setImage:[UIImage imageNamed:@"phone"] forState:UIControlStateNormal];
+        [_phoneBtn setImage:[UIImage imageNamed:@"btn_phone_n"] forState:UIControlStateNormal];
         [_phoneBtn addTarget:self action:@selector(call) forControlEvents:UIControlEventTouchUpInside];
     }
     if(_talentDetail.hasAttachment == 1){
-        [_emailBtn setImage:[UIImage imageNamed:@"download"] forState:UIControlStateNormal];
+        [_emailBtn setImage:[UIImage imageNamed:@"btn_download_n"] forState:UIControlStateNormal];
         [_emailBtn addTarget:self action:@selector(email) forControlEvents:UIControlEventTouchUpInside];
+    }
+    /**
+     *  添加判断,没有简历则不能进入查看界面
+     */
+    if (_talentDetail.hasAttachment == 1) {
+        [_checkBtn setImage:[UIImage imageNamed:@"btn_resume_n"] forState:UIControlStateNormal];
+        [_checkBtn addTarget:self action:@selector(handleCheck:) forControlEvents:UIControlEventTouchUpInside];
     }
 }
 #pragma mark -- 按钮响应事件
 - (void)handleCheck:(UIButton *)sender {
     TSWTalentCheckViewController *talentCheckViewController = [[TSWTalentCheckViewController alloc] init];
     talentCheckViewController.PDFid = self.sid; //赋值
+    talentCheckViewController.attachment = _talentDetail.attachment;
+    talentCheckViewController.name = _talentDetail.name;
     [self.navigationController pushViewController:talentCheckViewController animated:YES];
 }
 

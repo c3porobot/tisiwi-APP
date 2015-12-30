@@ -24,4 +24,6 @@
 @property (nonatomic, strong) NSString *email;  //email
 @property (nonatomic, assign) NSInteger hasAttachment;
 
+@property (nonatomic, copy) NSString *attachment; //测试
+
 @end

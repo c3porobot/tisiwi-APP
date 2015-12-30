@@ -17,7 +17,7 @@
     [super viewDidLoad];
     CGFloat width = CGRectGetWidth(self.view.bounds);
     CGFloat height = CGRectGetHeight(self.view.bounds);
-    self.navigationBar.title = @"关于天使湾";
+    self.navigationBar.title = @"天使湾APP使用协议";
     self.navigationBar.titleView.textColor = RGB(90, 90, 90);
     self.navigationBar.backgroundView.backgroundColor = [UIColor whiteColor];
     [self.navigationBar.leftButton setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];

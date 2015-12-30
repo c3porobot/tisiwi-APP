@@ -128,7 +128,7 @@ static const CGFloat gap = 20.0f;
     self.authorLabel = [[UILabel alloc]initWithFrame:CGRectMake(160.0f, CGRectGetMinY(self.labelView.frame), 296.0f, 14.0f)];
     self.authorLabel.textAlignment = NSTextAlignmentRight;
     self.authorLabel.textColor = RGB(150, 150, 150);
-    self.authorLabel.font = [UIFont systemFontOfSize:10.0f];
+    self.authorLabel.font = [UIFont systemFontOfSize:12.0f];
     self.authorLabel.backgroundColor = [UIColor clearColor];
     self.authorLabel.text = @"";
     [self.mainView addSubview:self.authorLabel];
@@ -267,17 +267,21 @@ static const CGFloat gap = 20.0f;
     self.titleSize = titleSize;
     //重新定义标题frame
     _titleLabel.frame = CGRectMake(margin, margin, titleSize.width, titleSize.height);
-    
 //    self.lineView.frame = CGRectMake(margin, contentMargin+titleSize.height+5.0f, width - 2*margin, 0.5f);
+    
+    
+    /**
+     * 标签的大小
+     */
     
     // 逗号分隔成数组，循环显示button
     NSArray *labelArray = [articleDetail.label componentsSeparatedByString:@","];
     NSUInteger count = labelArray.count;
     for (int i=0; i<count; i++) {
-        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(i*(45.0f+5.0f), 0.0f, 45.0f, 16.0f)];
+        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(i*(45.0f+5.0f), 0.0f, 55.0f, 16.0f)];
         label.textAlignment = NSTextAlignmentCenter;
         label.textColor = RGB(234, 234, 234);
-        label.font = [UIFont systemFontOfSize:10.0f];
+        label.font = [UIFont systemFontOfSize:12.0f];
         label.backgroundColor = RGB(83, 172, 232);
         label.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
         label.text = labelArray[i];
@@ -352,8 +356,9 @@ static const CGFloat gap = 20.0f;
         _authorLabel.text = [[NSString alloc] initWithFormat:@"%@", currentDateStr];
     }
     
-    self.authorLabel.frame = CGRectMake(12.0f, CGRectGetMinY(self.labelView.frame) , 296.0f, 14.0f);
+    //self.authorLabel.frame = CGRectMake(12.0f, CGRectGetMinY(self.labelView.frame) , 296.0f, 14.0f);
     
+    self.authorLabel.frame = CGRectMake([UIScreen mainScreen].bounds.size.width - 316, CGRectGetMinY(self.labelView.frame), 296, 14);
     // 显示html片段
     NSString *HTMLData = articleDetail.content;
     [self.webView loadHTMLString:HTMLData baseURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]]];

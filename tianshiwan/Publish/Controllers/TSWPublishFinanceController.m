@@ -62,7 +62,7 @@ static const CGFloat labelWidth = 80.0f; //左边UILabel的宽度
     valueLabel.textColor = RGB(120, 120, 120);
     valueLabel.font = [UIFont systemFontOfSize:17.0f];
     valueLabel.backgroundColor = [UIColor clearColor];
-    valueLabel.text = @"目前估值";
+    valueLabel.text = @"目标估值";
     [_scrollView addSubview:valueLabel];
     
     self.valueField = [[UITextField alloc]initWithFrame:CGRectMake(labelWidth+15.0f, 30.0f, (width-labelWidth-2*15.0f)/3, 30.0f)];
@@ -144,8 +144,12 @@ static const CGFloat labelWidth = 80.0f; //左边UILabel的宽度
     startLabel.backgroundColor = [UIColor clearColor];
     startLabel.text = @"启动时间";
     [_scrollView addSubview:startLabel];
-    
-    self.timeField = [[UITextField alloc]initWithFrame:CGRectMake(labelWidth+15.0f, 30.0f+2*(30.0f+12.0f), (width-labelWidth-2*15.0f), 30.0f)];
+    /**
+     *修改了启动时间输入框的长度
+     */
+//    self.timeField = [[UITextField alloc]initWithFrame:CGRectMake(labelWidth+15.0f, 30.0f+2*(30.0f+12.0f), (width-labelWidth-2*15.0f), 30.0f)];
+    //self.timeField = [[UITextField alloc]initWithFrame:CGRectMake(labelWidth+15.0f, 30.0f+2*(30.0f+12.0f), (width-labelWidth-2*15.0f) - 54, 30.0f)];
+    self.timeField = [[UITextField alloc] initWithFrame:CGRectMake(labelWidth+15.0f, 30.0f+2*(30.0f+12.0f), ((width-labelWidth-2*15.0f)/3)+ ((width-labelWidth-2*15.0f)/3) + 35, 30.0f)];
     self.timeField.borderStyle = UITextBorderStyleNone;
     self.timeField.layer.borderColor = [RGB(127, 127, 127) CGColor];
     self.timeField.layer.borderWidth = 0.5f;
@@ -164,7 +168,7 @@ static const CGFloat labelWidth = 80.0f; //左边UILabel的宽度
     _timeVeri.font = [UIFont systemFontOfSize:17.0f];
     _timeVeri.backgroundColor = [UIColor clearColor];
     _timeVeri.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
-    _timeVeri.text = @"超出有效长度";
+    //_timeVeri.text = @"超出有效长度";
     _timeVeri.numberOfLines = 0;
     _timeVeri.hidden = YES;
     [_scrollView addSubview:_timeVeri];
@@ -210,7 +214,7 @@ static const CGFloat labelWidth = 80.0f; //左边UILabel的宽度
     _otherVeri.font = [UIFont systemFontOfSize:17.0f];
     _otherVeri.backgroundColor = [UIColor clearColor];
     _otherVeri.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
-    _otherVeri.text = @"超出有效长度";
+    //_otherVeri.text = @"超出有效长度";
     _otherVeri.numberOfLines = 0;
     _otherVeri.hidden = YES;
     [_scrollView addSubview:_otherVeri];
@@ -364,6 +368,9 @@ static const CGFloat labelWidth = 80.0f; //左边UILabel的宽度
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
+/**
+ *修改了>=
+ */
 -(void)finishFinance {
     NSString *NUM = @"^[0-9]*$";
     NSPredicate *regextestmobile = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", NUM];
@@ -374,7 +381,7 @@ static const CGFloat labelWidth = 80.0f; //左边UILabel的宽度
                     if(_timeField.text.length>0){
                         if(_timeField.text.length<=256){
                             _timeVeri.hidden = YES;
-                            if(_otherView.text.length>=0 && _otherView.text.length<=1024){
+                            if(_otherView.text.length > 0 && _otherView.text.length<=1024){
                                     _otherVeri.hidden = YES;
                                     [self showLoadingViewWithText:@"提交中..."];
                                     int fa = 0;
@@ -457,7 +464,7 @@ static const CGFloat labelWidth = 80.0f; //左边UILabel的宽度
                     _timeVeri.hidden = NO;
                 }
             }else{
-                _timeVeri.text = @"请填写融资时间";
+                //_timeVeri.text = @"请填写融资时间";
                 _timeVeri.hidden = NO;
             }
 

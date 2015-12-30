@@ -63,7 +63,7 @@
         [GVUserDefaults standardUserDefaults].shouldGoHome = @"NO";
         [self.navigationController popToRootViewControllerAnimated:YES];
     }else{
-        self.dataArray = @[@[@{@"text":@"关于天使湾", @"imageName":@"", @"remark":@"", @"className":@"TSWAboutController"}, @{@"text":@"意见反馈", @"imageName":@"", @"remark":@"", @"className":@"TSWFeedbackController", @"urlString":@"", }]];
+        self.dataArray = @[@[@{@"text":@"天使湾APP使用协议", @"imageName":@"", @"remark":@"", @"className":@"TSWAboutController"}, @{@"text":@"意见反馈", @"imageName":@"", @"remark":@"", @"className":@"TSWFeedbackController", @"urlString":@"", }]];
         
         [self.collectionView reloadData];
     }

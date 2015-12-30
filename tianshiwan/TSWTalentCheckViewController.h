@@ -10,4 +10,6 @@
 
 @interface TSWTalentCheckViewController : QLPreviewController
 @property (nonatomic ,strong) NSString *PDFid; //PDF的唯一标识
+@property (nonatomic, copy) NSString *attachment;
+@property (nonatomic ,copy) NSString *name;
 @end
