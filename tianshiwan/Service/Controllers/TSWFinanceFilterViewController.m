@@ -76,7 +76,7 @@
     cityLabel.textColor = RGB(120, 120, 120);
     cityLabel.font = [UIFont systemFontOfSize:14.0f];
     cityLabel.backgroundColor = [UIColor clearColor];
-    cityLabel.text = @"投资地区:";
+    cityLabel.text = @"投资地区";
     [_scrollView addSubview:cityLabel];
     
     
@@ -129,7 +129,7 @@
     fieldLabel.textColor = RGB(120, 120, 120);
     fieldLabel.font = [UIFont systemFontOfSize:14.0f];
     fieldLabel.backgroundColor = [UIColor clearColor];
-    fieldLabel.text = @"投资领域:";
+    fieldLabel.text = @"投资领域";
     [_scrollView addSubview:fieldLabel];
     
     _fieldBtns = [[UIView alloc]initWithFrame:CGRectMake(5.0f, 30.0f+3*(20.0f+12.0f), width-2*5.0f, 20.0f)];

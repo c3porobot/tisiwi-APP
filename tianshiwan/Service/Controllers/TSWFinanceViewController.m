@@ -25,7 +25,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationBar.title = @"融资";
+    self.navigationBar.title = @"投资机构";
     self.view.backgroundColor = RGB(234, 234, 234);
     [self addRightNavigatorButton];
     
@@ -254,6 +254,7 @@
 
 -(void) gotoFinanceDetail:(TSWFinanceCell *)cell withFinance:(TSWFinance *)finance{
     TSWFinanceDetailViewController *financeDetailController = [[TSWFinanceDetailViewController alloc] initWithFinanceId:finance.sid];
+    financeDetailController.investorName = finance.name;
     [self.navigationController pushViewController:financeDetailController animated:YES];
 }
 

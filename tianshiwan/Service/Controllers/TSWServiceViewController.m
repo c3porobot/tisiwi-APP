@@ -75,7 +75,7 @@ static const CGFloat searchCellHeight = 50.0f+13.0f+3.0f+10.0f; // icon高+标�
     _textField.clearButtonMode = UITextFieldViewModeWhileEditing;
     _textField.backgroundColor = [UIColor clearColor];
     _textField.autocapitalizationType = NO;
-    _textField.placeholder = @"请输入关键字，如姓名、公司名";
+    _textField.placeholder = @"搜索公司、联系人";
     [_textField addTarget:self action:@selector(searchBegin) forControlEvents: UIControlEventEditingDidBegin];
     [_textField addTarget:self  action:@selector(valueChanged:)  forControlEvents:UIControlEventAllEditingEvents];
     [_searchBoxView addSubview:_textField];

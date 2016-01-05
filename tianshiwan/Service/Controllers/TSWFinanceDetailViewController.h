@@ -9,5 +9,6 @@
 #import "CXNavigationBarController.h"
 
 @interface TSWFinanceDetailViewController : CXNavigationBarController
+@property (nonatomic ,copy) NSString *investorName; //投资人
 - (instancetype)initWithFinanceId:(NSString *)financeId;
 @end

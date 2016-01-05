@@ -265,7 +265,7 @@
     [UIView beginAnimations:nil context:nil];
     //执行动画
     //设置动画执行时间
-    [UIView setAnimationDuration:1.0];
+    [UIView setAnimationDuration:0.5];
     //设置代理
     [UIView setAnimationDelegate:self];
     //设置动画执行完毕调用的事件

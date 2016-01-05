@@ -24,6 +24,11 @@
 		A42780691C33B31F00F3D3E0 /* btn_resume_disable@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A42780611C33B31F00F3D3E0 /* btn_resume_disable@3x.png */; };
 		A427806A1C33B31F00F3D3E0 /* btn_wechat_disable@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A42780621C33B31F00F3D3E0 /* btn_wechat_disable@2x.png */; };
 		A427806B1C33B31F00F3D3E0 /* btn_wechat_disable@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A42780631C33B31F00F3D3E0 /* btn_wechat_disable@3x.png */; };
+		A42780781C3A590200F3D3E0 /* btn_mail_disable@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A42780741C3A590200F3D3E0 /* btn_mail_disable@2x.png */; };
+		A42780791C3A590200F3D3E0 /* btn_mail_disable@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A42780751C3A590200F3D3E0 /* btn_mail_disable@3x.png */; };
+		A427807A1C3A590200F3D3E0 /* btn_mail_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A42780761C3A590200F3D3E0 /* btn_mail_n@2x.png */; };
+		A427807B1C3A590200F3D3E0 /* btn_mail_n@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A42780771C3A590200F3D3E0 /* btn_mail_n@3x.png */; };
+		A427807E1C3BA78F00F3D3E0 /* LHBCopyLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = A427807D1C3BA78F00F3D3E0 /* LHBCopyLabel.m */; };
 		A4CCE70A1C1F16C800930ADD /* LHBTalentCheckController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4CCE7091C1F16C800930ADD /* LHBTalentCheckController.m */; };
 		A4CCE70F1C1F1C8C00930ADD /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4CCE70E1C1F1C8C00930ADD /* QuickLook.framework */; };
 		A4CCE7121C1FA72400930ADD /* TSWTalentCheckViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4CCE7111C1FA72400930ADD /* TSWTalentCheckViewController.m */; };
@@ -427,6 +432,12 @@
 		A42780611C33B31F00F3D3E0 /* btn_resume_disable@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_resume_disable@3x.png"; sourceTree = "<group>"; };
 		A42780621C33B31F00F3D3E0 /* btn_wechat_disable@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_wechat_disable@2x.png"; sourceTree = "<group>"; };
 		A42780631C33B31F00F3D3E0 /* btn_wechat_disable@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_wechat_disable@3x.png"; sourceTree = "<group>"; };
+		A42780741C3A590200F3D3E0 /* btn_mail_disable@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "btn_mail_disable@2x.png"; path = "Resources/images/contact/btn_mail_disable@2x.png"; sourceTree = "<group>"; };
+		A42780751C3A590200F3D3E0 /* btn_mail_disable@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "btn_mail_disable@3x.png"; path = "Resources/images/contact/btn_mail_disable@3x.png"; sourceTree = "<group>"; };
+		A42780761C3A590200F3D3E0 /* btn_mail_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "btn_mail_n@2x.png"; path = "Resources/images/contact/btn_mail_n@2x.png"; sourceTree = "<group>"; };
+		A42780771C3A590200F3D3E0 /* btn_mail_n@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "btn_mail_n@3x.png"; path = "Resources/images/contact/btn_mail_n@3x.png"; sourceTree = "<group>"; };
+		A427807C1C3BA78F00F3D3E0 /* LHBCopyLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LHBCopyLabel.h; sourceTree = "<group>"; };
+		A427807D1C3BA78F00F3D3E0 /* LHBCopyLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LHBCopyLabel.m; sourceTree = "<group>"; };
 		A4CCE7081C1F16C800930ADD /* LHBTalentCheckController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LHBTalentCheckController.h; sourceTree = "<group>"; };
 		A4CCE7091C1F16C800930ADD /* LHBTalentCheckController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LHBTalentCheckController.m; sourceTree = "<group>"; };
 		A4CCE70E1C1F1C8C00930ADD /* QuickLook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLook.framework; path = System/Library/Frameworks/QuickLook.framework; sourceTree = SDKROOT; };
@@ -1300,6 +1311,10 @@
 		B9E56EC21BB5BD0B00A0B12F /* contact */ = {
 			isa = PBXGroup;
 			children = (
+				A42780741C3A590200F3D3E0 /* btn_mail_disable@2x.png */,
+				A42780751C3A590200F3D3E0 /* btn_mail_disable@3x.png */,
+				A42780761C3A590200F3D3E0 /* btn_mail_n@2x.png */,
+				A42780771C3A590200F3D3E0 /* btn_mail_n@3x.png */,
 				B9E56EC31BB5BD1800A0B12F /* foto@2x.png */,
 				B9E56EC41BB5BD1800A0B12F /* foto@3x.png */,
 			);
@@ -1601,6 +1616,8 @@
 			children = (
 				A41A3F501C1A9F14004D2650 /* LHBPicBrowser.h */,
 				A41A3F511C1A9F14004D2650 /* LHBPicBrowser.m */,
+				A427807C1C3BA78F00F3D3E0 /* LHBCopyLabel.h */,
+				A427807D1C3BA78F00F3D3E0 /* LHBCopyLabel.m */,
 				A4DACE321C0C448500AF4234 /* SDWebImage */,
 				B9E020771BE0F272008587FC /* GeTui */,
 				B9DE8AF01BA2C593003E3DFC /* Reachability */,
@@ -2376,6 +2393,7 @@
 				B93753D11BB1A90C00011EEB /* down@3x.png in Resources */,
 				B9E020661BDE6E2E008587FC /* profile_default@2x.jpg in Resources */,
 				B937539B1BAD16AF00011EEB /* tabbar_4highlighted@2x.png in Resources */,
+				A42780781C3A590200F3D3E0 /* btn_mail_disable@2x.png in Resources */,
 				B9E0209A1BE30ECB008587FC /* download@3x.png in Resources */,
 				B92E1E9F1BFEC7EC001EBB74 /* login_bti_n@2x.png in Resources */,
 				B9E56EBC1BB5BB5900A0B12F /* man@2x.png in Resources */,
@@ -2412,6 +2430,7 @@
 				A42780641C33B31F00F3D3E0 /* btn_download_disable@2x.png in Resources */,
 				B9E56EB31BB5A64F00A0B12F /* wechat@2x.png in Resources */,
 				B9EFEBF71B9E8A7C009132ED /* back_icon_normal@2x.png in Resources */,
+				A427807B1C3A590200F3D3E0 /* btn_mail_n@3x.png in Resources */,
 				B93753931BAD16AF00011EEB /* tabbar_2highlighted@2x.png in Resources */,
 				A427805B1C3386FA00F3D3E0 /* btn_wechat_n@3x.png in Resources */,
 				B9E56E911BB5832300A0B12F /* law@2x.png in Resources */,
@@ -2505,6 +2524,7 @@
 				B9E56EA61BB5A63600A0B12F /* location@2x.png in Resources */,
 				B937535F1BAAFF2D00011EEB /* Details@3x.png in Resources */,
 				B9E020991BE30ECB008587FC /* download@2X.png in Resources */,
+				A427807A1C3A590200F3D3E0 /* btn_mail_n@2x.png in Resources */,
 				B9E9425F1BC0FDBC0057B743 /* regions.csv in Resources */,
 				B93753A31BAD16AF00011EEB /* top@2x.png in Resources */,
 				B9EFEAE11B9C243E009132ED /* tiyandian_selected@3x.png in Resources */,
@@ -2533,6 +2553,7 @@
 				A427805A1C3386FA00F3D3E0 /* btn_wechat_n@2x.png in Resources */,
 				B9EFEADC1B9C243E009132ED /* my_tab_selected@2x.png in Resources */,
 				B9E56E901BB5832300A0B12F /* law@.png in Resources */,
+				A42780791C3A590200F3D3E0 /* btn_mail_disable@3x.png in Resources */,
 				B9E56E971BB5832300A0B12F /* support@3x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2617,6 +2638,7 @@
 				B9EFEB961B9D3A05009132ED /* UIColor+CXExtensions.m in Sources */,
 				B9DE8B111BA313D0003E3DFC /* TSWOtherRequirement.m in Sources */,
 				B9EFEA2D1B9C0C3D009132ED /* TSWSplashViewController.m in Sources */,
+				A427807E1C3BA78F00F3D3E0 /* LHBCopyLabel.m in Sources */,
 				B9EFEB821B9D3930009132ED /* DDAbstractDatabaseLogger.m in Sources */,
 				B93753361BA9A9DD00011EEB /* TSWServiceList.m in Sources */,
 				B9EFEC0E1B9EDAF1009132ED /* TSWTextFieldCell.m in Sources */,
@@ -2869,7 +2891,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tianshiwan/TSW-prefix.pch";
 				INFOPLIST_FILE = tianshiwan/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2894,7 +2916,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tianshiwan/TSW-prefix.pch";
 				INFOPLIST_FILE = tianshiwan/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

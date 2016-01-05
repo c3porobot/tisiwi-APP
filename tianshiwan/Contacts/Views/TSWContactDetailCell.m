@@ -108,7 +108,7 @@
         phoneLabel.text = @"";
         [self.contentView addSubview:phoneLabel];
         
-        UILabel *emailLabel = [[UILabel alloc]initWithFrame:CGRectMake(20.0f, 10.0f+60.0f+15.0f+6*(12.0f+5.0f)+CGRectGetHeight(projectInfoLabel.frame)+15.0f+12.0f+15.0f, width-2*20.0f, 12.0f)];
+        UILabel *emailLabel = [[UILabel alloc]initWithFrame:CGRectMake(20.0f, 10.0f+60.0f+15.0f+7*(12.0f+5.0f)+CGRectGetHeight(projectInfoLabel.frame)+15.0f+12.0f+15.0f, width-2*20.0f, 12.0f)];
         emailLabel.textAlignment = NSTextAlignmentLeft;
         emailLabel.textColor = RGB(155, 155, 155);
         emailLabel.font = [UIFont systemFontOfSize:12.0f];
@@ -116,7 +116,7 @@
         emailLabel.text = @"";
         [self.contentView addSubview:emailLabel];
         
-        UILabel *weixinLabel = [[UILabel alloc]initWithFrame:CGRectMake(20.0f, 10.0f+60.0f+15.0f+7*(12.0f+5.0f)+CGRectGetHeight(projectInfoLabel.frame)+15.0f+12.0f+15.0f, width-2*20.0f, 12.0f)];
+        UILabel *weixinLabel = [[UILabel alloc]initWithFrame:CGRectMake(20.0f, 10.0f+60.0f+15.0f+6*(12.0f+5.0f)+CGRectGetHeight(projectInfoLabel.frame)+15.0f+12.0f+15.0f, width-2*20.0f, 12.0f)];
         weixinLabel.textAlignment = NSTextAlignmentLeft;
         weixinLabel.textColor = RGB(155, 155, 155);
         weixinLabel.font = [UIFont systemFontOfSize:12.0f];

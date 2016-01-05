@@ -9,7 +9,7 @@
 #import "CXNavigationBarController.h"
 
 @interface TSWContactDetailViewController : CXNavigationBarController
-
+@property (nonatomic, copy) NSString *contectName;
 - (instancetype)initWithContactId:(NSString *)contactId;
 
 @end

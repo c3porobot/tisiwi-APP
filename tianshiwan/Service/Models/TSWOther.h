@@ -17,4 +17,7 @@
 @property(nonatomic, strong) NSString *cityCode;
 @property(nonatomic, strong) NSString *cityName;
 @property(nonatomic, assign) NSInteger like;
+@property (nonatomic, copy) NSString *served_aera; //服务地区
+@property (nonatomic, copy) NSString *tags; //标签
+
 @end

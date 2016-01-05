@@ -12,6 +12,7 @@
 #import "TSWSendEmail.h"
 #import "LHBTalentCheckController.h"
 #import "TSWTalentCheckViewController.h"
+#import "LHBCopyLabel.h"
 @interface TSWTalentDetailViewController ()<UIAlertViewDelegate>
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) NSString *sid;
@@ -25,9 +26,9 @@
 @property (nonatomic, strong) UILabel *directLabel2;
 @property (nonatomic, strong) UILabel *jianLabel2;
 
-@property (nonatomic, strong) UILabel *wechatLabel; //微信
-@property (nonatomic, strong) UILabel *phoneLabel;  //手机
-@property (nonatomic, strong) UILabel *emailLabel;  //邮箱
+@property (nonatomic, strong) LHBCopyLabel *wechatLabel; //微信
+@property (nonatomic, strong) LHBCopyLabel *phoneLabel;  //手机
+@property (nonatomic, strong) LHBCopyLabel *emailLabel;  //邮箱
 
 @property (nonatomic, strong) UIImageView *mapImageView;
 
@@ -67,7 +68,7 @@ static NSString * const reuseIdentifier = @"Cell";
     [super viewDidLoad];
     CGFloat width = CGRectGetWidth(self.view.bounds);
     CGFloat height = CGRectGetHeight(self.view.bounds);
-    self.navigationBar.title = @"人才详情";
+    self.navigationBar.title = self.talentName;
     self.view.backgroundColor = RGB(234, 234, 234);
     
     _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0.0f, self.navigationBarHeight, width, height-self.navigationBarHeight-20.0f)];
@@ -107,7 +108,7 @@ static NSString * const reuseIdentifier = @"Cell";
     baseLabel1.textColor = RGB(127, 127, 127);
     baseLabel1.font = [UIFont systemFontOfSize:12.0f];
     baseLabel1.backgroundColor = [UIColor clearColor];
-    baseLabel1.text = @"基本信息:";
+    baseLabel1.text = @"基本信息";
     [_scrollView addSubview:baseLabel1];
     _baseLabel2 = [[UILabel alloc]initWithFrame:CGRectMake(20.0f, 22.0f+CGRectGetHeight(_headerView.frame)+28.0f+12.0f+5.0f, width-2*20.0f, 12.0f)];
     _baseLabel2.textAlignment = NSTextAlignmentLeft;
@@ -131,10 +132,10 @@ static NSString * const reuseIdentifier = @"Cell";
     contactLabel.textColor = RGB(127, 127, 127);
     contactLabel.font = [UIFont systemFontOfSize:12.0f];
     contactLabel.backgroundColor = [UIColor clearColor];
-    contactLabel.text = @"联系信息:";
+    contactLabel.text = @"联系信息";
     [_scrollView addSubview:contactLabel];
     
-    self.wechatLabel = [[UILabel alloc] initWithFrame:CGRectMake(20.0f, CGRectGetMaxY(contactLabel.frame)+5, width-2*20.0f, 12.0f)];
+    self.wechatLabel = [[LHBCopyLabel alloc] initWithFrame:CGRectMake(20.0f, CGRectGetMaxY(contactLabel.frame)+5, width-2*20.0f, 12.0f)];
     _wechatLabel.textAlignment = NSTextAlignmentLeft;
     _wechatLabel.textColor = RGB(155, 155, 155);
     _wechatLabel.font = [UIFont systemFontOfSize:12.0f];
@@ -142,7 +143,7 @@ static NSString * const reuseIdentifier = @"Cell";
     _wechatLabel.text = @"微信:";
     [_scrollView addSubview:_wechatLabel];
     
-    self.phoneLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(self.wechatLabel.frame) + 5, width-2*20.0f, 12)];
+    self.phoneLabel = [[LHBCopyLabel alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(self.wechatLabel.frame) + 5, width-2*20.0f, 12)];
     _phoneLabel.textAlignment = NSTextAlignmentLeft;
     _phoneLabel.textColor = RGB(155, 155, 155);
     _phoneLabel.font = [UIFont systemFontOfSize:12.0f];
@@ -150,7 +151,7 @@ static NSString * const reuseIdentifier = @"Cell";
     _phoneLabel.text = @"手机:";
     [_scrollView addSubview:_phoneLabel];
     
-    self.emailLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(self.phoneLabel.frame) + 5, width - 2*20, 12)];
+    self.emailLabel = [[LHBCopyLabel alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(self.phoneLabel.frame) + 5, width - 2*20, 12)];
     _emailLabel.textAlignment = NSTextAlignmentLeft;
     _emailLabel.textColor = RGB(155, 155, 155);
     _emailLabel.font = [UIFont systemFontOfSize:12.0f];
@@ -163,7 +164,7 @@ static NSString * const reuseIdentifier = @"Cell";
     directLabel1.textColor = RGB(127, 127, 127);
     directLabel1.font = [UIFont systemFontOfSize:12.0f];
     directLabel1.backgroundColor = [UIColor clearColor];
-    directLabel1.text = @"意向岗位:";
+    directLabel1.text = @"意向岗位";
     [_scrollView addSubview:directLabel1];
     _directLabel2 = [[UILabel alloc]initWithFrame:CGRectMake(20.0f, CGRectGetMaxY(directLabel1.frame) + 5, width-2*20.0f, 12.0f)];
     _directLabel2.textAlignment = NSTextAlignmentLeft;
@@ -178,7 +179,7 @@ static NSString * const reuseIdentifier = @"Cell";
     jianLabel1.textColor = RGB(127, 127, 127);
     jianLabel1.font = [UIFont systemFontOfSize:12.0f];
     jianLabel1.backgroundColor = [UIColor clearColor];
-    jianLabel1.text = @"天使湾评价:";
+    jianLabel1.text = @"天使湾评价";
     [_scrollView addSubview:jianLabel1];
     _jianLabel2 = [[UILabel alloc]initWithFrame:CGRectMake(20.0f, CGRectGetMaxY(jianLabel1.frame) + 17, width-2*20.0f, 12.0f)];
     _jianLabel2.textAlignment = NSTextAlignmentLeft;
@@ -318,10 +319,14 @@ static NSString * const reuseIdentifier = @"Cell";
     CGSize size2 = [status sizeWithAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:12.0f],NSFontAttributeName, nil]];
     _mapImageView.frame = CGRectMake(width - 15.0f - size.width - size2.width - 6.0f - 2.0f - 15.0f - 15.0f, 2.0f, 11.0f, 15.0f);
     
-    _baseLabel2.text = [NSString stringWithFormat:@"工作年限: %@",talentDetail.seniority];
+    _baseLabel2.text = [NSString stringWithFormat:@"工作经验: %@年",talentDetail.seniority];
     
     //_baseLabel2.text = [NSString stringWithFormat:@"工作年限: %@", talentDetail.attachment];
-    _baseLabel3.text = [NSString stringWithFormat:@"月薪要求: %@元",talentDetail.salary];
+    if ([talentDetail.salary isEqualToString:@"0"]) {
+        _baseLabel3.text = [NSString stringWithFormat:@"月薪要求: 面议"];
+    }else {
+        _baseLabel3.text = [NSString stringWithFormat:@"月薪要求: %@K",talentDetail.salary];
+    }
     _directLabel2.text = talentDetail.titles;
     _jianLabel2.text = talentDetail.introduction;
     _jianLabel2.numberOfLines = 0;
@@ -354,7 +359,8 @@ static NSString * const reuseIdentifier = @"Cell";
     talentCheckViewController.PDFid = self.sid; //赋值
     talentCheckViewController.attachment = _talentDetail.attachment;
     talentCheckViewController.name = _talentDetail.name;
-    [self.navigationController pushViewController:talentCheckViewController animated:YES];
+    //[self.navigationController pushViewController:talentCheckViewController animated:YES];
+    [self presentViewController:talentCheckViewController animated:NO completion:nil];
 }
 
 -(void)call{

@@ -68,7 +68,7 @@ static NSString * const reuseIdentifier = @"Cell";
     [super viewDidLoad];
     CGFloat width = CGRectGetWidth(self.view.bounds);
     CGFloat height = CGRectGetHeight(self.view.bounds);
-    self.navigationBar.title = @"联系人信息";
+    self.navigationBar.title = self.contectName;
     self.view.backgroundColor = RGB(234, 234, 234);
     _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0.0f, self.navigationBarHeight, width, height-self.navigationBarHeight-20.0f)];
     _scrollView.backgroundColor = [UIColor whiteColor];
@@ -90,7 +90,7 @@ static NSString * const reuseIdentifier = @"Cell";
     _nameLabel.text = @"";
     [_headerView addSubview:_nameLabel];
     
-    _positionLabel = [[UILabel alloc]initWithFrame:CGRectMake(15.0f+60.0f+15.0f, 22.0f+14.0f+10.0f, width - (15.0f+60.0f+15.0f+15.0f), 12.0f)];
+    _positionLabel = [[UILabel alloc]initWithFrame:CGRectMake(15.0f+60.0f+15.0f, CGRectGetMaxY(self.nameLabel.frame) + 10, width - (15.0f+60.0f+15.0f+15.0f), 12.0f)];
     _positionLabel.textAlignment = NSTextAlignmentLeft;
     _positionLabel.textColor = RGB(132, 132, 132);
     _positionLabel.font = [UIFont systemFontOfSize:12.0f];
@@ -106,10 +106,10 @@ static NSString * const reuseIdentifier = @"Cell";
     titleLabel1.textColor = RGB(105, 105, 105);
     titleLabel1.font = [UIFont systemFontOfSize:12.0f];
     titleLabel1.backgroundColor = [UIColor clearColor];
-    titleLabel1.text = @"项目信息:";
+    titleLabel1.text = @"项目信息";
     [_scrollView addSubview:titleLabel1];
     
-    _projectInfoLabel = [[UILabel alloc]initWithFrame:CGRectMake(20.0f, 10.0f+60.0f+15.0f+12.0f+5.0f, width, 50.0f)];
+    _projectInfoLabel = [[UILabel alloc]initWithFrame:CGRectMake(20.0f, CGRectGetMaxY(self.faceImageView.frame) + 10, width, 50.0f)];
     _projectInfoLabel.textAlignment = NSTextAlignmentLeft;
     _projectInfoLabel.textColor = RGB(155, 155, 155);
     _projectInfoLabel.font = [UIFont systemFontOfSize:12.0f];
@@ -126,7 +126,7 @@ static NSString * const reuseIdentifier = @"Cell";
     _titleLabel2.textColor = RGB(105, 105, 105);
     _titleLabel2.font = [UIFont systemFontOfSize:12.0f];
     _titleLabel2.backgroundColor = [UIColor clearColor];
-    _titleLabel2.text = @"公司信息:";
+    _titleLabel2.text = @"公司信息";
     [_scrollView addSubview:_titleLabel2];
     
     _cityLabel = [[UILabel alloc]initWithFrame:CGRectMake(20.0f, 10.0f+60.0f+15.0f+2*(12.0f+5.0f)+CGRectGetHeight(_projectInfoLabel.frame)+15.0f, width-2*20.0f, 12.0f)];
@@ -163,7 +163,7 @@ static NSString * const reuseIdentifier = @"Cell";
     _titleLabel3.text = @"联系方式";
     [_scrollView addSubview:_titleLabel3];
     
-    _phoneLabel = [[UILabel alloc]initWithFrame:CGRectMake(20.0f, 10.0f+60.0f+15.0f+4*(12.0f+5.0f)+CGRectGetHeight(_projectInfoLabel.frame)+15.0f+12.0f+CGRectGetHeight(_addressLabel.frame)+15.0f, width-2*20.0f, 12.0f)];
+    _phoneLabel = [[UILabel alloc]initWithFrame:CGRectMake(20.0f, CGRectGetMaxY(self.titleLabel3.frame)+ 5.0f, width-2*20.0f, 12.0f)];
     _phoneLabel.textAlignment = NSTextAlignmentLeft;
     _phoneLabel.textColor = RGB(155, 155, 155);
     _phoneLabel.font = [UIFont systemFontOfSize:12.0f];
@@ -171,15 +171,7 @@ static NSString * const reuseIdentifier = @"Cell";
     _phoneLabel.text = @"";
     [_scrollView addSubview:_phoneLabel];
     
-    _emailLabel = [[UILabel alloc]initWithFrame:CGRectMake(20.0f, 10.0f+60.0f+15.0f+5*(12.0f+5.0f)+CGRectGetHeight(_projectInfoLabel.frame)+15.0f+12.0f+CGRectGetHeight(_addressLabel.frame)+15.0f, width-2*20.0f, 12.0f)];
-    _emailLabel.textAlignment = NSTextAlignmentLeft;
-    _emailLabel.textColor = RGB(155, 155, 155);
-    _emailLabel.font = [UIFont systemFontOfSize:12.0f];
-    _emailLabel.backgroundColor = [UIColor clearColor];
-    _emailLabel.text = @"";
-    [_scrollView addSubview:_emailLabel];
-    
-    _weixinLabel = [[UILabel alloc]initWithFrame:CGRectMake(20.0f, 10.0f+60.0f+15.0f+6*(12.0f+5.0f)+CGRectGetHeight(_projectInfoLabel.frame)+15.0f+12.0f+CGRectGetHeight(_addressLabel.frame)+15.0f, width-2*20.0f, 12.0f)];
+    _weixinLabel = [[UILabel alloc]initWithFrame:CGRectMake(20.0f, CGRectGetMaxY(self.phoneLabel.frame) + 5.0f, width-2*20.0f, 12.0f)];
     _weixinLabel.textAlignment = NSTextAlignmentLeft;
     _weixinLabel.textColor = RGB(155, 155, 155);
     _weixinLabel.font = [UIFont systemFontOfSize:12.0f];
@@ -187,24 +179,32 @@ static NSString * const reuseIdentifier = @"Cell";
     _weixinLabel.text = @"";
     [_scrollView addSubview:_weixinLabel];
     
+    _emailLabel = [[UILabel alloc]initWithFrame:CGRectMake(20.0f, CGRectGetMaxY(self.weixinLabel.frame) + 5.0f, width-2*20.0f, 12.0f)];
+    _emailLabel.textAlignment = NSTextAlignmentLeft;
+    _emailLabel.textColor = RGB(155, 155, 155);
+    _emailLabel.font = [UIFont systemFontOfSize:12.0f];
+    _emailLabel.backgroundColor = [UIColor clearColor];
+    _emailLabel.text = @"";
+    [_scrollView addSubview:_emailLabel];
+    
+    
     UIView *btnsView = [[UIView alloc]initWithFrame:CGRectMake(0.0f, height-60.0f, width, 60.0f)];
     btnsView.backgroundColor = RGB(255, 255, 255);
-    _phoneBtn = [[UIButton alloc]initWithFrame:CGRectMake(0.0f, 0.0f, (width-4*2.0f)/3, 60.0f)];
+    _phoneBtn = [[UIButton alloc]initWithFrame:CGRectMake(0.0f, 0.0f, [UIScreen mainScreen].bounds.size.width / 3, 60.0f)];
     _phoneBtn.backgroundColor = RGB(234, 234, 234);
-    [_phoneBtn setImage:[UIImage imageNamed:@"phone_disabled"] forState:UIControlStateNormal];
-    
+    [_phoneBtn setImage:[UIImage imageNamed:@"btn_phone_disale"] forState:UIControlStateNormal];
     [btnsView addSubview:_phoneBtn];
-    _emailBtn = [[UIButton alloc]initWithFrame:CGRectMake((width-4*2.0f)/3+4.0f, 0.0f, (width-4*2.0f)/3, 60.0f)];
-    _emailBtn.backgroundColor = RGB(234, 234, 234);
-    [_emailBtn setImage:[UIImage imageNamed:@"maildown_disabled"] forState:UIControlStateNormal];
     
+    _wechatBtn = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.phoneBtn.frame), 0.0f, [UIScreen mainScreen].bounds.size.width / 3, 60.0f)];
+    _wechatBtn.backgroundColor = RGB(234, 234, 234);
+    [_wechatBtn setImage:[UIImage imageNamed:@"btn_wechat_disable"] forState:UIControlStateNormal];
+    [btnsView addSubview:_wechatBtn];
+    
+    _emailBtn = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.wechatBtn.frame), 0.0f, [UIScreen mainScreen].bounds.size.width / 3, 60.0f)];
+    _emailBtn.backgroundColor = RGB(234, 234, 234);
+    [_emailBtn setImage:[UIImage imageNamed:@"btn_mail_disable"] forState:UIControlStateNormal];
     [btnsView addSubview:_emailBtn];
     
-    _wechatBtn = [[UIButton alloc]initWithFrame:CGRectMake(2*((width-4*2.0f)/3+4.0f), 0.0f, (width-4*2.0f)/3, 60.0f)];
-    _wechatBtn.backgroundColor = RGB(234, 234, 234);
-    [_wechatBtn setImage:[UIImage imageNamed:@"wechat_disabled"] forState:UIControlStateNormal];
-    
-    [btnsView addSubview:_wechatBtn];
     
     [self.view addSubview:btnsView];
     
@@ -276,42 +276,42 @@ static NSString * const reuseIdentifier = @"Cell";
     CGSize titleSize = [contactDetail.project boundingRectWithSize:CGSizeMake(width - 20*2, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12]} context:nil].size;
     _projectInfoLabel.frame = CGRectMake(20.0f, 10.0f+60.0f+15.0f+12.0f+5.0f, titleSize.width, titleSize.height);
     
-    _titleLabel2.frame = CGRectMake(15.0f, 10.0f+60.0f+15.0f+12.0f+5.0f+CGRectGetHeight(_projectInfoLabel.frame)+15.0f, width-2*15.0f, 12.0f);
+    _titleLabel2.frame = CGRectMake(15.0f, CGRectGetMaxY(self.projectInfoLabel.frame) + 10, width-2*15.0f, 12.0f);
     
     _cityLabel.text = contactDetail.companyCityName;
-    _cityLabel.frame = CGRectMake(20.0f, 10.0f+60.0f+15.0f+2*(12.0f+5.0f)+CGRectGetHeight(_projectInfoLabel.frame)+15.0f, width-2*20.0f, 12.0f);
+    _cityLabel.frame = CGRectMake(20.0f, CGRectGetMaxY(self.titleLabel2.frame) + 5, width-2*20.0f, 12.0f);
     
     _companyLabel.text = contactDetail.companyFullName;
-    _companyLabel.frame = CGRectMake(20.0f, 10.0f+60.0f+15.0f+3*(12.0f+5.0f)+CGRectGetHeight(_projectInfoLabel.frame)+15.0f, width-2*20.0f, 12.0f);
+    _companyLabel.frame = CGRectMake(20.0f, CGRectGetMaxY(self.cityLabel.frame) + 5, width-2*20.0f, 12.0f);
     
     _addressLabel.text = contactDetail.companyAddress;
     _addressLabel.numberOfLines = 0;
     CGSize titleSize1 = [contactDetail.companyAddress boundingRectWithSize:CGSizeMake(width - 20*2, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12]} context:nil].size;
-    _addressLabel.frame = CGRectMake(20.0f, 10.0f+60.0f+15.0f+4*(12.0f+5.0f)+CGRectGetHeight(_projectInfoLabel.frame)+15.0f, titleSize1.width, titleSize1.height);
+    _addressLabel.frame = CGRectMake(20.0f, CGRectGetMaxY(self.companyLabel.frame) + 5, titleSize1.width, titleSize1.height);
     
-    _titleLabel3.frame = CGRectMake(15.0f, 10.0f+60.0f+15.0f+3*(12.0f+5.0f)+CGRectGetHeight(_projectInfoLabel.frame)+15.0f+12.0f+CGRectGetHeight(_addressLabel.frame)+15.0f, width-2*15.0f, 12.0f);
+    _titleLabel3.frame = CGRectMake(15.0f, CGRectGetMaxY(self.addressLabel.frame) + 10, width-2*15.0f, 12.0f);
     
-    _phoneLabel.text = [NSString stringWithFormat:@"手机 %@", contactDetail.phone];
-    _phoneLabel.frame = CGRectMake(20.0f, 10.0f+60.0f+15.0f+4*(12.0f+5.0f)+CGRectGetHeight(_projectInfoLabel.frame)+15.0f+12.0f+CGRectGetHeight(_addressLabel.frame)+15.0f, width-2*20.0f, 12.0f);
+    _phoneLabel.text = [NSString stringWithFormat:@"手机: %@", contactDetail.phone];
+    _phoneLabel.frame = CGRectMake(20.0f, CGRectGetMaxY(self.titleLabel3.frame) + 5, width-2*20.0f, 12.0f);
     
-    _emailLabel.text = [NSString stringWithFormat:@"邮箱 %@", contactDetail.email];
-    _emailLabel.frame = CGRectMake(20.0f, 10.0f+60.0f+15.0f+5*(12.0f+5.0f)+CGRectGetHeight(_projectInfoLabel.frame)+15.0f+12.0f+CGRectGetHeight(_addressLabel.frame)+15.0f, width-2*20.0f, 12.0f);
+    _emailLabel.text = [NSString stringWithFormat:@"邮箱: %@", contactDetail.email];
+    _emailLabel.frame = CGRectMake(20.0f, CGRectGetMaxY(self.phoneLabel.frame) + 5, width-2*20.0f, 12.0f);
     
-    _weixinLabel.text = [NSString stringWithFormat:@"微信 %@", contactDetail.wechat];
-    _weixinLabel.frame = CGRectMake(20.0f, 10.0f+60.0f+15.0f+6*(12.0f+5.0f)+CGRectGetHeight(_projectInfoLabel.frame)+15.0f+12.0f+CGRectGetHeight(_addressLabel.frame)+15.0f, width-2*20.0f, 12.0f);
+    _weixinLabel.text = [NSString stringWithFormat:@"微信: %@", contactDetail.wechat];
+    _weixinLabel.frame = CGRectMake(20.0f, CGRectGetMaxY(self.emailLabel.frame) + 5, width-2*20.0f, 12.0f);
     
     _scrollView.contentSize = CGSizeMake(width, 10.0f+60.0f+15.0f+7*(12.0f+5.0f)+CGRectGetHeight(_projectInfoLabel.frame)+15.0f+12.0f+15.0f+12.0f+15.0f+60.0f);
     
     if(_contactDetail.phone!=nil && ![_contactDetail.phone isEqualToString:@""]){
-        [_phoneBtn setImage:[UIImage imageNamed:@"phone"] forState:UIControlStateNormal];
+        [_phoneBtn setImage:[UIImage imageNamed:@"btn_phone_n"] forState:UIControlStateNormal];
         [_phoneBtn addTarget:self action:@selector(call) forControlEvents:UIControlEventTouchUpInside];
     }
     if(_contactDetail.email!=nil && ![_contactDetail.email isEqualToString:@""]){
-        [_emailBtn setImage:[UIImage imageNamed:@"maildown"] forState:UIControlStateNormal];
+        [_emailBtn setImage:[UIImage imageNamed:@"btn_mail_n"] forState:UIControlStateNormal];
         [_emailBtn addTarget:self action:@selector(email) forControlEvents:UIControlEventTouchUpInside];
     }
     if(_contactDetail.wechat!=nil && ![_contactDetail.wechat isEqualToString:@""]){
-        [_wechatBtn setImage:[UIImage imageNamed:@"wechat"] forState:UIControlStateNormal];
+        [_wechatBtn setImage:[UIImage imageNamed:@"btn_wechat_n"] forState:UIControlStateNormal];
         [_wechatBtn addTarget:self action:@selector(wechat) forControlEvents:UIControlEventTouchUpInside];
     }
 }

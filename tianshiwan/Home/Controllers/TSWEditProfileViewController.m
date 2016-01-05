@@ -48,6 +48,8 @@
 @property (nonatomic, strong) UILabel *emailVeri;
 @property (nonatomic, strong) UILabel *wechatVeri;
 @property (nonatomic, strong) UILabel *addressVeri;
+
+@property (nonatomic, strong) UIButton *dismissButton; //返回按钮
 @end
 
 @implementation TSWEditProfileViewController
@@ -67,17 +69,17 @@
     if ([self.navigationController.viewControllers indexOfObject:self] == 0) {
         CGRect dismissButtonFrame = CGRectMake(00.0f, 0.0f, 21.0f, 44.0f);
         
-        UIButton *dismissButton = [[UIButton alloc] initWithFrame:dismissButtonFrame];
-        dismissButton.backgroundColor = [UIColor clearColor];
-        [dismissButton setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
-        [dismissButton setImage:[UIImage imageNamed:@"back"] forState:UIControlStateHighlighted];
-        [dismissButton setImageEdgeInsets:UIEdgeInsetsMake(0,10.0f,0,0)];
-        [dismissButton setTitle:@" " forState:UIControlStateNormal];
-        [dismissButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [dismissButton setTitleColor:MAIN_COLOR forState:UIControlStateHighlighted];
-        [dismissButton addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
+        self.dismissButton = [[UIButton alloc] initWithFrame:dismissButtonFrame];
+        _dismissButton.backgroundColor = [UIColor clearColor];
+        [_dismissButton setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
+        [_dismissButton setImage:[UIImage imageNamed:@"back"] forState:UIControlStateHighlighted];
+        [_dismissButton setImageEdgeInsets:UIEdgeInsetsMake(0,10.0f,0,0)];
+        [_dismissButton setTitle:@" " forState:UIControlStateNormal];
+        [_dismissButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [_dismissButton setTitleColor:MAIN_COLOR forState:UIControlStateHighlighted];
+        [_dismissButton addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
         
-        self.navigationBar.leftButton = dismissButton;
+        self.navigationBar.leftButton = _dismissButton;
     }
     
     self.details = [[UIScrollView alloc]initWithFrame:CGRectMake(0, self.navigationBarHeight, width, height-self.navigationBarHeight)];
@@ -566,9 +568,9 @@
                             if(_dEmailField.text.length>0){
                                 if(_dEmailField.text.length<=128){
                                     _emailVeri.hidden = YES;
-                                    if(_dWechatField.text.length>=0 && _dWechatField.text.length<=128){
+                                    if(_dWechatField.text.length > 0 && _dWechatField.text.length<=128){
                                             _wechatVeri.hidden = YES;
-                                            if(_dAddressField.text.length>=0 && _dAddressField.text.length<=256){
+                                            if(_dAddressField.text.length > 0 && _dAddressField.text.length<=256){
                                                     _addressVeri.hidden = YES;
                                                     [self showLoadingViewWithText:@"提交中..."];
                                                     [self.sendProfile loadDataWithRequestMethodType:kHttpRequestMethodTypePost parameters:@{@"name":_dNameField.text,@"title":_dPositionField.text,@"company":_dCompanyField.text,@"cityCode":_selectedCityCode,@"address":_dAddressField.text,@"email":_dEmailField.text,@"wechat":_dWechatField.text,@"avatar":self.dFace.image} dataType:kHttpRequestDataTypeMultipart];
@@ -606,6 +608,7 @@
         _nameVeri.text = @"请填写有效姓名";
         _nameVeri.hidden = NO;
     }
+    
 }
 
 - (void)dealloc
@@ -615,6 +618,8 @@
 }
 
 - (BOOL)textFieldShouldEndEditing:(UITextField *)textField{
+    self.finishBtn.hidden = NO;
+    self.dismissButton.hidden = NO;
     switch (textField.tag) {
         case 1:
             if(_dNameField.text.length>0){
@@ -700,6 +705,8 @@
             CGRect frame = self.view.frame;
             frame.origin.y = offset;
             self.view.frame = frame;
+            self.finishBtn.hidden = YES;
+            self.dismissButton.hidden = YES;
         }];
     }
     return YES;

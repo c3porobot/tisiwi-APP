@@ -55,7 +55,7 @@
     // Do any additional setup after loading the view.
     self.view.backgroundColor = RGB(234, 234, 234);
     
-    self.navigationBar.title = @"联系人";
+    self.navigationBar.title = @"湾仔";
     self.letterCellsIndexPath = [[NSMutableArray alloc] init];
     
     CGFloat width = CGRectGetWidth(self.view.bounds);
@@ -287,6 +287,7 @@
 - (void)gotoDetail:(TSWContactsCell *)cell withContact:(TSWContact *)contact{
     [[self rdv_tabBarController] setTabBarHidden:YES animated:YES];
     TSWContactDetailViewController *detailController = [[TSWContactDetailViewController alloc]initWithContactId:contact.sid];
+    detailController.contectName = contact.name;
     [self.navigationController pushViewController:detailController animated:YES];
 }
 

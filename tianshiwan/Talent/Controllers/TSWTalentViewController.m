@@ -267,6 +267,7 @@
 - (void) gotoTalentDetail:(TSWTalentCell *)cell withTalent:(TSWTalent *)talent{
     [[self rdv_tabBarController] setTabBarHidden:YES animated:YES];
     TSWTalentDetailViewController *talentDetailController = [[TSWTalentDetailViewController alloc] initWithTalentId:talent.sid];
+    talentDetailController.talentName = talent.name;
     [self.navigationController pushViewController:talentDetailController animated:YES];
 }
 

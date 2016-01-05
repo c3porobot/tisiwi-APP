@@ -180,7 +180,7 @@
     TSWContactsViewController *contactsViewController = [[TSWContactsViewController alloc] init];
     contactsViewController.title = @"联系人";
     RDVTabBarItem *contactsItem = [[RDVTabBarItem alloc] init];
-    contactsItem.title = @"联系人";
+    contactsItem.title = @"湾仔";
     contactsItem.titlePositionAdjustment = UIOffsetMake(0.0f, 2.0f);
     [contactsItem setFinishedSelectedImage:[UIImage imageNamed:@"tabbar_5highlighted"] withFinishedUnselectedImage:[UIImage imageNamed:@"tabbar_5normal"]];
     UIViewController *contactsNavigationController = [[UINavigationController alloc]

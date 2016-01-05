@@ -47,6 +47,11 @@
 @property (nonatomic, strong) UIButton *wechatBtn;
 
 @property (nonatomic, strong) NSString *namex;
+
+@property (nonatomic, strong) UILabel *personInfo;
+@property (nonatomic ,strong) UILabel *wechatLabel;
+@property (nonatomic, strong) UILabel *phoneLabel;
+@property (nonatomic, strong) UILabel *emailLabel;
 @end
 
 @implementation TSWOtherDetailViewController
@@ -137,15 +142,50 @@ static NSString * const reuseIdentifier = @"Cell";
     _positionLabel.text = @"";
     [_scrollView addSubview:_positionLabel];
     
+    UILabel *contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(15.0f, 22.0f+CGRectGetHeight(_headerView.frame)+28.0f+18.0f, width-2*15.0f, 12.0f)];
+    contentLabel.text = @"联系方式";
+    contentLabel.textAlignment = NSTextAlignmentLeft;
+    contentLabel.textColor = RGB(127, 127, 127);
+    contentLabel.font = [UIFont systemFontOfSize:12.0f];
+    contentLabel.backgroundColor = [UIColor clearColor];
+    [_scrollView addSubview:contentLabel];
     
+    self.phoneLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(contentLabel.frame) + 10, width-2*20.0f, 12)];
+    _phoneLabel.textAlignment = NSTextAlignmentLeft;
+    _phoneLabel.textColor = RGB(155, 155, 155);
+    _phoneLabel.font = [UIFont systemFontOfSize:12.0f];
+    _phoneLabel.backgroundColor = [UIColor clearColor];
+    _phoneLabel.text = @"";
+    _phoneLabel.numberOfLines = 0;
+    [_scrollView addSubview:_phoneLabel];
+    
+    self.wechatLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(self.phoneLabel.frame) + 5, width-2*20.0f, 12)];
+    _wechatLabel.textAlignment = NSTextAlignmentLeft;
+    _wechatLabel.textColor = RGB(155, 155, 155);
+    _wechatLabel.font = [UIFont systemFontOfSize:12.0f];
+    _wechatLabel.backgroundColor = [UIColor clearColor];
+    _wechatLabel.text = @"";
+    _wechatLabel.numberOfLines = 0;
+    [_scrollView addSubview:_wechatLabel];
+    
+    
+    self.emailLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(self.wechatLabel.frame) + 5, width-2*20.0f, 12)];
+    _emailLabel.textAlignment = NSTextAlignmentLeft;
+    _emailLabel.textColor = RGB(155, 155, 155);
+    _emailLabel.font = [UIFont systemFontOfSize:12.0f];
+    _emailLabel.backgroundColor = [UIColor clearColor];
+    _emailLabel.text = @"";
+    _emailLabel.numberOfLines = 0;
+    [_scrollView addSubview:_emailLabel];
+
     // 分层次介绍
-    UILabel *personInfo = [[UILabel alloc]initWithFrame:CGRectMake(15.0f, 22.0f+CGRectGetHeight(_headerView.frame)+28.0f+18.0f, width-2*15.0f, 12.0f)];
-    personInfo.textAlignment = NSTextAlignmentLeft;
-    personInfo.textColor = RGB(127, 127, 127);
-    personInfo.font = [UIFont systemFontOfSize:12.0f];
-    personInfo.backgroundColor = [UIColor clearColor];
-    personInfo.text = @"公司介绍:";
-    [_scrollView addSubview:personInfo];
+    self.personInfo = [[UILabel alloc]initWithFrame:CGRectMake(15.0f, CGRectGetMaxY(self.emailLabel.frame) + 18, width-2*15.0f, 12.0f)];
+    _personInfo.textAlignment = NSTextAlignmentLeft;
+    _personInfo.textColor = RGB(127, 127, 127);
+    _personInfo.font = [UIFont systemFontOfSize:12.0f];
+    _personInfo.backgroundColor = [UIColor clearColor];
+    _personInfo.text = @"公司介绍";
+    [_scrollView addSubview:_personInfo];
     _personContent = [[UILabel alloc]initWithFrame:CGRectMake(20.0f, 22.0f+CGRectGetHeight(_headerView.frame)+28.0f+18.0f+12.0f+5.0f, width-2*20.0f, 12.0f)];
     _personContent.textAlignment = NSTextAlignmentLeft;
     _personContent.textColor = RGB(155, 155, 155);
@@ -158,12 +198,12 @@ static NSString * const reuseIdentifier = @"Cell";
     _personContent.frame = CGRectMake(20.0f, 22.0f+CGRectGetHeight(_headerView.frame)+28.0f+18.0f+12.0f+5.0f, titleSize.width, titleSize.height);
     [_scrollView addSubview:_personContent];
     
-    _fieldLabel = [[UILabel alloc]initWithFrame:CGRectMake(15.0f, 22.0f+CGRectGetHeight(_headerView.frame)+28.0f+18.0f+(12.0f+5.0f)+titleSize.height+15.0f, width-2*15.0f, 12.0f)];
+    _fieldLabel = [[UILabel alloc]initWithFrame:CGRectMake(15.0f, CGRectGetMaxY(self.personContent.frame) + 18, width-2*15.0f, 12.0f)];
     _fieldLabel.textAlignment = NSTextAlignmentLeft;
     _fieldLabel.textColor = RGB(127, 127, 127);
     _fieldLabel.font = [UIFont systemFontOfSize:12.0f];
     _fieldLabel.backgroundColor = [UIColor clearColor];
-    _fieldLabel.text = @"服务介绍:";
+    _fieldLabel.text = @"服务介绍";
     [_scrollView addSubview:_fieldLabel];
     
     _fieldContent = [[UILabel alloc]initWithFrame:CGRectMake(20.0f, 22.0f+CGRectGetHeight(_headerView.frame)+28.0f+18.0f+2*(12.0f+5.0f)+titleSize.height+15.0f, width-2*20.0f, 12.0f)];
@@ -178,12 +218,54 @@ static NSString * const reuseIdentifier = @"Cell";
     _fieldContent.frame = CGRectMake(20.0f, 22.0f+CGRectGetHeight(_headerView.frame)+28.0f+18.0f+2*(12.0f+5.0f)+titleSize.height+15.0f, titleSize2.width, titleSize2.height);
     [_scrollView addSubview:_fieldContent];
     
+    
+    _stepLabel = [[UILabel alloc]initWithFrame:CGRectMake(15.0f, CGRectGetMaxY(self.fieldContent.frame) + 18, width-2*15.0f, 12.0f)];
+    _stepLabel.textAlignment = NSTextAlignmentLeft;
+    _stepLabel.textColor = RGB(127, 127, 127);
+    _stepLabel.font = [UIFont systemFontOfSize:12.0f];
+    _stepLabel.backgroundColor = [UIColor clearColor];
+    _stepLabel.text = @"服务地区";
+    [_scrollView addSubview:_stepLabel];
+    
+    self.stepContent = [[UILabel alloc]initWithFrame:CGRectMake(20.0f, CGRectGetMaxY(self.stepLabel.frame) + 5, width-2*20.0f, 12.0f)];
+    _stepContent.textAlignment = NSTextAlignmentLeft;
+    _stepContent.textColor = RGB(155, 155, 155);
+    _stepContent.font = [UIFont systemFontOfSize:12.0f];
+    _stepContent.backgroundColor = [UIColor clearColor];
+    NSString *titleContent3 = @"";
+    _stepContent.text = titleContent3;
+    _stepContent.numberOfLines = 0;
+    CGSize titleSize3 = [titleContent3 boundingRectWithSize:CGSizeMake(width - 20*2, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12]} context:nil].size;
+    _stepContent.frame = CGRectMake(20.0f, 22.0f+CGRectGetHeight(_headerView.frame)+28.0f+18.0f+2*(12.0f+5.0f)+titleSize.height+15.0f, titleSize3.width, titleSize3.height);
+    [_scrollView addSubview:_stepContent];
+    
+    
+    _sampleLabel = [[UILabel alloc]initWithFrame:CGRectMake(15.0f, CGRectGetMaxY(self.stepContent.frame) + 10, width-2*15.0f, 12.0f)];
+    _sampleLabel.textAlignment = NSTextAlignmentLeft;
+    _sampleLabel.textColor = RGB(127, 127, 127);
+    _sampleLabel.font = [UIFont systemFontOfSize:12.0f];
+    _sampleLabel.backgroundColor = [UIColor clearColor];
+    _sampleLabel.text = @"标签";
+    [_scrollView addSubview:_sampleLabel];
+    
+    self.sampleContent = [[UILabel alloc]initWithFrame:CGRectMake(20.0f, CGRectGetMaxY(self.sampleLabel.frame) + 5, width-2*20.0f, 12.0f)];
+    _sampleContent.textAlignment = NSTextAlignmentLeft;
+    _sampleContent.textColor = RGB(155, 155, 155);
+    _sampleContent.font = [UIFont systemFontOfSize:12.0f];
+    _sampleContent.backgroundColor = [UIColor clearColor];
+    NSString *titleContent4 = @"";
+    _sampleContent.text = titleContent4;
+    _sampleContent.numberOfLines = 0;
+    CGSize titleSize4 = [titleContent4 boundingRectWithSize:CGSizeMake(width - 20*2, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12]} context:nil].size;
+    _stepContent.frame = CGRectMake(20.0f, 22.0f+CGRectGetHeight(_headerView.frame)+28.0f+18.0f+2*(12.0f+5.0f)+titleSize.height+15.0f, titleSize4.width, titleSize4.height);
+    [_scrollView addSubview:_sampleContent];
+    
     _wayLabel = [[UILabel alloc]initWithFrame:CGRectMake(15.0f, 22.0f+CGRectGetHeight(_headerView.frame)+28.0f+18.0f+2*(12.0f+5.0f)+titleSize.height+15.0f+titleSize2.height+15.0f, width-2*15.0f, 12.0f)];
     _wayLabel.textAlignment = NSTextAlignmentLeft;
     _wayLabel.textColor = RGB(127, 127, 127);
     _wayLabel.font = [UIFont systemFontOfSize:12.0f];
     _wayLabel.backgroundColor = [UIColor clearColor];
-    _wayLabel.text = @"申请方式:";
+    _wayLabel.text = @"申请方式";
    // [_scrollView addSubview:_wayLabel];
     
     _wayContent = [[UILabel alloc]initWithFrame:CGRectMake(20.0f, 22.0f+CGRectGetHeight(_headerView.frame)+28.0f+18.0f+3*(12.0f+5.0f)+titleSize.height+15.0f+titleSize2.height+15.0f, width-2*20.0f, 12.0f)];
@@ -198,12 +280,12 @@ static NSString * const reuseIdentifier = @"Cell";
     _wayContent.frame = CGRectMake(20.0f, 22.0f+CGRectGetHeight(_headerView.frame)+28.0f+18.0f+3*(12.0f+5.0f)+titleSize.height+15.0f+titleSize2.height+15.0f, titleSize5.width, titleSize5.height);
     //[_scrollView addSubview:_wayContent];
     
-    _refererLabel = [[UILabel alloc]initWithFrame:CGRectMake(15.0f, 22.0f+CGRectGetHeight(_headerView.frame)+28.0f+18.0f+3*(12.0f+5.0f)+titleSize.height+15.0f+titleSize2.height+15.0f+titleSize5.height+15.0f, width-2*15.0f, 12.0f)];
+    _refererLabel = [[UILabel alloc]initWithFrame:CGRectMake(15.0f, CGRectGetMaxY(self.sampleContent.frame) + 30, width-2*15.0f, 12.0f)];
     _refererLabel.textAlignment = NSTextAlignmentLeft;
     _refererLabel.textColor = RGB(127, 127, 127);
     _refererLabel.font = [UIFont systemFontOfSize:12.0f];
     _refererLabel.backgroundColor = [UIColor clearColor];
-    _refererLabel.text = @"天使湾熟络人:";
+    _refererLabel.text = @"天使湾熟络人";
     [_scrollView addSubview:_refererLabel];
     
     _refererContent = [[UILabel alloc]initWithFrame:CGRectMake(20.0f, 22.0f+CGRectGetHeight(_headerView.frame)+28.0f+18.0f+4*(12.0f+5.0f)+titleSize.height+15.0f+titleSize2.height+15.0f+titleSize5.height+15.0f, width-2*20.0f, 12.0f)];
@@ -218,7 +300,7 @@ static NSString * const reuseIdentifier = @"Cell";
     _refererContent.frame = CGRectMake(20.0f, 22.0f+CGRectGetHeight(_headerView.frame) + 28.0f + 18.0f + 5 * (12.0f + 5.0f) + titleSize.height + 15.0f + titleSize2.height + 15.0f + titleSize5.height + 15.0f + titleSize5.height + 15.0f, titleSize6.width, titleSize6.height);
     [_scrollView addSubview:_refererContent];
     
-    _faceImageView = [[UIImageView alloc] initWithFrame:CGRectMake(15.0f, 22.0f+CGRectGetHeight(_headerView.frame)+28.0f+18.0f+4*(12.0f+5.0f)+titleSize.height+15.0f+titleSize2.height+15.0f+titleSize5.height+15.0f+titleSize6.height, width - 2*15.0f, (width - 2*15.0f)*9/16)];
+    _faceImageView = [[UIImageView alloc] initWithFrame:CGRectMake(15.0f, CGRectGetMaxY(self.refererLabel.frame) + 15, width - 2*15.0f, (width - 2*15.0f)*9/16)];
     _faceImageView.layer.masksToBounds = YES;
     _faceImageView.userInteractionEnabled = YES; //打开图片的交互响应
     [_faceImageView setImage:[UIImage imageNamed:@"profile_default"]];
@@ -234,20 +316,19 @@ static NSString * const reuseIdentifier = @"Cell";
      */
     UIView *btnsView = [[UIView alloc]initWithFrame:CGRectMake(0.0f, height-60.0f, width, 60.0f)];
     btnsView.backgroundColor = RGB(255, 255, 255);
-    _phoneBtn = [[UIButton alloc]initWithFrame:CGRectMake(0.0f, 0.0f, (width-4*2.0f)/3, 60.0f)];
+    _phoneBtn = [[UIButton alloc]initWithFrame:CGRectMake(0.0f, 0.0f, [UIScreen mainScreen].bounds.size.width / 2, 60.0f)];
     _phoneBtn.backgroundColor = RGB(234, 234, 234);
-    [_phoneBtn setImage:[UIImage imageNamed:@"phone_disabled"] forState:UIControlStateNormal];
+    [_phoneBtn setImage:[UIImage imageNamed:@"btn_phone_disale"] forState:UIControlStateNormal];
     
     [btnsView addSubview:_phoneBtn];
-    _emailBtn = [[UIButton alloc]initWithFrame:CGRectMake((width-4*2.0f)/3+4.0f, 0.0f, (width-4*2.0f)/3, 60.0f)];
+    _emailBtn = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.phoneBtn.frame), 0.0f, [UIScreen mainScreen].bounds.size.width / 3, 60.0f)];
     _emailBtn.backgroundColor = RGB(234, 234, 234);
-    [_emailBtn setImage:[UIImage imageNamed:@"download_disabled"] forState:UIControlStateNormal];
+    [_emailBtn setImage:[UIImage imageNamed:@"btn_mail_disable"] forState:UIControlStateNormal];
+    //[btnsView addSubview:_emailBtn];
     
-    [btnsView addSubview:_emailBtn];
-    
-    _wechatBtn = [[UIButton alloc]initWithFrame:CGRectMake(2*((width-4*2.0f)/3+4.0f), 0.0f, (width-4*2.0f)/3, 60.0f)];
+    _wechatBtn = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.phoneBtn.frame), 0.0f, [UIScreen mainScreen].bounds.size.width / 2, 60.0f)];
     _wechatBtn.backgroundColor = RGB(234, 234, 234);
-    [_wechatBtn setImage:[UIImage imageNamed:@"wechat_disabled"] forState:UIControlStateNormal];
+    [_wechatBtn setImage:[UIImage imageNamed:@"btn_wechat_disable"] forState:UIControlStateNormal];
     
     [btnsView addSubview:_wechatBtn];
     
@@ -338,6 +419,9 @@ static NSString * const reuseIdentifier = @"Cell";
     _otherDetail = otherDetal;
     CGFloat width = CGRectGetWidth(self.view.bounds);
     // 布局，塞数据
+    _wechatLabel.text = [NSString stringWithFormat:@"微信: %@", otherDetal.wechat];
+    _phoneLabel.text = [NSString stringWithFormat:@"手机: %@", otherDetal.tel];
+    _emailLabel.text = [NSString stringWithFormat:@"邮箱: %@", otherDetal.email];
     _nameLabel.text = otherDetal.name;
     _zanLabel.text = [NSString stringWithFormat:@"%ld",(long)otherDetal.like];
     CGSize size2 = [_zanLabel.text sizeWithAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:12.0f],NSFontAttributeName, nil]];
@@ -365,15 +449,21 @@ static NSString * const reuseIdentifier = @"Cell";
     _personContent.text = otherDetal.companyIntroduction;
     _personContent.numberOfLines = 0;
     CGSize titleSize = [otherDetal.companyIntroduction boundingRectWithSize:CGSizeMake(width - 20*2, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12]} context:nil].size;
-    _personContent.frame = CGRectMake(20.0f, 22.0f+CGRectGetHeight(_headerView.frame)+28.0f+18.0f+12.0f+5.0f, titleSize.width, titleSize.height);
+    _personContent.frame = CGRectMake(20.0f, CGRectGetMaxY(self.personInfo.frame) + 10, titleSize.width, titleSize.height);
     
-    _fieldLabel.frame = CGRectMake(15.0f, 22.0f+CGRectGetHeight(_headerView.frame)+28.0f+18.0f+(12.0f+5.0f)+titleSize.height+15.0f, width-2*15.0f, 12.0f);
+    _fieldLabel.frame = CGRectMake(15.0f, CGRectGetMaxY(self.personContent.frame) + 15, width-2*15.0f, 12.0f);
     
     _fieldContent.text = otherDetal.introduction;
     _fieldContent.numberOfLines = 0;
     CGSize titleSize2 = [otherDetal.introduction boundingRectWithSize:CGSizeMake(width - 20*2, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12]} context:nil].size;
-    _fieldContent.frame = CGRectMake(20.0f, 22.0f+CGRectGetHeight(_headerView.frame)+28.0f+18.0f+2*(12.0f+5.0f)+titleSize.height+15.0f, titleSize2.width, titleSize2.height);
+    _fieldContent.frame = CGRectMake(20.0f, CGRectGetMaxY(self.fieldLabel.frame) + 10, titleSize2.width, titleSize2.height);
     
+    _stepLabel.frame = CGRectMake(15.0f, CGRectGetMaxY(self.fieldContent.frame) + 15, width-2*15.0f, 12.0f);
+    _stepContent.frame = CGRectMake(20.0f, CGRectGetMaxY(self.stepLabel.frame) + 10, titleSize2.width, titleSize2.height);
+    _stepContent.text = otherDetal.served_aera; //服务地区
+    _sampleLabel.frame = CGRectMake(15.0f, CGRectGetMaxY(self.stepContent.frame) + 15, width-2*15.0f, 12.0f);
+    _sampleContent.frame = CGRectMake(20.0f, CGRectGetMaxY(self.sampleLabel.frame) + 10, titleSize2.width, titleSize2.height);
+    _sampleContent.text = otherDetal.tags; //标签
     
     _wayLabel.frame = CGRectMake(15.0f, 22.0f+CGRectGetHeight(_headerView.frame)+28.0f+18.0f+2*(12.0f+5.0f)+titleSize.height+15.0f+titleSize2.height+15.0f, width-2*15.0f, 12.0f);
     _wayContent.text = otherDetal.applyMethod;
@@ -381,18 +471,18 @@ static NSString * const reuseIdentifier = @"Cell";
     CGSize titleSize5 = [otherDetal.applyMethod boundingRectWithSize:CGSizeMake(width - 20*2, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12]} context:nil].size;
     _wayContent.frame = CGRectMake(20.0f, 22.0f+CGRectGetHeight(_headerView.frame)+28.0f+18.0f+3*(12.0f+5.0f)+titleSize.height+15.0f+titleSize2.height+15.0f, titleSize5.width, titleSize5.height);
     
-    _refererLabel.frame = CGRectMake(15.0f, 22.0f+CGRectGetHeight(_headerView.frame)+3*(12.0f+5.0f)+titleSize.height+15.0f+titleSize2.height+15.0f+titleSize5.height+15.0f, width-2*15.0f, 12.0f);
+    _refererLabel.frame = CGRectMake(15.0f, CGRectGetMaxY(self.sampleContent.frame) + 15, width-2*15.0f, 12.0f);
     
     _refererContent.text = otherDetal.referrer;
     _refererContent.numberOfLines = 0;
     CGSize titleSize6 = [otherDetal.referrer boundingRectWithSize:CGSizeMake(width - 20*2, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12]} context:nil].size;
-    _refererContent.frame = CGRectMake(20.0f, 22.0f+CGRectGetHeight(_headerView.frame)+4*(12.0f+5.0f)+titleSize.height+15.0f+titleSize2.height+15.0f+titleSize5.height+15.0f, titleSize6.width, titleSize6.height);
+    _refererContent.frame = CGRectMake(20.0f, CGRectGetMaxY(self.refererLabel.frame) + 10, titleSize6.width, titleSize6.height);
     
     if(otherDetal.card){
         [[CXImageLoader sharedImageLoader] loadImageForURL:[NSURL URLWithString:otherDetal.card] image:^(UIImage *image, NSError *error) {
             _faceImageView.image = image;
         }];
-        _faceImageView.frame = CGRectMake(15.0f, 22.0f+CGRectGetHeight(_headerView.frame)+28.0f+18.0f+4*(12.0f+5.0f)+titleSize.height+15.0f+titleSize2.height+15.0f+titleSize5.height+15.0f+titleSize6.height+15.0f, width - 2*15.0f, (width - 2*15.0f)*9/16);
+        _faceImageView.frame = CGRectMake(15.0f, CGRectGetMaxY(self.refererContent.frame) + 15, width - 2*15.0f, (width - 2*15.0f)*9/16);
         /**
          *点击进入图片详情界面
          */
@@ -400,18 +490,18 @@ static NSString * const reuseIdentifier = @"Cell";
         [_faceImageView addGestureRecognizer:tapFaceImage];
     }
     
-    _scrollView.contentSize = CGSizeMake(width, 22.0f+CGRectGetHeight(_headerView.frame)+28.0f+18.0f+5*(12.0f+5.0f)+titleSize.height+15.0f+titleSize2.height+15.0f+titleSize5.height+15.0f+titleSize6.height+(width-2*15.0f)*9/16+15.0f+60.0f);
+    _scrollView.contentSize = CGSizeMake(width, 22.0f+CGRectGetHeight(_headerView.frame)+28.0f+18.0f+5*(12.0f+5.0f)+titleSize.height+15.0f+titleSize2.height+15.0f+titleSize5.height+15.0f+titleSize6.height+(width-2*15.0f)*9/16+15.0f+60.0f + 50 + 100);
     
     if(_otherDetail.tel!=nil && ![_otherDetail.tel isEqualToString:@""]){
-        [_phoneBtn setImage:[UIImage imageNamed:@"phone"] forState:UIControlStateNormal];
+        [_phoneBtn setImage:[UIImage imageNamed:@"btn_phone_n"] forState:UIControlStateNormal];
         [_phoneBtn addTarget:self action:@selector(call) forControlEvents:UIControlEventTouchUpInside];
     }
-    if(_otherDetail.hasAttachment == 1){
-        [_emailBtn setImage:[UIImage imageNamed:@"download"] forState:UIControlStateNormal];
+    if([otherDetal.email length] != 0){
+        [_emailBtn setImage:[UIImage imageNamed:@"btn_mail_n"] forState:UIControlStateNormal];
         [_emailBtn addTarget:self action:@selector(email) forControlEvents:UIControlEventTouchUpInside];
     }
     if(_otherDetail.wechat!=nil && ![_otherDetail.wechat isEqualToString:@""]){
-        [_wechatBtn setImage:[UIImage imageNamed:@"wechat"] forState:UIControlStateNormal];
+        [_wechatBtn setImage:[UIImage imageNamed:@"btn_wechat_n"] forState:UIControlStateNormal];
         [_wechatBtn addTarget:self action:@selector(wechat) forControlEvents:UIControlEventTouchUpInside];
     }
 }

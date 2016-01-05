@@ -278,7 +278,7 @@ static const CGFloat gap = 20.0f;
     NSArray *labelArray = [articleDetail.label componentsSeparatedByString:@","];
     NSUInteger count = labelArray.count;
     for (int i=0; i<count; i++) {
-        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(i*(45.0f+5.0f), 0.0f, 55.0f, 16.0f)];
+        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(i*(45.0f+15.0f), 0.0f, 55.0f, 16.0f)];
         label.textAlignment = NSTextAlignmentCenter;
         label.textColor = RGB(234, 234, 234);
         label.font = [UIFont systemFontOfSize:12.0f];
@@ -291,9 +291,8 @@ static const CGFloat gap = 20.0f;
     //设置标签的frame
     //self.labelView.frame = CGRectMake(12.0f, contentMargin+titleSize.height+5.0f, 148.0f, 12.0f);
     self.labelView.frame = CGRectMake(margin, CGRectGetMaxY(self.titleLabel.frame) + 5, 148, 12);
-    
     // 根据星级显示五角星
-    for (int i=0; i<5; i++) {
+    for (int i = 0; i < 5; i++) {
         if(i<[articleDetail.rating intValue] && [articleDetail.rating intValue]>=0){
             UIImageView *highStar = [[UIImageView alloc]initWithFrame:CGRectMake(30.0f+i*(11.0f+3.0f), 2.0f, 11.0f, 10.0f)];
             [highStar setImage:[UIImage imageNamed:@"star_highlighted"]];

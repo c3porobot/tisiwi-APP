@@ -79,7 +79,7 @@ static NSString * const reuseIdentifier = @"Cell";
     [super viewDidLoad];
     CGFloat width = CGRectGetWidth(self.view.bounds);
     CGFloat height = CGRectGetHeight(self.view.bounds);
-    self.navigationBar.title = @"融资详情";
+    self.navigationBar.title = self.investorName;
     self.view.backgroundColor = RGB(234, 234, 234);
     
     _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0.0f, self.navigationBarHeight, width, height-self.navigationBarHeight-20.0f)];
@@ -149,16 +149,7 @@ static NSString * const reuseIdentifier = @"Cell";
     contactLabel.text = @"联系方式:";
     [_scrollView addSubview:contactLabel];
     
-    self.wechatLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(contactLabel.frame) + 5, width-2*20.0f, 12)];
-    _wechatLabel.textAlignment = NSTextAlignmentLeft;
-    _wechatLabel.textColor = RGB(155, 155, 155);
-    _wechatLabel.font = [UIFont systemFontOfSize:12.0f];
-    _wechatLabel.backgroundColor = [UIColor clearColor];
-    _wechatLabel.text = @"微信:";
-    _wechatLabel.numberOfLines = 0;
-    [_scrollView addSubview:_wechatLabel];
-    
-    self.phoneLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(self.wechatLabel.frame) + 5, width-2*20.0f, 12)];
+    self.phoneLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(contactLabel.frame) + 5, width-2*20.0f, 12)];
     _phoneLabel.textAlignment = NSTextAlignmentLeft;
     _phoneLabel.textColor = RGB(155, 155, 155);
     _phoneLabel.font = [UIFont systemFontOfSize:12.0f];
@@ -167,22 +158,33 @@ static NSString * const reuseIdentifier = @"Cell";
     _phoneLabel.numberOfLines = 0;
     [_scrollView addSubview:_phoneLabel];
     
-    self.emailLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(self.phoneLabel.frame) + 5, width-2*20.0f, 12)];
+    //self.wechatLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(contactLabel.frame) + 5, width-2*20.0f, 12)];
+    self.wechatLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(self.phoneLabel.frame) + 5, width-2*20.0f, 12)];
+    _wechatLabel.textAlignment = NSTextAlignmentLeft;
+    _wechatLabel.textColor = RGB(155, 155, 155);
+    _wechatLabel.font = [UIFont systemFontOfSize:12.0f];
+    _wechatLabel.backgroundColor = [UIColor clearColor];
+    _wechatLabel.text = @"微信:";
+    _wechatLabel.numberOfLines = 0;
+    [_scrollView addSubview:_wechatLabel];
+    
+    
+    self.emailLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(self.wechatLabel.frame) + 5, width-2*20.0f, 12)];
     _emailLabel.textAlignment = NSTextAlignmentLeft;
     _emailLabel.textColor = RGB(155, 155, 155);
     _emailLabel.font = [UIFont systemFontOfSize:12.0f];
     _emailLabel.backgroundColor = [UIColor clearColor];
-    _emailLabel.text = @"邮箱:";
+    _emailLabel.text = @"邮箱";
     _emailLabel.numberOfLines = 0;
     [_scrollView addSubview:_emailLabel];
     
     // 分层次介绍
-    UILabel *personInfo = [[UILabel alloc]initWithFrame:CGRectMake(15.0f, 22.0f+CGRectGetHeight(_headerView.frame)+28.0f+18.0f + 67, width-2*15.0f, 12.0f)];
+    UILabel *personInfo = [[UILabel alloc]initWithFrame:CGRectMake(15.0f, 22.0f+CGRectGetHeight(_headerView.frame)+28.0f+18.0f + 72, width-2*15.0f, 12.0f)];
     personInfo.textAlignment = NSTextAlignmentLeft;
     personInfo.textColor = RGB(127, 127, 127);
     personInfo.font = [UIFont systemFontOfSize:12.0f];
     personInfo.backgroundColor = [UIColor clearColor];
-    personInfo.text = @"个人介绍:";
+    personInfo.text = @"个人介绍";
     [_scrollView addSubview:personInfo];
     
     _personContent = [[UILabel alloc]initWithFrame:CGRectMake(20.0f, 22.0f+CGRectGetHeight(_headerView.frame)+28.0f+18.0f+12.0f+5.0f, width-2*20.0f, 12.0f)];
@@ -202,7 +204,7 @@ static NSString * const reuseIdentifier = @"Cell";
     _fieldLabel.textColor = RGB(127, 127, 127);
     _fieldLabel.font = [UIFont systemFontOfSize:12.0f];
     _fieldLabel.backgroundColor = [UIColor clearColor];
-    _fieldLabel.text = @"投资领域:";
+    _fieldLabel.text = @"投资领域";
     [_scrollView addSubview:_fieldLabel];
     
     _fieldContent = [[UILabel alloc]initWithFrame:CGRectMake(20.0f, 22.0f+CGRectGetHeight(_headerView.frame)+28.0f+18.0f+2*(12.0f+5.0f)+titleSize.height+15.0f + 67, width-2*20.0f, 12.0f)];
@@ -222,7 +224,7 @@ static NSString * const reuseIdentifier = @"Cell";
     _stepLabel.textColor = RGB(127, 127, 127);
     _stepLabel.font = [UIFont systemFontOfSize:12.0f];
     _stepLabel.backgroundColor = [UIColor clearColor];
-    _stepLabel.text = @"投资阶段:";
+    _stepLabel.text = @"投资阶段";
     [_scrollView addSubview:_stepLabel];
     
     _stepContent = [[UILabel alloc]initWithFrame:CGRectMake(20.0f, 22.0f+CGRectGetHeight(_headerView.frame)+28.0f+18.0f+3*(12.0f+5.0f)+titleSize.height+15.0f+titleSize2.height+15.0f + 67, width-2*20.0f, 12.0f)];
@@ -242,7 +244,7 @@ static NSString * const reuseIdentifier = @"Cell";
     _sampleLabel.textColor = RGB(127, 127, 127);
     _sampleLabel.font = [UIFont systemFontOfSize:12.0f];
     _sampleLabel.backgroundColor = [UIColor clearColor];
-    _sampleLabel.text = @"投资案例:";
+    _sampleLabel.text = @"投资案例";
     [_scrollView addSubview:_sampleLabel];
     
     _sampleContent = [[UILabel alloc]initWithFrame:CGRectMake(20.0f, 22.0f+CGRectGetHeight(_headerView.frame)+28.0f+12.0f+4*(12.0f+5.0f)+titleSize.height+15.0f+titleSize2.height+15.0f+titleSize3.height+15.0F + 67, width-2*20.0f, 12.0f)];
@@ -262,7 +264,7 @@ static NSString * const reuseIdentifier = @"Cell";
     _wayLabel.textColor = RGB(127, 127, 127);
     _wayLabel.font = [UIFont systemFontOfSize:12.0f];
     _wayLabel.backgroundColor = [UIColor clearColor];
-    _wayLabel.text = @"申请方式:";
+    _wayLabel.text = @"申请方式";
     //[_scrollView addSubview:_wayLabel];
     
     _wayContent = [[UILabel alloc]initWithFrame:CGRectMake(20.0f, 22.0f+CGRectGetHeight(_headerView.frame)+28.0f+18.0f+5*(12.0f+5.0f)+titleSize.height+15.0f+titleSize2.height+15.0f+titleSize3.height+15.0F+titleSize4.height+15.0f + 67, width-2*20.0f, 12.0f)];
@@ -282,7 +284,7 @@ static NSString * const reuseIdentifier = @"Cell";
     _refererLabel.textColor = RGB(127, 127, 127);
     _refererLabel.font = [UIFont systemFontOfSize:12.0f];
     _refererLabel.backgroundColor = [UIColor clearColor];
-    _refererLabel.text = @"天使湾熟络人:";
+    _refererLabel.text = @"天使湾熟络人";
     [_scrollView addSubview:_refererLabel];
     
     _refererContent = [[UILabel alloc]initWithFrame:CGRectMake(20.0f, 22.0f+CGRectGetHeight(_headerView.frame)+7*(12.0f+5.0f)+titleSize.height+15.0f+titleSize2.height+15.0f+titleSize3.height+15.0F+titleSize4.height+15.0f + 67, width-2*20.0f, 12.0f)];
@@ -307,22 +309,20 @@ static NSString * const reuseIdentifier = @"Cell";
     
     UIView *btnsView = [[UIView alloc]initWithFrame:CGRectMake(0.0f, height-60.0f, width, 60.0f)];
     btnsView.backgroundColor = RGB(255, 255, 255);
-    _phoneBtn = [[UIButton alloc]initWithFrame:CGRectMake(0.0f, 0.0f, (width-4*2.0f)/3, 60.0f)];
+    _phoneBtn = [[UIButton alloc]initWithFrame:CGRectMake(0.0f, 0.0f, [UIScreen mainScreen].bounds.size.width / 2, 60.0f)];
     _phoneBtn.backgroundColor = RGB(234, 234, 234);
-    [_phoneBtn setImage:[UIImage imageNamed:@"phone_disabled"] forState:UIControlStateNormal];
+    [_phoneBtn setImage:[UIImage imageNamed:@"btn_phone_disale"] forState:UIControlStateNormal];
+    
     [btnsView addSubview:_phoneBtn];
-    _emailBtn = [[UIButton alloc]initWithFrame:CGRectMake((width-4*2.0f)/3+4.0f, 0.0f, (width-4*2.0f)/3, 60.0f)];
+    _emailBtn = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.phoneBtn.frame), 0.0f, [UIScreen mainScreen].bounds.size.width / 2, 60.0f)];
     _emailBtn.backgroundColor = RGB(234, 234, 234);
-    [_emailBtn setImage:[UIImage imageNamed:@"download_disabled"] forState:UIControlStateNormal];
+    [_emailBtn setImage:[UIImage imageNamed:@"btn_mail_disable"] forState:UIControlStateNormal];
+    //[btnsView addSubview:_emailBtn];
     
-    [btnsView addSubview:_emailBtn];
-    
-    _wechatBtn = [[UIButton alloc]initWithFrame:CGRectMake(2*((width-4*2.0f)/3+4.0f), 0.0f, (width-4*2.0f)/3, 60.0f)];
+    _wechatBtn = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.phoneBtn.frame), 0.0f, [UIScreen mainScreen].bounds.size.width / 2, 60.0f)];
     _wechatBtn.backgroundColor = RGB(234, 234, 234);
-    [_wechatBtn setImage:[UIImage imageNamed:@"wechat_disabled"] forState:UIControlStateNormal];
-    
+    [_wechatBtn setImage:[UIImage imageNamed:@"btn_wechat_disable"] forState:UIControlStateNormal];
     [btnsView addSubview:_wechatBtn];
-    
     [self.view addSubview:btnsView];
     
     _scrollView.contentSize = CGSizeMake(width, 22.0f+CGRectGetHeight(_headerView.frame)+28.0f+18.0f+5*(12.0f+5.0f)+titleSize.height+15.0f+titleSize2.height+15.0f+titleSize3.height+15.0F+titleSize4.height+15.0f+titleSize5.height+15.0f+(width-2*15.0f)*9/16+60.0f);
@@ -410,7 +410,6 @@ static NSString * const reuseIdentifier = @"Cell";
     _wechatLabel.text = [NSString stringWithFormat:@"微信: %@", financeDetal.wechat];
     _emailLabel.text = [NSString stringWithFormat:@"邮箱: %@", financeDetal.email];
     _phoneLabel.text = [NSString stringWithFormat:@"手机: %@", financeDetal.tel];
-    NSLog(@"********%@", financeDetal.wechat);
     _financeDetail = financeDetal;
     CGFloat width = CGRectGetWidth(self.view.bounds);
     // 布局，塞数据
@@ -441,14 +440,13 @@ static NSString * const reuseIdentifier = @"Cell";
     _personContent.text = financeDetal.introduction;
     _personContent.numberOfLines = 0;
     CGSize titleSize = [financeDetal.introduction boundingRectWithSize:CGSizeMake(width - 20*2, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12]} context:nil].size;
-    _personContent.frame = CGRectMake(20.0f, 22.0f+CGRectGetHeight(_headerView.frame)+28.0f+18.0f+12.0f+5.0f + 67, titleSize.width, titleSize.height);
+    _personContent.frame = CGRectMake(20.0f, 22.0f+CGRectGetHeight(_headerView.frame)+28.0f+18.0f+12.0f+5.0f + 72, titleSize.width, titleSize.height);
     
     _fieldLabel.frame = CGRectMake(15.0f, 22.0f+CGRectGetHeight(_headerView.frame)+28.0f+18.0f+(12.0f+5.0f)+titleSize.height+15.0f + 67, width-2*15.0f, 12.0f);
-    
-//    financeDetal.field = @"";
-    _fieldContent.text = financeDetal.fields;
+
+    _fieldContent.text = financeDetal.domains;
     _fieldContent.numberOfLines = 0;
-    CGSize titleSize2 = [financeDetal.fields boundingRectWithSize:CGSizeMake(width - 20*2, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12]} context:nil].size;
+    CGSize titleSize2 = [financeDetal.domains boundingRectWithSize:CGSizeMake(width - 20*2, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12]} context:nil].size;
     _fieldContent.frame = CGRectMake(20.0f, 22.0f+CGRectGetHeight(_headerView.frame)+28.0f+18.0f+2*(12.0f+5.0f)+titleSize.height+15.0f + 67, titleSize2.width, titleSize2.height);
     
     _stepLabel.frame = CGRectMake(15.0f, 22.0f+CGRectGetHeight(_headerView.frame)+28.0f+18.0f+2*(12.0f+5.0f)+titleSize.height+15.0f+titleSize2.height+15.0f + 67, width-2*15.0f, 12.0f);
@@ -474,12 +472,12 @@ static NSString * const reuseIdentifier = @"Cell";
     /**
      *更改推荐高度
      */
-    _refererLabel.frame = CGRectMake(15.0f, 22.0f+CGRectGetHeight(_headerView.frame)+5*(12.0f+5.0f)+titleSize.height+15.0f+titleSize2.height+15.0f+titleSize3.height+15.0F+titleSize4.height+15.0f+titleSize5.height+15.0f + 67, width-2*15.0f, 12.0f);
+    _refererLabel.frame = CGRectMake(15.0f, 22.0f+CGRectGetHeight(_headerView.frame)+5*(12.0f+5.0f)+titleSize.height+15.0f+titleSize2.height+15.0f+titleSize3.height+15.0F+titleSize4.height+15.0f+titleSize5.height+15.0f + 67 + 10, width-2*15.0f, 12.0f);
     
     _refererContent.text = financeDetal.referrer;
     _refererContent.numberOfLines = 0;
     CGSize titleSize6 = [financeDetal.referrer boundingRectWithSize:CGSizeMake(width - 20*2, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12]} context:nil].size;
-    _refererContent.frame = CGRectMake(20.0f, 22.0f+CGRectGetHeight(_headerView.frame)+6*(12.0f+5.0f)+titleSize.height+15.0f+titleSize2.height+15.0f+titleSize3.height+15.0F+titleSize4.height+15.0f+titleSize5.height+15.0f + 67, titleSize6.width, titleSize6.height);
+    _refererContent.frame = CGRectMake(20.0f, 22.0f+CGRectGetHeight(_headerView.frame)+6*(12.0f+5.0f)+titleSize.height+15.0f+titleSize2.height+15.0f+titleSize3.height+15.0F+titleSize4.height+15.0f+titleSize5.height+15.0f + 67 + 10, titleSize6.width, titleSize6.height);
     
     if (financeDetal.card) {
         [[CXImageLoader sharedImageLoader] loadImageForURL:[NSURL URLWithString:financeDetal.card] image:^(UIImage *image, NSError *error) {
@@ -491,15 +489,15 @@ static NSString * const reuseIdentifier = @"Cell";
      _scrollView.contentSize = CGSizeMake(width, 22.0f+CGRectGetHeight(_headerView.frame)+28.0f+18.0f+7*(12.0f+5.0f)+titleSize.height+15.0f+titleSize2.height+15.0f+titleSize3.height+15.0F+titleSize4.height+15.0f+titleSize5.height+15.0f+titleSize6.height+15.0f+(width-2*15.0f)*9/16+60.0f);
     
     if(_financeDetail.tel!=nil && ![_financeDetail.tel isEqualToString:@""]){
-        [_phoneBtn setImage:[UIImage imageNamed:@"phone"] forState:UIControlStateNormal];
+        [_phoneBtn setImage:[UIImage imageNamed:@"btn_phone_n"] forState:UIControlStateNormal];
         [_phoneBtn addTarget:self action:@selector(call) forControlEvents:UIControlEventTouchUpInside];
     }
     if(_financeDetail.hasAttachment == 1){
-        [_emailBtn setImage:[UIImage imageNamed:@"download"] forState:UIControlStateNormal];
+        [_emailBtn setImage:[UIImage imageNamed:@"btn_mail_n"] forState:UIControlStateNormal];
         [_emailBtn addTarget:self action:@selector(email) forControlEvents:UIControlEventTouchUpInside];
     }
     if(_financeDetail.wechat!=nil && ![_financeDetail.wechat isEqualToString:@""]){
-        [_wechatBtn setImage:[UIImage imageNamed:@"wechat"] forState:UIControlStateNormal];
+        [_wechatBtn setImage:[UIImage imageNamed:@"btn_wechat_n"] forState:UIControlStateNormal];
         [_wechatBtn addTarget:self action:@selector(wechat) forControlEvents:UIControlEventTouchUpInside];
     }
     

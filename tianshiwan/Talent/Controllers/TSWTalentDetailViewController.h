@@ -9,5 +9,6 @@
 #import "CXNavigationBarController.h"
 
 @interface TSWTalentDetailViewController : CXNavigationBarController
+@property (nonatomic, copy) NSString *talentName;
 - (instancetype)initWithTalentId:(NSString *)talentId;
 @end

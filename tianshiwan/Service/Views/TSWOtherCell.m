@@ -38,7 +38,7 @@
         _nameLabel.text = @"";
         [titleView addSubview:_nameLabel];
         
-        _positionLabel = [[UILabel alloc] initWithFrame:CGRectMake(15.0f, 12.0f+17.0f+8.0f+2*(12.0f+8.0f), width - 115.0f, 12.0f)];
+        _positionLabel = [[UILabel alloc] initWithFrame:CGRectMake(15.0f, 12.0f+17.0f+8.0f, width - 115.0f, 12.0f)];
         _positionLabel.textAlignment = NSTextAlignmentLeft;
         _positionLabel.textColor = RGB(105, 105, 105);
         _positionLabel.font = [UIFont systemFontOfSize:12.0f];
@@ -46,6 +46,24 @@
         _positionLabel.text = @"";
         [titleView addSubview:_positionLabel];
         
+        /**
+         * 服务地区和标签
+         */
+        _stepLabel = [[UILabel alloc] initWithFrame:CGRectMake(15.0f, 12.0f+17.0f+8.0f+12.0f+8.0f, width - 115.0f, 12.0f)];
+        _stepLabel.textAlignment = NSTextAlignmentLeft;
+        _stepLabel.textColor = RGB(127, 127, 127);
+        _stepLabel.font = [UIFont systemFontOfSize:12.0f];
+        _stepLabel.backgroundColor = [UIColor clearColor];
+        _stepLabel.text = @"";
+        [titleView addSubview:_stepLabel];
+        
+        _sampleLabel = [[UILabel alloc] initWithFrame:CGRectMake(15.0f, 12.0f+17.0f+8.0f+2*(12.0f+8.0f), width - 68.0f, 12.0f)];
+        _sampleLabel.textAlignment = NSTextAlignmentLeft;
+        _sampleLabel.textColor = RGB(127, 127, 127);
+        _sampleLabel.font = [UIFont systemFontOfSize:12.0f];
+        _sampleLabel.backgroundColor = [UIColor clearColor];
+        _sampleLabel.text = @"";
+        [titleView addSubview:_sampleLabel];
         
         _cityLabel = [[UILabel alloc] initWithFrame:CGRectMake(width-115.0f, 12.0f, 100.0f, 12.0f)];
         _cityLabel.textAlignment = NSTextAlignmentRight;
@@ -101,6 +119,12 @@
     
     _nameLabel.text = _other.name;
     _positionLabel.text = [NSString stringWithFormat:@"%@  %@", _other.title, _other.company];
+    _stepLabel.text = [NSString stringWithFormat:@"服务地区: %@", _other.served_aera];
+    if ([_other.tags isEqualToString:@""] || [other.tags length] == 0) {
+        _sampleLabel.text = [NSString stringWithFormat:@""];
+    } else {
+        _sampleLabel.text = [NSString stringWithFormat:@"标签: %@", _other.tags];
+    }
     
     NSArray *provinces = [[NSArray alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"area.plist" ofType:nil]];
     for (int i=0; i<[provinces count]; i++) {

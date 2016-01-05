@@ -17,13 +17,13 @@
     [super viewDidLoad];
     CGFloat width = CGRectGetWidth(self.view.bounds);
     CGFloat height = CGRectGetHeight(self.view.bounds);
-    self.navigationBar.title = @"天使湾APP使用协议";
+    self.navigationBar.title = @"天使湾App使用协议";
     self.navigationBar.titleView.textColor = RGB(90, 90, 90);
     self.navigationBar.backgroundView.backgroundColor = [UIColor whiteColor];
     [self.navigationBar.leftButton setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
     self.navigationBar.bottomLineView.hidden = YES;
     
-    UIScrollView *top = [[UIScrollView alloc]initWithFrame:CGRectMake(0.0f, self.navigationBarHeight+18.0f, width, height - self.navigationBarHeight-18.0f)];
+    UIScrollView *top = [[UIScrollView alloc]initWithFrame:CGRectMake(0.0f, self.navigationBarHeight, width, height - self.navigationBarHeight)];
     top.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:top];
     
@@ -33,7 +33,7 @@
     zeroLabel.font = [UIFont systemFontOfSize:14.0f];
     zeroLabel.backgroundColor = [UIColor clearColor];
     zeroLabel.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
-    NSString *titleContent0= @"简介";
+    NSString *titleContent0= @"特别提示";
     zeroLabel.text = titleContent0;
     zeroLabel.numberOfLines = 0;
     zeroLabel.frame = CGRectMake(12.0f, 12.0f, width-2*12.0f, 20.0f);
@@ -45,11 +45,11 @@
     firstLabel.font = [UIFont systemFontOfSize:12.0f];
     firstLabel.backgroundColor = [UIColor clearColor];
     firstLabel.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
-    NSString *titleContent1 = @"浙江天使湾创业投资有限公司成立于 2010 年 9 月,该创投基金由庞小伟先生联合实力雄厚的财团法人等在中国杭州发起设立。 天使湾创投公司是一家专注于互联网产业投资的风险投资公司,也是目前互联网领域国内领先的早期风险投资基金。目前直接管理了 6 支人民币天使投资基金,分别是“天使湾 1 号”至“天使湾 6 号”,天使湾将是一个持续的系列的计划,我们计划未来 5 年在互联网领 域投入不少于 10 亿元人民币的天使投资。";
+    NSString *titleContent1 = @"杭州天湾投资管理有限公司（以下简称“天湾”）在此特别提醒您（湾仔）在使用本App之前，请认真阅读本《使用协议》（以下简称“协议”），确保您充分理解本协议中各条款。请您审慎阅读并选择接受或不接受本协议。您的登录、使用等行为将视为对本协议的接受，并同意接受本协议各项条款的约束";
     firstLabel.text = titleContent1;
     firstLabel.numberOfLines = 0;
     CGSize titleSize1 = [titleContent1 boundingRectWithSize:CGSizeMake(width - 12*2, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:18]} context:nil].size;
-    firstLabel.frame = CGRectMake(12.0f, 12.0f, titleSize1.width, titleSize1.height);
+    firstLabel.frame = CGRectMake(12.0f, CGRectGetMaxY(firstLabel.frame) + 10, titleSize1.width, titleSize1.height);
     NSMutableAttributedString *attributedString1 = [[ NSMutableAttributedString alloc ] initWithString: firstLabel.text ];
     NSMutableParagraphStyle *paragraphStyle1 = [[ NSMutableParagraphStyle alloc ] init];
     paragraphStyle1.firstLineHeadIndent = 24.0f;
@@ -64,11 +64,11 @@
     secondLabel.font = [UIFont systemFontOfSize:12.0f];
     secondLabel.backgroundColor = [UIColor clearColor];
     secondLabel.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
-    NSString *titleContent2 = @"天使湾的基金只专注于投资互联网,目前范围主要包括移动互联网、移动电子商务、企 业移动服务、软硬件结合、移动游戏等方向。 供天使投资(1000 万人民币以下、25%以 下)和种子投资(20 万-50 万,10%左右)两种投资服务。经过将近五年的投资实践,天使 湾在互联网投资领域已经建立了独特的投资平台和标准化评估流程,并积累了丰富的投资经 验。";
+    NSString *titleContent2 = @"本协议约定天湾与湾仔之间关于“天使湾”软件服务（以下简称“服务”）的权利义务。“湾仔”是指天湾管理的基金所投资的企业的现任CEO。本协议可由天湾随时更新，湾仔可在App的“设置”板块查阅最新版协议条款。在天湾修改协议条款后，如果湾仔不接受修改后的条款，请立即停止使用天湾提供的服务，湾仔继续使用天湾提供的服务将被视为接受修改后的协议。";
     secondLabel.text = titleContent2;
     secondLabel.numberOfLines = 0;
     CGSize titleSize2 = [titleContent2 boundingRectWithSize:CGSizeMake(width - 12*2, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:18]} context:nil].size;
-    secondLabel.frame = CGRectMake(12.0f, 12.0f+titleSize1.height*2/3+15.0f, titleSize2.width, titleSize2.height);
+    secondLabel.frame = CGRectMake(12.0f, CGRectGetMaxY(firstLabel.frame) - [UIScreen mainScreen].bounds.size.height / 13.34 , titleSize2.width, titleSize2.height);
     NSMutableAttributedString *attributedString2 = [[ NSMutableAttributedString alloc ] initWithString: secondLabel.text ];
     NSMutableParagraphStyle *paragraphStyle2 = [[ NSMutableParagraphStyle alloc ] init];
     paragraphStyle2.firstLineHeadIndent = 24.0f;
@@ -79,18 +79,18 @@
     
     UILabel *thirdLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     thirdLabel.textAlignment = NSTextAlignmentLeft;
-    thirdLabel.textColor = RGB(97, 97, 97);
-    thirdLabel.font = [UIFont systemFontOfSize:12.0f];
+    thirdLabel.textColor = RGB(60, 60, 60);
+    thirdLabel.font = [UIFont systemFontOfSize:14.0f];
     thirdLabel.backgroundColor = [UIColor clearColor];
     thirdLabel.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
-    NSString *titleContent3 = @"天使湾下属互联网投资平台网站——天使湾 tisiwi.com,此网站是国内唯一的互联网 领域的早期风险投资项目申请平台。天使湾创投的投资理念:创投务必让世界更美好;对投 资者和创业者负责。";
+    NSString *titleContent3 = @"一、帐号使用";
     thirdLabel.text = titleContent3;
     thirdLabel.numberOfLines = 0;
     CGSize titleSize3 = [titleContent3 boundingRectWithSize:CGSizeMake(width - 12*2, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:18]} context:nil].size;
-    thirdLabel.frame = CGRectMake(12.0f, 12.0f+8.0f+titleSize1.height*2/3+titleSize2.height*2/3+2*15.0f, titleSize3.width, titleSize3.height);
+    thirdLabel.frame = CGRectMake(12.0f, CGRectGetMaxY(secondLabel.frame), titleSize3.width, titleSize3.height);
     NSMutableAttributedString *attributedString3 = [[ NSMutableAttributedString alloc ] initWithString: thirdLabel.text ];
     NSMutableParagraphStyle *paragraphStyle3 = [[ NSMutableParagraphStyle alloc ] init];
-    paragraphStyle3.firstLineHeadIndent = 24.0f;
+    paragraphStyle3.firstLineHeadIndent = 0.0f;
     paragraphStyle3.lineHeightMultiple = 1.5;
     [attributedString3 addAttribute: NSParagraphStyleAttributeName value:paragraphStyle3 range: NSMakeRange (0 , [thirdLabel.text length])];
     thirdLabel.attributedText = attributedString3;
@@ -102,9 +102,17 @@
     fourthLabel.font = [UIFont systemFontOfSize:12.0f];
     fourthLabel.backgroundColor = [UIColor clearColor];
     fourthLabel.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
-    NSString *titleContent4 = @"";
+    NSString *titleContent4 = @"1.湾仔向天湾提供本人名下的常用手机号码，作为登录App的唯一身份账号，天湾根据湾仔提供的手机号码为湾仔开通账号。";
     fourthLabel.text = titleContent4;
     fourthLabel.numberOfLines = 0;
+    CGSize titleSize4 = [titleContent4 boundingRectWithSize:CGSizeMake(width - 12*2, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:18]} context:nil].size;
+    fourthLabel.frame = CGRectMake(12.0f, CGRectGetMaxY(thirdLabel.frame), titleSize4.width, titleSize4.height);
+    NSMutableAttributedString *attributedString4 = [[ NSMutableAttributedString alloc ] initWithString: fourthLabel.text ];
+    NSMutableParagraphStyle *paragraphStyle4 = [[ NSMutableParagraphStyle alloc ] init];
+    paragraphStyle4.firstLineHeadIndent = 24.0f;
+    paragraphStyle4.lineHeightMultiple = 1.5;
+    [attributedString4 addAttribute: NSParagraphStyleAttributeName value:paragraphStyle4 range: NSMakeRange (0 , [fourthLabel.text length])];
+    fourthLabel.attributedText = attributedString4;
     [top addSubview:fourthLabel];
     
     UILabel *label5 = [[UILabel alloc] initWithFrame:CGRectZero];
@@ -113,11 +121,11 @@
     label5.font = [UIFont systemFontOfSize:12.0f];
     label5.backgroundColor = [UIColor clearColor];
     label5.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
-    NSString *titleContent5 = @"天使湾创投的投资团队由具有丰富的互联网创业经验、深厚的技术背景、中外互联网研 究积累的专业人士组成。团队创始人庞小伟为互联网领域知名的创业者,也是中国十大新锐 天使投资人、浙江省十大天使投资人。天使湾创投也是杭州市蒲公英天使投资引导基金第一 家合作对象,也是上海市天使投资引导基金第一批合作对象。";
+    NSString *titleContent5 = @"2.App账号只限湾仔本人使用，不得转借他人使用。";
     label5.text = titleContent5;
     label5.numberOfLines = 0;
     CGSize titleSize5 = [titleContent5 boundingRectWithSize:CGSizeMake(width - 12*2, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:18]} context:nil].size;
-    label5.frame = CGRectMake(12.0f, 12.0f+8.0f+titleSize1.height*2/3+titleSize2.height*2/3+titleSize3.height*2/3+15.0f+8.0f, titleSize5.width, titleSize5.height);
+    label5.frame = CGRectMake(12.0f, CGRectGetMaxY(fourthLabel.frame), titleSize5.width, titleSize5.height);
     NSMutableAttributedString *attributedString5 = [[ NSMutableAttributedString alloc ] initWithString: label5.text ];
     NSMutableParagraphStyle *paragraphStyle5 = [[ NSMutableParagraphStyle alloc ] init];
     paragraphStyle5.firstLineHeadIndent = 24.0f;
@@ -132,10 +140,18 @@
     sixthLabel.font = [UIFont systemFontOfSize:14.0f];
     sixthLabel.backgroundColor = [UIColor clearColor];
     sixthLabel.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
-    NSString *titleContent6 = @"信念与愿景";
+    NSString *titleContent6 = @"二、保密责任";
     sixthLabel.text = titleContent6;
     sixthLabel.numberOfLines = 0;
-    sixthLabel.frame = CGRectMake(12.0f, 12.0f+8.0f+titleSize1.height*2/3+titleSize2.height*2/3+titleSize3.height*2/3+titleSize5.height*2/3+4*15.0f+3*8.0f, width-2*12.0f, 20.0f);
+    sixthLabel.frame = CGRectMake(12.0f, CGRectGetMaxY(label5.frame), width-2*12.0f, 20.0f);
+    CGSize titleSize6 = [titleContent6 boundingRectWithSize:CGSizeMake(width - 12*2, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:18]} context:nil].size;
+    sixthLabel.frame = CGRectMake(12.0f, CGRectGetMaxY(label5.frame), titleSize6.width, titleSize6.height);
+    NSMutableAttributedString *attributedString6 = [[ NSMutableAttributedString alloc ] initWithString: sixthLabel.text ];
+    NSMutableParagraphStyle *paragraphStyle6 = [[ NSMutableParagraphStyle alloc ] init];
+    paragraphStyle6.firstLineHeadIndent = 0.0f;
+    paragraphStyle6.lineHeightMultiple = 1.5;
+    [attributedString6 addAttribute: NSParagraphStyleAttributeName value:paragraphStyle6 range: NSMakeRange (0 , [sixthLabel.text length])];
+    sixthLabel.attributedText = attributedString6;
     [top addSubview:sixthLabel];
     
     UILabel *sevenLabel = [[UILabel alloc] initWithFrame:CGRectZero];
@@ -144,11 +160,11 @@
     sevenLabel.font = [UIFont systemFontOfSize:12.0f];
     sevenLabel.backgroundColor = [UIColor clearColor];
     sevenLabel.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
-    NSString *titleContent7 = @"我们相信互联网对人类社会的发展将起到重大推动作用。我们愿意和心怀愿景和梦想的创业者,用互联网精神和方法,对社会发展的重大问题 出解决和改善之道。 我们的目标是成为中国领先的互联网专业天使投资基金,以开创性的投资帮助创业者,促进互联网在中国和全球的应用和发展。";
+    NSString *titleContent7 = @"1.App内所有资源的信息，包括但不限于联系人、联系方式、优惠内容，归天湾所有，不得向第三方透露。";
     sevenLabel.text = titleContent7;
     sevenLabel.numberOfLines = 0;
     CGSize titleSize7 = [titleContent7 boundingRectWithSize:CGSizeMake(width - 12*2, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:18]} context:nil].size;
-    sevenLabel.frame = CGRectMake(12.0f, 12.0f+8.0f+titleSize1.height*2/3+titleSize2.height*2/3+titleSize3.height*2/3+titleSize5.height*2/3+20.0f+3*15.0f+3*8.0f, titleSize7.width, titleSize7.height);
+    sevenLabel.frame = CGRectMake(12.0f, CGRectGetMaxY(sixthLabel.frame), titleSize7.width, titleSize7.height);
     NSMutableAttributedString *attributedString7 = [[ NSMutableAttributedString alloc ] initWithString: sevenLabel.text ];
     NSMutableParagraphStyle *paragraphStyle7 = [[ NSMutableParagraphStyle alloc ] init];
     paragraphStyle7.firstLineHeadIndent = 24.0f;
@@ -159,14 +175,21 @@
     
     UILabel *eightLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     eightLabel.textAlignment = NSTextAlignmentLeft;
-    eightLabel.textColor = RGB(60, 60, 60);
-    eightLabel.font = [UIFont systemFontOfSize:14.0f];
+    eightLabel.textColor = RGB(97, 97, 97);
+    eightLabel.font = [UIFont systemFontOfSize:12.0f];
     eightLabel.backgroundColor = [UIColor clearColor];
     eightLabel.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
-    NSString *titleContent8 = @"天使湾的独特性 ";
+    NSString *titleContent8 = @"2.App内资源仅限于湾仔为公司经营需要使用，不得用于其他第三方公司或个人。";
     eightLabel.text = titleContent8;
     eightLabel.numberOfLines = 0;
-    eightLabel.frame = CGRectMake(12.0f, 12.0f+8.0f+titleSize1.height*2/3+titleSize2.height*2/3+titleSize3.height*2/3+titleSize5.height*2/3+20.0f+titleSize7.height*2/3+3*15.0f+3*8.0f+60.0f, width-2*12.0f, 20.0f);
+    CGSize titleSize8 = [titleContent8 boundingRectWithSize:CGSizeMake(width - 12*2, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:18]} context:nil].size;
+    eightLabel.frame = CGRectMake(12.0f, CGRectGetMaxY(sevenLabel.frame), titleSize8.width, titleSize8.height);
+    NSMutableAttributedString *attributedString8 = [[ NSMutableAttributedString alloc ] initWithString: eightLabel.text ];
+    NSMutableParagraphStyle *paragraphStyle8 = [[ NSMutableParagraphStyle alloc ] init];
+    paragraphStyle8.firstLineHeadIndent = 24.0f;
+    paragraphStyle8.lineHeightMultiple = 1.5;
+    [attributedString8 addAttribute: NSParagraphStyleAttributeName value:paragraphStyle8 range: NSMakeRange (0 , [eightLabel.text length])];
+    eightLabel.attributedText = attributedString8;
     [top addSubview:eightLabel];
     
     UILabel *Label9 = [[UILabel alloc] initWithFrame:CGRectZero];
@@ -175,11 +198,11 @@
     Label9.font = [UIFont systemFontOfSize:12.0f];
     Label9.backgroundColor = [UIColor clearColor];
     Label9.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
-    NSString *titleContent9 = @"1. 我们是愿景式风险投资商。我们坚信投资的财务回报本质来自于我们所投资的企业为社会所创造的价值,所以我们会选择长期地和有愿景的创业者站在一起。这些价值观方面差异,一旦接触,你必能感受。";
+    NSString *titleContent9 = @"3.若湾仔更换账号关联手机号码，必须及时通知天湾投后部门人员更改账号。";
     Label9.text = titleContent9;
     Label9.numberOfLines = 0;
     CGSize titleSize9 = [titleContent9 boundingRectWithSize:CGSizeMake(width - 12*2, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:18]} context:nil].size;
-    Label9.frame = CGRectMake(12.0f, 12.0f+8.0f+titleSize1.height*2/3+titleSize2.height*2/3+titleSize3.height*2/3+titleSize5.height*2/3+20.0f+titleSize7.height*2/3+20.0f+3*15.0f+3*8.0f+60.0f, titleSize9.width, titleSize9.height);
+    Label9.frame = CGRectMake(12.0f, CGRectGetMaxY(eightLabel.frame), titleSize9.width, titleSize9.height);
     NSMutableAttributedString *attributedString9 = [[ NSMutableAttributedString alloc ] initWithString: Label9.text ];
     NSMutableParagraphStyle *paragraphStyle9 = [[ NSMutableParagraphStyle alloc ] init];
     paragraphStyle9.firstLineHeadIndent = 24.0f;
@@ -194,11 +217,11 @@
     Label10.font = [UIFont systemFontOfSize:12.0f];
     Label10.backgroundColor = [UIColor clearColor];
     Label10.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
-    NSString *titleContent10 = @"2. 我们只投互联网。我们自己也是互联网的创业者,所以更理解互联网,更理解互联网代表的方向。";
+    NSString *titleContent10 = @"4.若湾仔不再担任天湾管理基金所投资公司的CEO，必须及时通知天湾投后部门人员，天湾投后部门人员将关闭湾仔账号。";
     Label10.text = titleContent10;
     Label10.numberOfLines = 0;
     CGSize titleSize10 = [titleContent10 boundingRectWithSize:CGSizeMake(width - 12*2, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:18]} context:nil].size;
-    Label10.frame = CGRectMake(12.0f, 12.0f+8.0f+titleSize1.height*2/3+titleSize2.height*2/3+titleSize3.height*2/3+titleSize5.height*2/3+20.0f+titleSize7.height*2/3+20.0f+titleSize9.height*2/3+3*15.0f+3*8.0f+10.0f+60.0f, titleSize10.width, titleSize10.height);
+    Label10.frame = CGRectMake(12.0f, CGRectGetMaxY(Label9.frame), titleSize10.width, titleSize10.height);
     NSMutableAttributedString *attributedString10 = [[ NSMutableAttributedString alloc ] initWithString: Label10.text ];
     NSMutableParagraphStyle *paragraphStyle10 = [[ NSMutableParagraphStyle alloc ] init];
     paragraphStyle10.firstLineHeadIndent = 24.0f;
@@ -209,18 +232,18 @@
     
     UILabel *Label11 = [[UILabel alloc] initWithFrame:CGRectZero];
     Label11.textAlignment = NSTextAlignmentLeft;
-    Label11.textColor = RGB(97, 97, 97);
-    Label11.font = [UIFont systemFontOfSize:12.0f];
+    Label11.textColor = RGB(60, 60, 60);
+    Label11.font = [UIFont systemFontOfSize:14.0f];
     Label11.backgroundColor = [UIColor clearColor];
     Label11.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
-    NSString *titleContent11 = @"3. 我们只做天使投资。因为天然的高风险,这是目前市场上最稀缺,也是最渴望的。";
+    NSString *titleContent11 = @"三、违约责任";
     Label11.text = titleContent11;
     Label11.numberOfLines = 0;
     CGSize titleSize11 = [titleContent11 boundingRectWithSize:CGSizeMake(width - 12*2, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:18]} context:nil].size;
-    Label11.frame = CGRectMake(12.0f, 12.0f+8.0f+titleSize1.height*2/3+titleSize2.height*2/3+titleSize3.height*2/3+titleSize5.height*2/3+20.0f+titleSize7.height*2/3+20.0f+titleSize9.height*2/3+titleSize10.height*2/3+3*15.0f+3*8.0f+10.0f+60.0f, titleSize11.width, titleSize11.height);
+    Label11.frame = CGRectMake(12.0f, CGRectGetMaxY(Label10.frame), titleSize11.width, titleSize11.height);
     NSMutableAttributedString *attributedString11 = [[ NSMutableAttributedString alloc ] initWithString: Label11.text ];
     NSMutableParagraphStyle *paragraphStyle11 = [[ NSMutableParagraphStyle alloc ] init];
-    paragraphStyle11.firstLineHeadIndent = 24.0f;
+    paragraphStyle11.firstLineHeadIndent = 0.0f;
     paragraphStyle11.lineHeightMultiple = 1.5;
     [attributedString11 addAttribute: NSParagraphStyleAttributeName value:paragraphStyle11 range: NSMakeRange (0 , [Label11.text length])];
     Label11.attributedText = attributedString11;
@@ -232,11 +255,11 @@
     Label12.font = [UIFont systemFontOfSize:12.0f];
     Label12.backgroundColor = [UIColor clearColor];
     Label12.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
-    NSString *titleContent12 = @"4. 我们倡导用互联网模式和理念来做互联网领域的投资,tisiwi.com网站就是呈现我们理念和方法的重要的平台。 我们是机构型的天使投资,在开放性、方法论、专业性、规模化、认同感等方面具有明显而独特的优势。";
+    NSString *titleContent12 = @"由于湾仔违约导致天湾商业信息、商业资源泄漏的，天湾有权通过法律手段追究湾仔相应责任，并有权要求湾仔对因此引起的天湾的损失进行赔偿。";
     Label12.text = titleContent12;
     Label12.numberOfLines = 0;
     CGSize titleSize12 = [titleContent12 boundingRectWithSize:CGSizeMake(width - 12*2, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:18]} context:nil].size;
-    Label12.frame = CGRectMake(12.0f, 12.0f+8.0f+titleSize1.height*2/3+titleSize2.height*2/3+titleSize3.height*2/3+titleSize5.height*2/3+20.0f+titleSize7.height*2/3+20.0f+titleSize9.height*2/3+titleSize10.height*2/3+titleSize11.height*2/3+3*15.0f+3*8.0f+10.0f+60.0f, titleSize12.width, titleSize12.height);
+    Label12.frame = CGRectMake(12.0f, CGRectGetMaxY(Label11.frame), titleSize12.width, titleSize12.height);
     NSMutableAttributedString *attributedString12 = [[ NSMutableAttributedString alloc ] initWithString: Label12.text ];
     NSMutableParagraphStyle *paragraphStyle12 = [[ NSMutableParagraphStyle alloc ] init];
     paragraphStyle12.firstLineHeadIndent = 24.0f;
@@ -245,9 +268,65 @@
     Label12.attributedText = attributedString12;
     [top addSubview:Label12];
     
+    UILabel *Label13 = [[UILabel alloc] initWithFrame:CGRectZero];
+    Label13.textAlignment = NSTextAlignmentLeft;
+    Label13.textColor = RGB(60, 60, 60);
+    Label13.font = [UIFont systemFontOfSize:14.0f];
+    Label13.backgroundColor = [UIColor clearColor];
+    Label13.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
+    NSString *titleContent13 = @"四、其他";
+    Label13.text = titleContent13;
+    Label13.numberOfLines = 0;
+    CGSize titleSize13 = [titleContent13 boundingRectWithSize:CGSizeMake(width - 12*2, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:18]} context:nil].size;
+    Label13.frame = CGRectMake(12.0f, CGRectGetMaxY(Label12.frame), titleSize13.width, titleSize13.height);
+    NSMutableAttributedString *attributedString13 = [[ NSMutableAttributedString alloc ] initWithString: Label13.text ];
+    NSMutableParagraphStyle *paragraphStyle13 = [[ NSMutableParagraphStyle alloc ] init];
+    paragraphStyle13.firstLineHeadIndent = 0.0f;
+    paragraphStyle13.lineHeightMultiple = 1.5;
+    [attributedString13 addAttribute: NSParagraphStyleAttributeName value:paragraphStyle13 range: NSMakeRange (0 , [Label13.text length])];
+    Label13.attributedText = attributedString13;
+    [top addSubview:Label13];
+    
+    UILabel *Label14 = [[UILabel alloc] initWithFrame:CGRectZero];
+    Label14.textAlignment = NSTextAlignmentLeft;
+    Label14.textColor = RGB(97, 97, 97);
+    Label14.font = [UIFont systemFontOfSize:12.0f];
+    Label14.backgroundColor = [UIColor clearColor];
+    Label14.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
+    NSString *titleContent14 = @"1.本协议的效力、解释及纠纷的解决，适用于中华人民共和国法律。若湾仔和天湾之间发生任何纠纷或争议，首先应友好协商解决，协商不成的，湾仔同意将纠纷或争议提交天湾住所地有管辖权的人民法院管辖。";
+    Label14.text = titleContent14;
+    Label14.numberOfLines = 0;
+    CGSize titleSize14 = [titleContent14 boundingRectWithSize:CGSizeMake(width - 12*2, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:18]} context:nil].size;
+    Label14.frame = CGRectMake(12.0f, CGRectGetMaxY(Label13.frame), titleSize14.width, titleSize14.height);
+    NSMutableAttributedString *attributedString14 = [[ NSMutableAttributedString alloc ] initWithString: Label14.text ];
+    NSMutableParagraphStyle *paragraphStyle14 = [[ NSMutableParagraphStyle alloc ] init];
+    paragraphStyle14.firstLineHeadIndent = 24.0f;
+    paragraphStyle14.lineHeightMultiple = 1.5;
+    [attributedString14 addAttribute: NSParagraphStyleAttributeName value:paragraphStyle14 range: NSMakeRange (0 , [Label14.text length])];
+    Label14.attributedText = attributedString14;
+    [top addSubview:Label14];
+    
+    UILabel *Label15 = [[UILabel alloc] initWithFrame:CGRectZero];
+    Label15.textAlignment = NSTextAlignmentLeft;
+    Label15.textColor = RGB(97, 97, 97);
+    Label15.font = [UIFont systemFontOfSize:12.0f];
+    Label15.backgroundColor = [UIColor clearColor];
+    Label15.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
+    NSString *titleContent15 = @"2.本协议的任何条款无论因何种原因无效或不具可执行性，其余条款仍有效，对双方具有约束力。";
+    Label15.text = titleContent15;
+    Label15.numberOfLines = 0;
+    CGSize titleSize15 = [titleContent15 boundingRectWithSize:CGSizeMake(width - 12*2, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:18]} context:nil].size;
+    Label15.frame = CGRectMake(12.0f, CGRectGetMaxY(Label14.frame), titleSize15.width, titleSize15.height);
+    NSMutableAttributedString *attributedString15 = [[ NSMutableAttributedString alloc ] initWithString: Label15.text ];
+    NSMutableParagraphStyle *paragraphStyle15 = [[ NSMutableParagraphStyle alloc ] init];
+    paragraphStyle15.firstLineHeadIndent = 24.0f;
+    paragraphStyle15.lineHeightMultiple = 1.5;
+    [attributedString15 addAttribute: NSParagraphStyleAttributeName value:paragraphStyle15 range: NSMakeRange (0 , [Label15.text length])];
+    Label15.attributedText = attributedString15;
+    [top addSubview:Label15];
     self.view.backgroundColor = RGB(234, 234, 234);
     
-    top.contentSize = CGSizeMake(width, 12.0f+8.0f+titleSize1.height*2/3+titleSize2.height*2/3+titleSize3.height*2/3+titleSize5.height*2/3+20.0f+titleSize7.height*2/3+20.0f+titleSize9.height*2/3+titleSize10.height*2/3+titleSize11.height*2/3+3*15.0f+3*8.0f+10.0f+60.0f+titleSize12.height*2/3+40.0f);
+    top.contentSize = CGSizeMake(width, CGRectGetHeight(firstLabel.frame) + CGRectGetHeight(secondLabel.frame) + CGRectGetHeight(thirdLabel.frame) + CGRectGetHeight(fourthLabel.frame) + CGRectGetHeight(label5.frame) + CGRectGetHeight(sixthLabel.frame) + CGRectGetHeight(sevenLabel.frame) + CGRectGetHeight(eightLabel.frame) + CGRectGetHeight(Label9.frame) + CGRectGetHeight(Label10.frame) + CGRectGetHeight(Label11.frame) + CGRectGetHeight(Label12.frame) + CGRectGetHeight(Label13.frame) + CGRectGetHeight(Label14.frame) + CGRectGetHeight(Label15.frame) + 40);
     
 }
 

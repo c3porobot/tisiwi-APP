@@ -24,4 +24,7 @@
 @property (nonatomic, strong) NSString *card;
 @property (nonatomic, assign) NSInteger hasAttachment;
 @property (nonatomic, strong) NSString *referrer;
+@property (nonatomic ,copy) NSString *email;// 邮箱
+@property (nonatomic, copy) NSString *served_aera; //服务地区
+@property (nonatomic, copy) NSString *tags; //标签
 @end

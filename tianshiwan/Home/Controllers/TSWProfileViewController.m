@@ -534,9 +534,9 @@
     [UIView setAnimationDelegate:self];
     //设置动画执行完毕调用的事件
     [UIView setAnimationDidStopSelector:@selector(didStopAnimation)];
-    self.details.center = CGPointMake(160, 820);
+    //动画弹出位置
+    self.details.center = CGPointMake([UIScreen mainScreen].bounds.size.width / 2, 1000);
     [UIView commitAnimations];
-    
     // 出现编辑按钮 TODO:要先隐藏
     self.editBtn.hidden = YES;
 }

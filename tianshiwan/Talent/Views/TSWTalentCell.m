@@ -52,18 +52,24 @@
         /**
          * 地理位置
          */
-        
-        UIImageView *mapImageView = [[UIImageView alloc] initWithFrame:CGRectMake(5.0f+60.0f+10.0f+80.0f+10.0f, 10.0f, 11.0f, 15.0f)];
-        mapImageView.image = [UIImage imageNamed:@"location"];
-        mapImageView.backgroundColor = [UIColor clearColor];
-        [titleView addSubview:mapImageView];
-        _cityLabel = [[UILabel alloc] initWithFrame:CGRectMake(5.0f+60.0f+10.0f+80.0f+10.0f+11.0f+3.0f, 13.0f, 60.0f, 12.0f)];
-        _cityLabel.textAlignment = NSTextAlignmentLeft;
-        _cityLabel.textColor = RGB(127, 127, 127);
+        _cityLabel = [[UILabel alloc] initWithFrame:CGRectMake(width-115.0f, 12.0f, 100.0f, 12.0f)];
+        _cityLabel.textAlignment = NSTextAlignmentRight;
+        _cityLabel.textColor = RGB(105, 105, 105);
         _cityLabel.font = [UIFont systemFontOfSize:12.0f];
         _cityLabel.backgroundColor = [UIColor clearColor];
         _cityLabel.text = @"";
+        CGSize size = [_cityLabel.text sizeWithAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:12.0f],NSFontAttributeName, nil]];
         [titleView addSubview:_cityLabel];
+        UIImageView *mapImageView = [[UIImageView alloc] initWithFrame:CGRectMake(width - size.width - 65, 12.0f, 11.0f, 15.0f)];
+        mapImageView.image = [UIImage imageNamed:@"location"];
+        mapImageView.backgroundColor = [UIColor clearColor];
+        [titleView addSubview:mapImageView];
+//        _cityLabel = [[UILabel alloc] initWithFrame:CGRectMake(5.0f+60.0f+10.0f+80.0f+10.0f+11.0f+3.0f, 13.0f, 60.0f, 12.0f)];
+//        _cityLabel.textAlignment = NSTextAlignmentLeft;
+//        _cityLabel.textColor = RGB(127, 127, 127);
+//        _cityLabel.font = [UIFont systemFontOfSize:12.0f];
+//        _cityLabel.backgroundColor = [UIColor clearColor];
+//        _cityLabel.text = @"";
         
         _salaryLabel = [[UILabel alloc] initWithFrame:CGRectMake(15.0f, 12.0f+17.0f+8.0f, width - 68.0f, 12.0f)];
         _salaryLabel.textAlignment = NSTextAlignmentLeft;
@@ -98,7 +104,7 @@
         _imageView = [[UIImageView alloc] initWithFrame:CGRectMake(width - 68.0f + 12.0f, 20.0f, 35, 35)];
         _imageView.image = [UIImage imageNamed:@"maildown_disabled"];
         _imageView.backgroundColor = [UIColor clearColor];
-        [self.contentView addSubview:_imageView];
+        //[self.contentView addSubview:_imageView];
         
         
     }
@@ -129,8 +135,12 @@
             }
         }
     }
-    
-    _salaryLabel.text = [NSString stringWithFormat:@"月薪要求: %@元", _talent.salary];
+    //如果薪资为0 ,改为面议
+    if ([_talent.salary isEqualToString:@"0"]) {
+        _salaryLabel.text = [NSString stringWithFormat:@"月薪要求: 面议"];
+    }else {
+        _salaryLabel.text = [NSString stringWithFormat:@"月薪要求: %@K", _talent.salary];
+    }
     _positionLabel.text = [NSString stringWithFormat:@"意向岗位: %@", _talent.titles];
     
     if(_talent.hasAttachment == 1){

@@ -25,15 +25,16 @@
     // Do any additional setup after loading the view.
     
     QLPreviewController * qlPreview = [[QLPreviewController alloc]init];
+    qlPreview.view.backgroundColor = [UIColor whiteColor];
     [[UINavigationBar appearanceWhenContainedIn:[QLPreviewController class], nil] setTintColor:[UIColor whiteColor]];
     [UINavigationBar appearanceWhenContainedIn:[QLPreviewController class], nil].barTintColor = [UIColor colorWithRed:33.0f/255.0f green:159.0f/255.0f blue:218.0f/255.0f alpha:1.0f];
      NSDictionary *dic = @{NSFontAttributeName:[UIFont boldSystemFontOfSize:20], NSForegroundColorAttributeName:[UIColor whiteColor]};
     [UINavigationBar appearanceWhenContainedIn:[QLPreviewController class], nil].titleTextAttributes = dic;
     qlPreview.dataSource = self; //需要打开的文件的信息要实现dataSource中的方法
     qlPreview.delegate = self;  //视图显示的控制
-    [self presentViewController:qlPreview animated:YES completion:^{
+    [self presentViewController:qlPreview animated:NO completion:^{
             //需要用模态化的方式进行展示
-    }];    
+    }];
     //创建一个文件路径
     //获取沙盒路径
     NSString *cachesPath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)firstObject];
@@ -104,7 +105,8 @@
 -(void)previewControllerDidDismiss:(QLPreviewController *)controller
 {
     //控制器消失后调用
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    //[self.navigationController popToRootViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:NO completion:nil];
 }
 -(void)previewControllerWillDismiss:(QLPreviewController *)controller
 {

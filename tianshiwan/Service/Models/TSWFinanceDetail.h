@@ -28,5 +28,6 @@
 @property (nonatomic, assign) NSInteger hasAttachment;
 @property (nonatomic, strong) NSString *referrer;
 @property (nonatomic, strong) NSString *email; //邮箱
+@property (nonatomic, strong) NSString *domains; //投资领域
 
 @end

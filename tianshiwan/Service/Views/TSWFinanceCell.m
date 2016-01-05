@@ -58,7 +58,7 @@
         [titleView addSubview:_positionLabel];
         
         
-        _cityLabel = [[UILabel alloc] initWithFrame:CGRectMake(width-115.0f, 12.0f+17.0f+8.0f, 100.0f, 12.0f)];
+        _cityLabel = [[UILabel alloc] initWithFrame:CGRectMake(width-115.0f, 12, 100.0f, 12.0f)];
         _cityLabel.textAlignment = NSTextAlignmentRight;
         _cityLabel.textColor = RGB(105, 105, 105);
         _cityLabel.font = [UIFont systemFontOfSize:12.0f];
@@ -142,7 +142,7 @@
     }
 //    _cityLabel.text = _finance.cityName;
     CGSize size = [_cityLabel.text sizeWithAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:12.0f],NSFontAttributeName, nil]];
-    _mapImageView.frame = CGRectMake(width - 15.0f-size.width-11.0f-3.0f, 12.0f+14.0f+8.0f-2.0f, 11.0f, 15.0f);
+    _mapImageView.frame = CGRectMake(width - 15.0f-size.width-11.0f-3.0f, 12, 11.0f, 15.0f);
     _stepLabel.text = [NSString stringWithFormat:@"投资阶段: %@",_finance.rounds];
     _sampleLabel.text = [NSString stringWithFormat:@"投资案例: %@",_finance.cases];
     _zanLabel.text = [NSString stringWithFormat:@"%ld",(long)_finance.like];
