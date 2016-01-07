@@ -353,16 +353,16 @@
     [self.dataArray removeAllObjects];
     NSLog(@"dataArray1:%@",self.dataArray);
     NSLog(@"tempDataArray1:%@",self.tempDataArray);
-    if (_textField.text.length>0) {
-        for (int i=0; i<self.tempDataArray.count; i++) {
-            if(i%2 == 1){
+    if (_textField.text.length > 0) {
+        for (int i = 0; i<self.tempDataArray.count; i++) {
+            if(i % 2 == 1){
                 NSMutableArray *innerArray = self.tempDataArray[i];
                 NSMutableArray *tempInnerArray = [[NSMutableArray alloc]init];
                 for (int j=0; j<innerArray.count; j++) {
                     NSString *keyStr = @"";
                     if([innerArray[j] isKindOfClass:[TSWContact class]]){
                         TSWContact *temp = innerArray[j];
-                        keyStr =[temp.name stringByAppendingString:temp.company];
+                        keyStr =[[temp.name stringByAppendingString:temp.companyCityName] stringByAppendingString:temp.project];
                     }else{
                         keyStr = innerArray[j];
                     }
@@ -389,8 +389,8 @@
                     
                 }
                 if(tempInnerArray.count > 0){
-                    [self.dataArray addObject:self.tempDataArray[i-1]];
-                    [self.array addObject:self.tempDataArray[i-1][0]];
+                    [self.dataArray addObject:self.tempDataArray[i - 1]];
+                    [self.array addObject:self.tempDataArray[i - 1][0]];
                     [self.dataArray addObject:tempInnerArray];
                 }
             }

@@ -2166,8 +2166,8 @@
 			children = (
 				B9EFEBE11B9DA8E8009132ED /* TSWContactsViewController.h */,
 				B9EFEBE21B9DA8E8009132ED /* TSWContactsViewController.m */,
-				B93753161BA7C75E00011EEB /* TSWContactDetailViewController.h */,
 				B93753171BA7C75E00011EEB /* TSWContactDetailViewController.m */,
+				B93753161BA7C75E00011EEB /* TSWContactDetailViewController.h */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";

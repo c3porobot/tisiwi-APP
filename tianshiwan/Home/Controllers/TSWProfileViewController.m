@@ -444,7 +444,7 @@
 //添加右侧导航按钮
 - (void)addRightNavigatorButton
 {
-    self.editBtn = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.view.bounds) - 58, 20, 48, 12)];
+    self.editBtn = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.view.bounds) - 58, 20, 48, 48)];
     [self.editBtn setTitleColor:RGB(32, 158, 217) forState:UIControlStateNormal];
     self.editBtn.titleLabel.font = [UIFont systemFontOfSize:14.0f];
     [self.editBtn setTitle:@"编辑" forState:UIControlStateNormal];

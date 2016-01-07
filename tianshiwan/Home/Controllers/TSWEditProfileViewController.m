@@ -374,7 +374,7 @@
 
 - (void)addRightNavigatorButton
 {
-    self.finishBtn = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.view.bounds) - 58, 20, 48, 12)];
+    self.finishBtn = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.view.bounds) - 58, 20, 48, 48)];
     [self.finishBtn setTitleColor:RGB(90, 90, 90) forState:UIControlStateNormal];
     self.finishBtn.titleLabel.font = [UIFont systemFontOfSize:14.0f];
     [self.finishBtn setTitle:@"完成" forState:UIControlStateNormal];
@@ -556,21 +556,21 @@
 }
 
 -(void)finishProfile {
-    if(_dNameField.text.length>0){
+    if(_dNameField.text.length>=0){
         if(_dNameField.text.length<=32){
             _nameVeri.hidden = YES;
-            if(_dPositionField.text.length>0){
+            if(_dPositionField.text.length>=0){
                 if(_dPositionField.text.length<=64){
                     _positionVeri.hidden = YES;
-                    if(_dCompanyField.text.length>0){
+                    if(_dCompanyField.text.length>=0){
                         if(_dCompanyField.text.length<=128){
                             _companyVeri.hidden = YES;
-                            if(_dEmailField.text.length>0){
+                            if(_dEmailField.text.length>=0){
                                 if(_dEmailField.text.length<=128){
                                     _emailVeri.hidden = YES;
                                     if(_dWechatField.text.length > 0 && _dWechatField.text.length<=128){
                                             _wechatVeri.hidden = YES;
-                                            if(_dAddressField.text.length > 0 && _dAddressField.text.length<=256){
+                                            if(_dAddressField.text.length >= 0 && _dAddressField.text.length<=256){
                                                     _addressVeri.hidden = YES;
                                                     [self showLoadingViewWithText:@"提交中..."];
                                                     [self.sendProfile loadDataWithRequestMethodType:kHttpRequestMethodTypePost parameters:@{@"name":_dNameField.text,@"title":_dPositionField.text,@"company":_dCompanyField.text,@"cityCode":_selectedCityCode,@"address":_dAddressField.text,@"email":_dEmailField.text,@"wechat":_dWechatField.text,@"avatar":self.dFace.image} dataType:kHttpRequestDataTypeMultipart];
