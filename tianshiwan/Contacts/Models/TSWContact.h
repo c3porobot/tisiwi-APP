@@ -14,6 +14,7 @@
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSString *company;
+@property (nonatomic, strong) NSString *project; //项目
 @property (nonatomic, strong) NSString *imgUrl_2x;
 @property (nonatomic, strong) NSString *imgUrl_3x;
 

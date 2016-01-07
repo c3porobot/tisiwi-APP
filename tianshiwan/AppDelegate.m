@@ -36,7 +36,6 @@ NSString* const NotificationActionTwoIdent = @"ACTION_TWO";
 @implementation AppDelegate
 
 - (void)registerRemoteNotification {
-    
 #ifdef __IPHONE_8_0
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
         //IOS8 新的通知机制category注册 ,创建交互通知
