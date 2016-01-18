@@ -165,6 +165,7 @@
     // 搜索新的列表
     [self pushFilterBar];
     self.articleList.page = 1;
+    
     if([_dataArray count]>=2){
         [_dataArray[1] removeAllObjects];
     }
@@ -172,13 +173,20 @@
 }
 
 -(void)gotoHuodong{
+    
     // 搜索新的列表
-    [self pushFilterBar];
+    [self pushFilterBar];//动画
     self.articleList.page = 1;
-    if([_dataArray count]>=2){
-        [_dataArray[1] removeAllObjects];
-    }
+    
     [self.articleList loadDataWithRequestMethodType:kHttpRequestMethodTypeGet parameters:@{@"type":@"activity"}];
+    if([_dataArray count] >= 2){
+        [_dataArray[1] removeAllObjects];
+//        NSMutableArray *tempArr = _dataArray[1];
+//        NSIndexSet *index = [NSIndexSet indexSetWithIndex:tempArr.count];
+//        [self.collectionView deleteSections:index];
+//        [self.collectionView reloadData];
+        
+    }
 }
 
 - (void)setupPullToRefresh
@@ -285,7 +293,7 @@
     [UIView beginAnimations:nil context:nil];
     //执行动画
     //设置动画执行时间
-    [UIView setAnimationDuration:1.0];
+    [UIView setAnimationDuration:0.5];
     //设置代理
     [UIView setAnimationDelegate:self];
     //设置动画执行完毕调用的事件

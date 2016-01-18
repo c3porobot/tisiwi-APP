@@ -16,4 +16,5 @@
 @property (nonatomic, copy) NSString *refreshToken; //更新令牌
 @property (nonatomic, copy) NSString *expire;       //有效期
 @property (nonatomic, copy) NSString *member;
+@property (nonatomic, copy) NSString *status;
 @end

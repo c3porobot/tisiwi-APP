@@ -14,6 +14,7 @@
 #import "CXImageLoader.h"
 #import "LHBPicBrowser.h"
 #import "LHBCopyLabel.h"
+#import "TSWFinanceFilterViewController.h"
 @interface TSWFinanceDetailViewController () <MFMailComposeViewControllerDelegate>
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) NSString *sid;
@@ -563,9 +564,10 @@ static NSString * const reuseIdentifier = @"Cell";
         
     }
     
-    
+
 
 }
+
 
 -(void) zan{
     NSLog(@"zan");

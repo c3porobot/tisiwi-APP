@@ -44,7 +44,7 @@
     //旧的接口
     //self.financeList = [[TSWFinanceList alloc] initWithBaseURL:TSW_API_BASE_URL path:FINANCE_LIST];
     //新的接口
-    self.financeList = [[TSWFinanceList alloc] initWithBaseURL:TSW_API_BASE_URL path:[[FINANCE_LIST stringByAppendingString:[GVUserDefaults standardUserDefaults].member] stringByAppendingString:@"/getdata"]];
+    self.financeList = [[TSWFinanceList alloc] initWithBaseURL:TSW_API_BASE_URL path:[FINANCE_LIST  stringByAppendingString:@"getdata"]];
     
     [self.financeList addObserver:self
                       forKeyPath:kResourceLoadingStatusKeyPath
@@ -57,9 +57,9 @@
     
     [GVUserDefaults standardUserDefaults].searchServiceCityCode = @"";
     [GVUserDefaults standardUserDefaults].searchServiceRound = @"";
-    [GVUserDefaults standardUserDefaults].searchServiceFields = @[];
-//    [self refreshData];
+    [GVUserDefaults standardUserDefaults].searchServiceFields = (NSMutableArray *)@[];
     
+    [self refreshData];
     [self setupPullToRefresh];
     [self setupInfiniteScrolling];
     [self refreshData];
@@ -105,7 +105,9 @@
     }
     NSData *jsonFields = [NSJSONSerialization dataWithJSONObject:[GVUserDefaults standardUserDefaults].searchServiceFields options:NSJSONWritingPrettyPrinted error:nil];
     NSString *text =[[NSString alloc] initWithData:jsonFields encoding:NSUTF8StringEncoding];
-    [self.financeList loadDataWithRequestMethodType:kHttpRequestMethodTypeGet parameters:@{@"page":@(self.financeList.page),@"cityCode":[GVUserDefaults standardUserDefaults].searchServiceCityCode,@"round":[GVUserDefaults standardUserDefaults].searchServiceRound,@"field":text}];
+    
+    [self.financeList loadDataWithRequestMethodType:kHttpRequestMethodTypePost parameters:@{@"page":@(self.financeList.page),@"cityCode":[GVUserDefaults standardUserDefaults].searchServiceCityCode,@"round":[GVUserDefaults standardUserDefaults].searchServiceRound,@"field":text, @"member": [GVUserDefaults standardUserDefaults].member}];
+    //[self refreshData];
 }
 
 - (void)dismiss:(UIButton *)sender
@@ -121,14 +123,17 @@
     TSWFinanceFilterViewController *filterController = [[TSWFinanceFilterViewController alloc]init];
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:filterController];
     [self presentViewController:navigationController animated:YES completion:^{
+        
     }];
+  //  [self.navigationController pushViewController:navigationController animated:YES];
     
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    //[self refreshData];
+    [self refreshData];
+        
 }
 - (void)viewDidAppear:(BOOL)animated
 {
@@ -174,7 +179,7 @@
                 
                 [GVUserDefaults standardUserDefaults].searchServiceCityCode = @"";
                 [GVUserDefaults standardUserDefaults].searchServiceRound = @"";
-                [GVUserDefaults standardUserDefaults].searchServiceFields = @[];
+                [GVUserDefaults standardUserDefaults].searchServiceFields =(NSMutableArray *)@[];
             }
             else if (_financeList.error) {
                 [self.collectionView.infiniteScrollingView stopAnimating];

@@ -255,12 +255,13 @@
     }
 }
 
--(void)dismiss{
+- (void)dismiss{
     //    [[self getAppdelegate] removeTrackingArrayLastObject];
     
     [self.navigationController dismissViewControllerAnimated:YES completion:^{
         
     }];
+   // [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -331,7 +332,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    //    [self refreshData];
+    //[self refreshData];
 }
 - (void)viewDidAppear:(BOOL)animated
 {

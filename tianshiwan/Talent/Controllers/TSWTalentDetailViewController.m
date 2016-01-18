@@ -360,14 +360,25 @@ static NSString * const reuseIdentifier = @"Cell";
      */
     _scrollView.contentSize = CGSizeMake(width, 22.0f+CGRectGetHeight(self.nameLabel.frame) + CGRectGetHeight(self.locationLabel.frame) + CGRectGetHeight(self.baseLabel2.frame) + CGRectGetHeight(self.baseLabel3.frame)+ CGRectGetHeight(self.jianLabel1.frame) + CGRectGetHeight(self.directLabel1.frame) + CGRectGetHeight(self.emailLabel.frame) + CGRectGetHeight(self.phoneLabel.frame) + CGRectGetHeight(self.weixinLabel.frame) + titleSize.height + 250);
     
-//    if(_talentDetail.tel!=nil && ![_talentDetail.tel isEqualToString:@""]){
-//        [_phoneBtn setImage:[UIImage imageNamed:@"btn_phone_n"] forState:UIControlStateNormal];
-//        [_phoneBtn addTarget:self action:@selector(call) forControlEvents:UIControlEventTouchUpInside];
-//    }
+    if(_talentDetail.tel ==nil && [_talentDetail.tel isEqualToString:@""]){
+        [_phoneBtn setImage:[UIImage imageNamed:@"btn_phone_disable"] forState:UIControlStateNormal];
+        _phoneBtn.userInteractionEnabled = NO;
+    }
+    
+    if(_talentDetail.email ==nil && [_talentDetail.email isEqualToString:@""]){
+        [_emailBtn setImage:[UIImage imageNamed:@"btn_mail_diasble"] forState:UIControlStateNormal];
+        _emailBtn.userInteractionEnabled = NO;
+        
+    }
+    if (talentDetail.wechat == nil && [_talentDetail.email isEqualToString:@""]) {
+        [_wechatBtn setImage:[UIImage imageNamed:@"btn_copy_disable"] forState:UIControlStateNormal];
+        _wechatBtn.userInteractionEnabled = NO;
+    }
+    
 //    if(_talentDetail.hasAttachment == 1){
 //        [_emailBtn setImage:[UIImage imageNamed:@"btn_download_n"] forState:UIControlStateNormal];
 //        [_emailBtn addTarget:self action:@selector(email) forControlEvents:UIControlEventTouchUpInside];
-   // }
+//    }
     /**
      *  添加判断,没有简历则不能进入查看界面
      */
