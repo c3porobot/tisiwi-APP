@@ -13,7 +13,7 @@
 #import "TSWFinanceDetailViewController.h"
 #import "TSWFinanceFilterViewController.h"
 #import "GVUserDefaults+TSWProperties.h"
-
+#import "BeforeAuditFinaceViewController.h"
 @interface TSWFinanceViewController ()<UICollectionViewDelegate, UICollectionViewDataSource,TSWFinanceCellDelegate>
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, strong) NSMutableArray *dataArray;
@@ -39,9 +39,13 @@
     [self.view addSubview:_collectionView];
     
     [_collectionView registerClass:[TSWFinanceCell class] forCellWithReuseIdentifier:@"TSWFinanceCell"];
-    
+
     // 处理数据
-    self.financeList = [[TSWFinanceList alloc] initWithBaseURL:TSW_API_BASE_URL path:FINANCE_LIST];
+    //旧的接口
+    //self.financeList = [[TSWFinanceList alloc] initWithBaseURL:TSW_API_BASE_URL path:FINANCE_LIST];
+    //新的接口
+    self.financeList = [[TSWFinanceList alloc] initWithBaseURL:TSW_API_BASE_URL path:[[FINANCE_LIST stringByAppendingString:[GVUserDefaults standardUserDefaults].member] stringByAppendingString:@"/getdata"]];
+    
     [self.financeList addObserver:self
                       forKeyPath:kResourceLoadingStatusKeyPath
                          options:NSKeyValueObservingOptionNew
@@ -58,6 +62,7 @@
     
     [self setupPullToRefresh];
     [self setupInfiniteScrolling];
+    [self refreshData];
 }
 
 - (void)addRightNavigatorButton
@@ -98,11 +103,8 @@
     if(self.financeList.finances){
         [self.financeList.finances removeAllObjects];
     }
-    NSData *jsonFields = [NSJSONSerialization dataWithJSONObject:[GVUserDefaults standardUserDefaults].searchServiceFields
-                                                        options:NSJSONWritingPrettyPrinted
-                                                          error:nil];
-    NSString *text =[[NSString alloc] initWithData:jsonFields
-                                          encoding:NSUTF8StringEncoding];
+    NSData *jsonFields = [NSJSONSerialization dataWithJSONObject:[GVUserDefaults standardUserDefaults].searchServiceFields options:NSJSONWritingPrettyPrinted error:nil];
+    NSString *text =[[NSString alloc] initWithData:jsonFields encoding:NSUTF8StringEncoding];
     [self.financeList loadDataWithRequestMethodType:kHttpRequestMethodTypeGet parameters:@{@"page":@(self.financeList.page),@"cityCode":[GVUserDefaults standardUserDefaults].searchServiceCityCode,@"round":[GVUserDefaults standardUserDefaults].searchServiceRound,@"field":text}];
 }
 
@@ -126,7 +128,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self refreshData];
+    //[self refreshData];
 }
 - (void)viewDidAppear:(BOOL)animated
 {
@@ -252,10 +254,20 @@
     [_collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
 }
 
--(void) gotoFinanceDetail:(TSWFinanceCell *)cell withFinance:(TSWFinance *)finance{
-    TSWFinanceDetailViewController *financeDetailController = [[TSWFinanceDetailViewController alloc] initWithFinanceId:finance.sid];
-    financeDetailController.investorName = finance.name;
-    [self.navigationController pushViewController:financeDetailController animated:YES];
+-(void) gotoFinanceDetail:(TSWFinanceCell *)cell withFinance:(TSWFinance *)finance withResult:(TSWResult *)result{
+   
+    if ([finance.currentstatus isEqualToString:@"-2"] || [finance.currentstatus isEqualToString:@"-1"] || [finance.currentstatus isEqualToString:@"0"]) {
+        BeforeAuditFinaceViewController *BAVC = [[BeforeAuditFinaceViewController alloc] initWithFinanceId:finance.sid];
+        BAVC.investorName = finance.name;
+        BAVC.sidValue = finance.sid;
+        BAVC.currentStatus = finance.currentstatus;
+        [self.navigationController pushViewController:BAVC animated:YES];
+    } else if ([finance.currentstatus isEqualToString:@"1"]) {
+            TSWFinanceDetailViewController *financeDetailController = [[TSWFinanceDetailViewController alloc] initWithFinanceId:finance.sid];
+            financeDetailController.investorName = finance.name;
+        [self.navigationController pushViewController:financeDetailController animated:YES];
+    
+    }
 }
 
 @end

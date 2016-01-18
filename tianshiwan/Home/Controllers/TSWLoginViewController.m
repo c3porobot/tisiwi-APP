@@ -202,7 +202,7 @@
                 [self hideLoadingView];
                 
                 [GVUserDefaults standardUserDefaults].token = _accountLogin.token;
-                
+                [GVUserDefaults standardUserDefaults].member = _accountLogin.member;
                 [[NSNotificationCenter defaultCenter] postNotificationName:kUserLoginSuccessNotificationName object:nil];
                 
                 [self refresh];

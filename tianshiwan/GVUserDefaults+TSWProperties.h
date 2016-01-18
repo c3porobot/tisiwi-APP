@@ -13,6 +13,7 @@
 @interface GVUserDefaults (TSWProperties)
 
 @property (nonatomic, weak) NSString *token;
+@property (nonatomic, weak) NSString *member; //成员编号
 @property (nonatomic, weak) NSString *refreshToken;
 @property (nonatomic, weak) NSString *expire;
 

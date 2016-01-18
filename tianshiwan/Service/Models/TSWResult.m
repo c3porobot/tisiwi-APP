@@ -23,12 +23,14 @@
         _innerType = value;
         [super setValue:value forKey:key];
     }else if ([key isEqualToString:@"items"]) {
+       
         if([_innerType isEqualToString:@"financing"]){
             if (![value isKindOfClass:[NSArray class]]) {
                 return;
             }
             
             if (self.items) {
+               
                 [self.items removeAllObjects];
             }
             else {
@@ -39,8 +41,10 @@
                 if (![dictionary isKindOfClass:[NSDictionary class]]) {
                     continue;
                 }
-                TSWFinance *finance = [[TSWFinance alloc] initWithValues:dictionary];
+                TSWFinance *finance = [[TSWFinance alloc] initWithValues:dictionary];              
                 [self.items addObject:finance];
+//                TSWResult *result = [[TSWResult alloc] initWithValues:dictionary];
+//                [self.items addObject:result];
             }
         }else{
             if (![value isKindOfClass:[NSArray class]]) {
@@ -67,5 +71,8 @@
     else {
         [super setValue:value forKey:key];
     }
+}
+- (void)setValue:(id)value forUndefinedKey:(NSString *)key {
+
 }
 @end

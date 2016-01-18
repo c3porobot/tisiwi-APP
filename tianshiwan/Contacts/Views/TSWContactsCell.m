@@ -78,7 +78,7 @@
     [_imageView sd_setImageWithURL:[NSURL URLWithString:contact.imgUrl_3x] placeholderImage:[UIImage imageNamed:@"foto"]];
     _textLabel.text = _contact.name;
     //将原来显示公司company改为显示项目project
-    _positionLabel.text = [NSString stringWithFormat:@"%@ %@",_contact.title,_contact.project];
+    _positionLabel.text = [NSString stringWithFormat:@"%@ %@",_contact.project, _contact.companyCityName];
     
 }
 

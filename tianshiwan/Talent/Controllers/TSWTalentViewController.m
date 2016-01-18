@@ -70,6 +70,7 @@
     
     [self setupPullToRefresh];
     [self setupInfiniteScrolling];
+    [self refreshData]; //刷新数据
     
 }
 
@@ -118,7 +119,7 @@
 {
     [super viewWillAppear:animated];
     [[self rdv_tabBarController] setTabBarHidden:NO animated:NO];
-    [self refreshData];
+   // [self refreshData];
 }
 - (void)viewDidAppear:(BOOL)animated
 {

@@ -12,7 +12,7 @@
 
 @property (nonatomic, strong) NSString *sid;
 @property (nonatomic, strong) NSString *name;
-@property (nonatomic, strong) NSString *title;
+@property (nonatomic, strong) NSString *title;//
 @property (nonatomic, strong) NSString *company;
 @property (nonatomic, strong) NSString *project;
 @property (nonatomic, strong) NSString *companyFullName;
@@ -23,5 +23,6 @@
 @property (nonatomic, strong) NSString *phone;
 @property (nonatomic, strong) NSString *email;
 @property (nonatomic, strong) NSString *wechat;
+@property (nonatomic, copy) NSString *summary;
 
 @end

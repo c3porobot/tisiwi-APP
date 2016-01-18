@@ -47,14 +47,15 @@
     self.navigationBar.title = @"天使湾";
     // 判断用户是否已登录，如果没有登录，则跳登录，如果登录再进首页
 //    [GVUserDefaults standardUserDefaults].token = nil;
-    if (![GVUserDefaults standardUserDefaults].token) {
-        TSWLoginViewController *loginController = [[TSWLoginViewController alloc] init];
-        loginController.delegate = self;
-        UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:loginController];
-        [self presentViewController:navigationController animated:YES completion:^{
-        }];
-    }
-    
+//    if (![GVUserDefaults standardUserDefaults].token) {
+//        TSWLoginViewController *loginController = [[TSWLoginViewController alloc] init];
+//        loginController.delegate = self;
+//        UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:loginController];
+//        [self presentViewController:navigationController animated:YES completion:^{
+//        }];
+//    }
+//    NSLog(@"#########################%@", [GVUserDefaults standardUserDefaults].member);
+//    NSLog(@"$$$$$$$$$$$$$$$$$$$$$%@", [GVUserDefaults standardUserDefaults].token);
     [self addRightNavigatorButton];
     [self addLeftNavigatorButton];
     

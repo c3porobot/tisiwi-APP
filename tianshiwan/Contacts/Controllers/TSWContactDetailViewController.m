@@ -10,8 +10,8 @@
 #import "TSWContactDetail.h"
 #import "TSWContactDetailCell.h"
 #import "UIImageView+WebCache.h"
+#import "LHBCopyLabel.h"
 #import <MessageUI/MFMailComposeViewController.h>
-
 @interface TSWContactDetailViewController ()<MFMailComposeViewControllerDelegate>
 
 @property (nonatomic, strong) UIScrollView *scrollView;
@@ -23,14 +23,20 @@
 @property (nonatomic, strong) UILabel *nameLabel;
 @property (nonatomic, strong) UILabel *positionLabel;
 @property (nonatomic, strong) UILabel *projectInfoLabel;
-@property (nonatomic, strong) UILabel *titleLabel2;
-@property (nonatomic, strong) UILabel *titleLabel3;
 @property (nonatomic, strong) UILabel *cityLabel;
 @property (nonatomic, strong) UILabel *companyLabel;
 @property (nonatomic, strong) UILabel *addressLabel;
 @property (nonatomic, strong) UILabel *phoneLabel;
+@property (nonatomic, strong) LHBCopyLabel *phoneContent;
 @property (nonatomic, strong) UILabel *emailLabel;
+@property (nonatomic, strong) LHBCopyLabel *emailContent;
 @property (nonatomic, strong) UILabel *weixinLabel;
+@property (nonatomic, strong) LHBCopyLabel *weixinContent;
+
+@property (nonatomic, strong) UILabel *lineOne;
+@property (nonatomic, strong) UILabel *lineTwo;
+
+@property (nonatomic, strong) UILabel *companySum; //公司简介
 
 @property (nonatomic, strong) UIImageView *faceImageView; //头像
 
@@ -70,145 +76,149 @@ static NSString * const reuseIdentifier = @"Cell";
     CGFloat height = CGRectGetHeight(self.view.bounds);
     self.navigationBar.title = self.contectName;
     self.view.backgroundColor = RGB(234, 234, 234);
-    _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0.0f, self.navigationBarHeight, width, height-self.navigationBarHeight-20.0f)];
+    _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0.0f, self.navigationBarHeight, width, height-self.navigationBarHeight)];
     _scrollView.backgroundColor = [UIColor whiteColor];
+    
     [self.view addSubview:_scrollView];
     
     //头部
-    _headerView = [[UIView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, width-2*15.0f, 90.0f)];
-    _faceImageView = [[UIImageView alloc] initWithFrame:CGRectMake(15.0f, 10.0f, 60.0f, 60.0f)];
+    _headerView = [[UIView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, [UIScreen mainScreen].bounds.size.width, 90.0f)];
+    _faceImageView = [[UIImageView alloc] initWithFrame:CGRectMake(15.0f, 20.0f, 60.0f, 60.0f)];
 //    _faceImageView.image = [UIImage imageNamed:@"default_face"];
     _faceImageView.layer.masksToBounds = YES;
     _faceImageView.layer.cornerRadius = 30;
     [_headerView addSubview:_faceImageView];
     
-    _nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(15.0f+60.0f+15.0f,22.0f, width - (15.0f+60.0f+15.0f+15.0f), 14.0f)];
+    _nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.faceImageView.frame) + 20,30.0f, width - (15.0f+60.0f+15.0f+15.0f), 14.0f)];
     _nameLabel.textAlignment = NSTextAlignmentLeft;
-    _nameLabel.textColor = RGB(32, 158, 217);
-    _nameLabel.font = [UIFont systemFontOfSize:15.0f];
+    _nameLabel.textColor = RGB(90, 90, 90);
+    _nameLabel.font = [UIFont systemFontOfSize:22.0f];
     _nameLabel.backgroundColor = [UIColor clearColor];
     _nameLabel.text = @"";
     [_headerView addSubview:_nameLabel];
     
-    _positionLabel = [[UILabel alloc]initWithFrame:CGRectMake(15.0f+60.0f+15.0f, CGRectGetMaxY(self.nameLabel.frame) + 10, width - (15.0f+60.0f+15.0f+15.0f), 12.0f)];
-    _positionLabel.textAlignment = NSTextAlignmentLeft;
-    _positionLabel.textColor = RGB(132, 132, 132);
-    _positionLabel.font = [UIFont systemFontOfSize:12.0f];
-    _positionLabel.backgroundColor = [UIColor clearColor];
-    _positionLabel.text = @"";
-    [_headerView addSubview:_positionLabel];
+    _projectInfoLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMinX(self.nameLabel.frame), CGRectGetMaxY(self.nameLabel.frame) + 22, width - (15.0f+60.0f+15.0f+15.0f), 12.0f)];
+    _projectInfoLabel.backgroundColor = [UIColor redColor];
+    _projectInfoLabel.textAlignment = NSTextAlignmentLeft;
+    _projectInfoLabel.textColor = RGB(132, 132, 132);
+    _projectInfoLabel.font = [UIFont systemFontOfSize:15.0f];
+    _projectInfoLabel.backgroundColor = [UIColor clearColor];
+    _projectInfoLabel.text = @"";
+    [_headerView addSubview:_projectInfoLabel];
     
     [_scrollView addSubview:_headerView];
+    //添加父视图
+    [_scrollView addSubview:_headerView];
+    /**
+     *  联系方式
+     */
+    _weixinLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(self.faceImageView.frame), CGRectGetMaxY(self.headerView.frame) + 20, 50, 20)];
+    _weixinLabel.textAlignment = NSTextAlignmentLeft;
+    _weixinLabel.textColor = RGB(90, 90, 90);
+    _weixinLabel.font = [UIFont systemFontOfSize:16.0f];
+    _weixinLabel.backgroundColor = [UIColor clearColor];
+    _weixinLabel.text = @"微信";
+    [_scrollView addSubview:_weixinLabel];
     
-    // 分层次介绍
-    UILabel *titleLabel1 = [[UILabel alloc]initWithFrame:CGRectMake(15.0f, 10.0f+60.0f+15.0f, width-2*15.0f, 12.0f)];
-    titleLabel1.textAlignment = NSTextAlignmentLeft;
-    titleLabel1.textColor = RGB(105, 105, 105);
-    titleLabel1.font = [UIFont systemFontOfSize:12.0f];
-    titleLabel1.backgroundColor = [UIColor clearColor];
-    titleLabel1.text = @"项目信息";
-    [_scrollView addSubview:titleLabel1];
+    _weixinContent = [[LHBCopyLabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.weixinLabel.frame), CGRectGetMinY(self.weixinLabel.frame), width - CGRectGetWidth(self.weixinLabel.frame) - 80, 20)];
+    _weixinContent.textAlignment = NSTextAlignmentLeft;
+    _weixinContent.textColor = RGB(155, 155, 155);
+    _weixinContent.font = [UIFont systemFontOfSize:15.0f];
+    _weixinContent.backgroundColor = [UIColor clearColor];
+    _weixinContent.text = @"";
+    [_scrollView addSubview:_weixinContent];
     
-    _projectInfoLabel = [[UILabel alloc]initWithFrame:CGRectMake(20.0f, CGRectGetMaxY(self.faceImageView.frame) + 10, width, 50.0f)];
-    _projectInfoLabel.textAlignment = NSTextAlignmentLeft;
-    _projectInfoLabel.textColor = RGB(155, 155, 155);
-    _projectInfoLabel.font = [UIFont systemFontOfSize:12.0f];
-    _projectInfoLabel.backgroundColor = [UIColor clearColor];
-    NSString *titleContent = @"";
-    _projectInfoLabel.text = titleContent;
-    _projectInfoLabel.numberOfLines = 0;
-    CGSize titleSize = [titleContent boundingRectWithSize:CGSizeMake(width - 20*2, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12]} context:nil].size;
-    _projectInfoLabel.frame = CGRectMake(20.0f, 10.0f+60.0f+15.0f+12.0f+5.0f, titleSize.width, titleSize.height);
-    [_scrollView addSubview:_projectInfoLabel];
+    _wechatBtn = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.weixinContent.frame), CGRectGetMinY(self.weixinContent.frame) - 10, 40, 40)];
+    _wechatBtn.backgroundColor = [UIColor clearColor];
+    [_wechatBtn setImage:[UIImage imageNamed:@"btn_copy"] forState:UIControlStateNormal];
+    [_wechatBtn addTarget:self action:@selector(wechat) forControlEvents:UIControlEventTouchUpInside];
+    [_scrollView addSubview:_wechatBtn];
     
-    _titleLabel2 = [[UILabel alloc]initWithFrame:CGRectMake(15.0f, 10.0f+60.0f+15.0f+12.0f+5.0f+CGRectGetHeight(_projectInfoLabel.frame)+15.0f, width-2*15.0f, 12.0f)];
-    _titleLabel2.textAlignment = NSTextAlignmentLeft;
-    _titleLabel2.textColor = RGB(105, 105, 105);
-    _titleLabel2.font = [UIFont systemFontOfSize:12.0f];
-    _titleLabel2.backgroundColor = [UIColor clearColor];
-    _titleLabel2.text = @"公司信息";
-    [_scrollView addSubview:_titleLabel2];
     
-    _cityLabel = [[UILabel alloc]initWithFrame:CGRectMake(20.0f, 10.0f+60.0f+15.0f+2*(12.0f+5.0f)+CGRectGetHeight(_projectInfoLabel.frame)+15.0f, width-2*20.0f, 12.0f)];
-    _cityLabel.textAlignment = NSTextAlignmentLeft;
-    _cityLabel.textColor =RGB(155, 155, 155);
-    _cityLabel.font = [UIFont systemFontOfSize:12.0f];
-    _cityLabel.backgroundColor = [UIColor clearColor];
-    _cityLabel.text = @"";
-    [_scrollView addSubview:_cityLabel];
-    _companyLabel = [[UILabel alloc]initWithFrame:CGRectMake(20.0f, 10.0f+60.0f+15.0f+3*(12.0f+5.0f)+CGRectGetHeight(_projectInfoLabel.frame)+15.0f, width-2*20.0f, 12.0f)];
+    self.lineOne = [[UILabel alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(self.weixinLabel.frame) + 15, width - 30, 0.5)];
+    _lineOne.backgroundColor = RGB(155, 155, 155);
+    [_scrollView addSubview:_lineOne];
+    
+    _phoneLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(self.faceImageView.frame), CGRectGetMaxY(_lineOne.frame) + 15, 50, 20)];
+    _phoneLabel.textAlignment = NSTextAlignmentLeft;
+    _phoneLabel.textColor = RGB(90, 90, 90);
+    _phoneLabel.font = [UIFont systemFontOfSize:16.0f];
+    _phoneLabel.backgroundColor = [UIColor clearColor];
+    _phoneLabel.text = @"手机";
+    [_scrollView addSubview:_phoneLabel];
+    
+    _phoneContent = [[LHBCopyLabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.phoneLabel.frame), CGRectGetMinY(self.phoneLabel.frame), width - CGRectGetWidth(self.phoneLabel.frame) - 80, 20)];
+    _phoneContent.textAlignment = NSTextAlignmentLeft;
+    _phoneContent.textColor = RGB(155, 155, 155);
+    _phoneContent.font = [UIFont systemFontOfSize:15.0f];
+    _phoneContent.backgroundColor = [UIColor clearColor];
+    _phoneContent.text = @"";
+    [_scrollView addSubview:_phoneContent];
+    
+    _phoneBtn = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.phoneContent.frame), CGRectGetMinY(self.phoneContent.frame) - 10, 40, 40)];
+    _phoneBtn.backgroundColor = [UIColor clearColor];
+    [_phoneBtn setImage:[UIImage imageNamed:@"btn_phone"] forState:UIControlStateNormal];
+    [_phoneBtn addTarget:self action:@selector(call) forControlEvents:UIControlEventTouchUpInside];
+    [_scrollView addSubview:_phoneBtn];
+    
+    self.lineTwo = [[UILabel alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(self.phoneLabel.frame) + 15, width - 30, 0.5)];
+    _lineTwo.backgroundColor = RGB(155, 155, 155);
+    [_scrollView addSubview:_lineTwo];
+    
+    _emailLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(self.faceImageView.frame), CGRectGetMaxY(_lineTwo.frame) + 15, 50, 20)];
+    _emailLabel.textAlignment = NSTextAlignmentLeft;
+    _emailLabel.textColor = RGB(90, 90, 90);
+    _emailLabel.font = [UIFont systemFontOfSize:16.0f];
+    _emailLabel.backgroundColor = [UIColor clearColor];
+    _emailLabel.text = @"邮箱";
+    [_scrollView addSubview:_emailLabel];
+    
+    _emailContent = [[LHBCopyLabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.emailLabel.frame), CGRectGetMinY(self.emailLabel.frame), width - CGRectGetWidth(self.emailLabel.frame) - 80, 20)];
+    _emailContent.textAlignment = NSTextAlignmentLeft;
+    _emailContent.textColor = RGB(155, 155, 155);
+    _emailContent.font = [UIFont systemFontOfSize:15.0f];
+    _emailContent.backgroundColor = [UIColor clearColor];
+    _emailContent.text = @"";
+    [_scrollView addSubview:_emailContent];
+    
+    _emailBtn = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.emailContent.frame), CGRectGetMinY(self.emailContent.frame) - 10, 40, 40)];
+    _emailBtn.backgroundColor = [UIColor clearColor];
+    [_emailBtn setImage:[UIImage imageNamed:@"btn_mail"] forState:UIControlStateNormal];
+    [_emailBtn addTarget:self action:@selector(email) forControlEvents:UIControlEventTouchUpInside];
+    [_scrollView addSubview:_emailBtn];
+    
+    /**
+     * 公司全称和公司地址
+     */
+    
+    self.companyLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(self.weixinLabel.frame), CGRectGetMaxY(self.emailLabel.frame) + 30, width, 20)];
     _companyLabel.textAlignment = NSTextAlignmentLeft;
     _companyLabel.textColor = RGB(155, 155, 155);
-    _companyLabel.font = [UIFont systemFontOfSize:12.0f];
+    _companyLabel.font = [UIFont systemFontOfSize:15.0f];
     _companyLabel.backgroundColor = [UIColor clearColor];
     _companyLabel.text = @"";
     [_scrollView addSubview:_companyLabel];
-    _addressLabel = [[UILabel alloc]initWithFrame:CGRectMake(20.0f, 10.0f+60.0f+15.0f+4*(12.0f+5.0f)+CGRectGetHeight(_projectInfoLabel.frame)+15.0f, width-2*20.0f, 12.0f)];
+    
+    self.addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(self.companyLabel.frame), CGRectGetMaxY(self.companyLabel.frame) + 15, width, 20)];
     _addressLabel.textAlignment = NSTextAlignmentLeft;
     _addressLabel.textColor = RGB(155, 155, 155);
-    _addressLabel.font = [UIFont systemFontOfSize:12.0f];
+    _addressLabel.font = [UIFont systemFontOfSize:15.0f];
     _addressLabel.backgroundColor = [UIColor clearColor];
-    NSString *titleContent1 = @"";
-    _addressLabel.text = titleContent1;
-    _addressLabel.numberOfLines = 0;
-    CGSize titleSize1 = [titleContent1 boundingRectWithSize:CGSizeMake(width - 20*2, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12]} context:nil].size;
-    _addressLabel.frame = CGRectMake(20.0f, 10.0f+60.0f+15.0f+4*(12.0f+5.0f)+CGRectGetHeight(_projectInfoLabel.frame)+15.0f, titleSize1.width, titleSize1.height);
+    _addressLabel.text = @"";
     [_scrollView addSubview:_addressLabel];
+   
+    /**
+     *公司简介
+     */
+    self.companySum = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(self.addressLabel.frame), CGRectGetMaxY(self.addressLabel.frame) + 30, width - 40, 100)];
+    _companySum.textAlignment = NSTextAlignmentLeft;
+    _companySum.textColor = RGB(155, 155, 155);
+    _companySum.font = [UIFont systemFontOfSize:15.0f];
+    _companySum.backgroundColor = [UIColor clearColor];
+    _companySum.text = @"";
+    [_scrollView addSubview:_companySum];
     
-    _titleLabel3 = [[UILabel alloc]initWithFrame:CGRectMake(15.0f, 10.0f+60.0f+15.0f+3*(12.0f+5.0f)+CGRectGetHeight(_projectInfoLabel.frame)+15.0f+12.0f+CGRectGetHeight(_addressLabel.frame)+15.0f, width-2*15.0f, 12.0f)];
-    _titleLabel3.textAlignment = NSTextAlignmentLeft;
-    _titleLabel3.textColor = RGB(105, 105, 105);
-    _titleLabel3.font = [UIFont systemFontOfSize:12.0f];
-    _titleLabel3.backgroundColor = [UIColor clearColor];
-    _titleLabel3.text = @"联系方式";
-    [_scrollView addSubview:_titleLabel3];
-    
-    _phoneLabel = [[UILabel alloc]initWithFrame:CGRectMake(20.0f, CGRectGetMaxY(self.titleLabel3.frame)+ 5.0f, width-2*20.0f, 12.0f)];
-    _phoneLabel.textAlignment = NSTextAlignmentLeft;
-    _phoneLabel.textColor = RGB(155, 155, 155);
-    _phoneLabel.font = [UIFont systemFontOfSize:12.0f];
-    _phoneLabel.backgroundColor = [UIColor clearColor];
-    _phoneLabel.text = @"";
-    [_scrollView addSubview:_phoneLabel];
-    
-    _weixinLabel = [[UILabel alloc]initWithFrame:CGRectMake(20.0f, CGRectGetMaxY(self.phoneLabel.frame) + 5.0f, width-2*20.0f, 12.0f)];
-    _weixinLabel.textAlignment = NSTextAlignmentLeft;
-    _weixinLabel.textColor = RGB(155, 155, 155);
-    _weixinLabel.font = [UIFont systemFontOfSize:12.0f];
-    _weixinLabel.backgroundColor = [UIColor clearColor];
-    _weixinLabel.text = @"";
-    [_scrollView addSubview:_weixinLabel];
-    
-    _emailLabel = [[UILabel alloc]initWithFrame:CGRectMake(20.0f, CGRectGetMaxY(self.weixinLabel.frame) + 5.0f, width-2*20.0f, 12.0f)];
-    _emailLabel.textAlignment = NSTextAlignmentLeft;
-    _emailLabel.textColor = RGB(155, 155, 155);
-    _emailLabel.font = [UIFont systemFontOfSize:12.0f];
-    _emailLabel.backgroundColor = [UIColor clearColor];
-    _emailLabel.text = @"";
-    [_scrollView addSubview:_emailLabel];
-    
-    
-    UIView *btnsView = [[UIView alloc]initWithFrame:CGRectMake(0.0f, height-60.0f, width, 60.0f)];
-    btnsView.backgroundColor = RGB(255, 255, 255);
-    _phoneBtn = [[UIButton alloc]initWithFrame:CGRectMake(0.0f, 0.0f, [UIScreen mainScreen].bounds.size.width / 3, 60.0f)];
-    _phoneBtn.backgroundColor = RGB(234, 234, 234);
-    [_phoneBtn setImage:[UIImage imageNamed:@"btn_phone_disale"] forState:UIControlStateNormal];
-    [btnsView addSubview:_phoneBtn];
-    
-    _wechatBtn = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.phoneBtn.frame), 0.0f, [UIScreen mainScreen].bounds.size.width / 3, 60.0f)];
-    _wechatBtn.backgroundColor = RGB(234, 234, 234);
-    [_wechatBtn setImage:[UIImage imageNamed:@"btn_wechat_disable"] forState:UIControlStateNormal];
-    [btnsView addSubview:_wechatBtn];
-    
-    _emailBtn = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.wechatBtn.frame), 0.0f, [UIScreen mainScreen].bounds.size.width / 3, 60.0f)];
-    _emailBtn.backgroundColor = RGB(234, 234, 234);
-    [_emailBtn setImage:[UIImage imageNamed:@"btn_mail_disable"] forState:UIControlStateNormal];
-    [btnsView addSubview:_emailBtn];
-    
-    
-    [self.view addSubview:btnsView];
-    
-    _scrollView.contentSize = CGSizeMake(width, 10.0f+60.0f+15.0f+7*(12.0f+5.0f)+CGRectGetHeight(_projectInfoLabel.frame)+15.0f+12.0f+15.0f+12.0f+15.0f+60.0f);
+    _scrollView.contentSize = CGSizeMake(width, 10.0f+60.0f+15.0f+7*(12.0f+5.0f)+CGRectGetHeight(_companySum.frame)+15.0f+12.0f+15.0f+12.0f+15.0f+60.0f);
     
     [self refreshData];
 }
@@ -263,57 +273,63 @@ static NSString * const reuseIdentifier = @"Cell";
     _contactDetail = contactDetail;
     // 塞数据 布局
     CGFloat width = CGRectGetWidth(self.view.bounds);
-    
-    //[_faceImageView setImage:[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:contactDetail.imgUrl_3x]]]];
     /**
      *设计默认图片,如果有网络数据,则从网络下载
      */
     [_faceImageView sd_setImageWithURL:[NSURL URLWithString:contactDetail.imgUrl_3x] placeholderImage:[UIImage imageNamed:@"default_face"]];
     _nameLabel.text = contactDetail.name;
+    /**
+     *  拼接字符串
+     */
     _positionLabel.text = [NSString stringWithFormat:@"%@ %@", contactDetail.title,contactDetail.company];
-    _projectInfoLabel.text = contactDetail.project;
-    _projectInfoLabel.numberOfLines = 0;
-    CGSize titleSize = [contactDetail.project boundingRectWithSize:CGSizeMake(width - 20*2, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12]} context:nil].size;
-    _projectInfoLabel.frame = CGRectMake(20.0f, 10.0f+60.0f+15.0f+12.0f+5.0f, titleSize.width, titleSize.height);
-    
-    _titleLabel2.frame = CGRectMake(15.0f, CGRectGetMaxY(self.projectInfoLabel.frame) + 10, width-2*15.0f, 12.0f);
-    
-    _cityLabel.text = contactDetail.companyCityName;
-    _cityLabel.frame = CGRectMake(20.0f, CGRectGetMaxY(self.titleLabel2.frame) + 5, width-2*20.0f, 12.0f);
-    
+    NSString *newStr = contactDetail.companyCityName;
+    newStr = [newStr stringByReplacingOccurrencesOfString:@" " withString:@" · "];
+    _projectInfoLabel.text = [NSString stringWithFormat:@"%@ · %@     %@", contactDetail.project, contactDetail.title, newStr];
     _companyLabel.text = contactDetail.companyFullName;
-    _companyLabel.frame = CGRectMake(20.0f, CGRectGetMaxY(self.cityLabel.frame) + 5, width-2*20.0f, 12.0f);
     
     _addressLabel.text = contactDetail.companyAddress;
     _addressLabel.numberOfLines = 0;
-    CGSize titleSize1 = [contactDetail.companyAddress boundingRectWithSize:CGSizeMake(width - 20*2, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12]} context:nil].size;
-    _addressLabel.frame = CGRectMake(20.0f, CGRectGetMaxY(self.companyLabel.frame) + 5, titleSize1.width, titleSize1.height);
     
-    _titleLabel3.frame = CGRectMake(15.0f, CGRectGetMaxY(self.addressLabel.frame) + 10, width-2*15.0f, 12.0f);
+    /**
+     * 如果用户微信字符串为空,则重新布局
+     */
     
-    _phoneLabel.text = [NSString stringWithFormat:@"手机: %@", contactDetail.phone];
-    _phoneLabel.frame = CGRectMake(20.0f, CGRectGetMaxY(self.titleLabel3.frame) + 5, width-2*20.0f, 12.0f);
-    
-    _emailLabel.text = [NSString stringWithFormat:@"邮箱: %@", contactDetail.email];
-    _emailLabel.frame = CGRectMake(20.0f, CGRectGetMaxY(self.phoneLabel.frame) + 5, width-2*20.0f, 12.0f);
-    
-    _weixinLabel.text = [NSString stringWithFormat:@"微信: %@", contactDetail.wechat];
-    _weixinLabel.frame = CGRectMake(20.0f, CGRectGetMaxY(self.emailLabel.frame) + 5, width-2*20.0f, 12.0f);
-    
-    _scrollView.contentSize = CGSizeMake(width, 10.0f+60.0f+15.0f+7*(12.0f+5.0f)+CGRectGetHeight(_projectInfoLabel.frame)+15.0f+12.0f+15.0f+12.0f+15.0f+60.0f);
-    
-    if(_contactDetail.phone!=nil && ![_contactDetail.phone isEqualToString:@""]){
-        [_phoneBtn setImage:[UIImage imageNamed:@"btn_phone_n"] forState:UIControlStateNormal];
-        [_phoneBtn addTarget:self action:@selector(call) forControlEvents:UIControlEventTouchUpInside];
+    if ([contactDetail.wechat isEqualToString:@""] || contactDetail.wechat == nil) {
+        _weixinLabel.frame = CGRectZero;
+        _wechatBtn.frame = CGRectZero;
+        _phoneLabel.frame = CGRectMake(CGRectGetMinX(self.faceImageView.frame), CGRectGetMaxY(self.headerView.frame) + 20, 50, 20);
+        _phoneContent.frame =CGRectMake(CGRectGetMaxX(self.phoneLabel.frame), CGRectGetMinY(self.phoneLabel.frame), width - CGRectGetWidth(self.phoneLabel.frame) - 80, 20);
+        _phoneBtn.frame = CGRectMake(CGRectGetMaxX(self.phoneContent.frame) - 10, CGRectGetMinY(self.phoneContent.frame) - 10, 40, 40);
+        _emailLabel.frame = CGRectMake(CGRectGetMinX(self.faceImageView.frame), CGRectGetMaxY(_lineOne.frame) + 15, 50, 20);
+        _emailContent.frame = CGRectMake(CGRectGetMaxX(self.emailLabel.frame), CGRectGetMinY(self.emailLabel.frame), width - CGRectGetWidth(self.emailLabel.frame) - 80, 20);
+        _emailBtn.frame = CGRectMake(CGRectGetMaxX(self.emailContent.frame) - 10, CGRectGetMinY(self.emailContent.frame) - 10, 40, 40);
+        _lineTwo.frame = CGRectZero;
+        _companyLabel.frame = CGRectMake(CGRectGetMinX(self.phoneLabel.frame), CGRectGetMaxY(self.emailLabel.frame) + 30, width, 20);
+        _addressLabel.frame = CGRectMake(CGRectGetMinX(self.phoneLabel.frame), CGRectGetMaxY(self.companyLabel.frame) + 30, width, 20);
     }
-    if(_contactDetail.email!=nil && ![_contactDetail.email isEqualToString:@""]){
-        [_emailBtn setImage:[UIImage imageNamed:@"btn_mail_n"] forState:UIControlStateNormal];
-        [_emailBtn addTarget:self action:@selector(email) forControlEvents:UIControlEventTouchUpInside];
+    _phoneContent.text = [NSString stringWithFormat:@"%@", contactDetail.phone];
+    
+    _emailContent.text = [NSString stringWithFormat:@"%@", contactDetail.email];
+    
+    _weixinContent.text = [NSString stringWithFormat:@"%@", contactDetail.wechat];
+    
+    /**
+     * 项目简介自适应
+     */
+    _companySum.text = contactDetail.summary;
+    _companySum.numberOfLines = 0;
+    CGSize companyTextSize = [contactDetail.summary boundingRectWithSize:CGSizeMake(width - 40, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15]} context:nil].size;
+    
+    if ([contactDetail.companyAddress isEqualToString:@""] || contactDetail.companyAddress == nil) {
+         _companySum.frame = CGRectMake(CGRectGetMinX(self.companyLabel.frame), CGRectGetMaxY(self.companyLabel.frame) + 30, companyTextSize.width, companyTextSize.height); //自适应高度
+    } else {
+        _companySum.frame = CGRectMake(CGRectGetMinX(self.addressLabel.frame), CGRectGetMaxY(self.addressLabel.frame) +30, companyTextSize.width, companyTextSize.height); //自适应高度
+        [self.view reloadInputViews];
     }
-    if(_contactDetail.wechat!=nil && ![_contactDetail.wechat isEqualToString:@""]){
-        [_wechatBtn setImage:[UIImage imageNamed:@"btn_wechat_n"] forState:UIControlStateNormal];
-        [_wechatBtn addTarget:self action:@selector(wechat) forControlEvents:UIControlEventTouchUpInside];
-    }
+    
+    
+    _scrollView.contentSize = CGSizeMake(width, CGRectGetHeight(self.faceImageView.frame) + CGRectGetHeight(self.weixinLabel.frame) + CGRectGetHeight(self.phoneLabel.frame) + CGRectGetHeight(self.emailLabel.frame) + CGRectGetHeight(self.companyLabel.frame) + CGRectGetHeight(self.addressLabel.frame) + companyTextSize.height + 200 );
+    
 }
 
 -(void)call{
@@ -348,7 +364,9 @@ static NSString * const reuseIdentifier = @"Cell";
 }
 
 -(void)wechat{
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"亲，微信号:" message:_contactDetail.wechat delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"已复制微信号" message:@"" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+    UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+    pasteboard.string = self.weixinContent.text;
     [alertView show];
 }
 

@@ -7,14 +7,13 @@
 //
 
 #import "CXResource.h"
-
 @interface TSWResult : CXResource
-
 @property (nonatomic, strong) NSString *sid;
 @property (nonatomic, strong) NSString *type;
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSString *imgUrl_2x;
 @property (nonatomic, strong) NSString *imgUrl_3x;
-@property (nonatomic, strong) NSMutableArray *items;
+@property (nonatomic, strong) NSString *currentstatus; //当前状态
 
+@property (nonatomic, strong) NSMutableArray *items;
 @end

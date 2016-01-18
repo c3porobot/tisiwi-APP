@@ -95,11 +95,11 @@
         _zanLabel.backgroundColor = [UIColor clearColor];
         _zanLabel.text = @"";
         CGSize size2 = [_zanLabel.text sizeWithAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:12.0f],NSFontAttributeName, nil]];
-        [titleView addSubview:_zanLabel];
+        //[titleView addSubview:_zanLabel];
         _goodImageView = [[UIImageView alloc] initWithFrame:CGRectMake(width - 15.0f-size2.width-15.0f-10.0f,12.0f+17.0f+8.0f+2*(12.0f+8.0f)-3.0f, 15.0f, 15.0f)];
         _goodImageView.image = [UIImage imageNamed:@"agree"];
         _goodImageView.backgroundColor = [UIColor clearColor];
-        [titleView addSubview:_goodImageView];
+       // [titleView addSubview:_goodImageView];
         
         [self.contentView addSubview:titleView];
         
@@ -127,7 +127,7 @@
     _finance = finance;
     
     _nameLabel.text = _finance.name;
-    _positionLabel.text = [NSString stringWithFormat:@"%@  %@", _finance.title, _finance.company];
+    _positionLabel.text = [NSString stringWithFormat:@"%@  %@", _finance.company, _finance.title];
     
     NSArray *provinces = [[NSArray alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"area.plist" ofType:nil]];
     for (int i=0; i<[provinces count]; i++) {
@@ -151,8 +151,8 @@
 }
 
 - (void) clickAction{
-    if (self.delegate && [self.delegate respondsToSelector:@selector(gotoFinanceDetail:withFinance:)]) {
-        [self.delegate gotoFinanceDetail:self withFinance:_finance];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(gotoFinanceDetail:withFinance:withResult:)]) {
+        [self.delegate gotoFinanceDetail:self withFinance:_finance withResult:_result];
     }
 }
 

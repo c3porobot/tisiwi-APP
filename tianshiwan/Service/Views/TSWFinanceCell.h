@@ -8,18 +8,18 @@
 
 #import <UIKit/UIKit.h>
 #import "TSWFinance.h"
-
+#import "TSWResult.h"
 @class TSWFinance;
 @protocol TSWFinanceCellDelegate;
 
 @interface TSWFinanceCell : UICollectionViewCell
 @property (nonatomic, weak) id<TSWFinanceCellDelegate> delegate;
 @property (nonatomic, strong) TSWFinance *finance;
-
+@property (nonatomic, strong) TSWResult *result;
 @end
 
 @protocol TSWFinanceCellDelegate <NSObject>
 
--(void) gotoFinanceDetail:(TSWFinanceCell *)cell withFinance:(TSWFinance *)finance;
+-(void) gotoFinanceDetail:(TSWFinanceCell *)cell withFinance:(TSWFinance *)finance withResult:(TSWResult *)result;
 
 @end

@@ -177,7 +177,7 @@ NSString* const NotificationActionTwoIdent = @"ACTION_TWO";
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
-    // [EXT] APP进入后台时，通知个推SDK进入后台
+    // [EXT] APP进入后台时，通知个推SDK进入后台,APP在后台,个推也能通知
     _isBackground = YES;
     [GeTuiSdk enterBackground];
     

@@ -9,5 +9,6 @@
 #import "CXResource.h"
 #define RESULT_LIST @"v1/search_service"
 @interface TSWResultList : CXResource
+
 @property (nonatomic, strong) NSMutableArray *results;
 @end

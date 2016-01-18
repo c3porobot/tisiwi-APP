@@ -146,7 +146,7 @@
     RDVTabBarItem *homeItem = [[RDVTabBarItem alloc] init];
     homeItem.title = @"天使湾";
     homeItem.titlePositionAdjustment = UIOffsetMake(0.0f, 2.0f);
-    [homeItem setFinishedSelectedImage:[UIImage imageNamed:@"tabbar_1highlighted"] withFinishedUnselectedImage:[UIImage imageNamed:@"tabbar_1normal"]];
+    [homeItem setFinishedSelectedImage:[UIImage imageNamed:@"tabbar_1highlighted"] withFinishedUnselectedImage:[UIImage imageNamed:@"Tabbar_b1_n"]];
     UIViewController *homeNavigationController = [[UINavigationController alloc]
                                                   initWithRootViewController:homeRootController];
     
@@ -155,7 +155,7 @@
     RDVTabBarItem *serviceItem = [[RDVTabBarItem alloc] init];
     serviceItem.title = @"服务";
     serviceItem.titlePositionAdjustment = UIOffsetMake(0.0f, 2.0f);
-    [serviceItem setFinishedSelectedImage:[UIImage imageNamed:@"tabbar_2highlighted"] withFinishedUnselectedImage:[UIImage imageNamed:@"tabbar_2normal"]];
+    [serviceItem setFinishedSelectedImage:[UIImage imageNamed:@"tabbar_2highlighted"] withFinishedUnselectedImage:[UIImage imageNamed:@"Tabbar_b2_n"]];
     UIViewController *serviceNavigationController = [[UINavigationController alloc]
                                                         initWithRootViewController:serviceViewController];
     
@@ -173,7 +173,7 @@
     RDVTabBarItem *talentItem = [[RDVTabBarItem alloc] init];
     talentItem.title = @"人才";
     talentItem.titlePositionAdjustment = UIOffsetMake(0.0f, 2.0f);
-    [talentItem setFinishedSelectedImage:[UIImage imageNamed:@"tabbar_4highlighted"] withFinishedUnselectedImage:[UIImage imageNamed:@"tabbar_4normal"]];
+    [talentItem setFinishedSelectedImage:[UIImage imageNamed:@"tabbar_4highlighted"] withFinishedUnselectedImage:[UIImage imageNamed:@"Tabbar_b3_n"]];
     UIViewController *talentNavigationController = [[UINavigationController alloc]
                                                       initWithRootViewController:talentViewController];
     
@@ -182,7 +182,7 @@
     RDVTabBarItem *contactsItem = [[RDVTabBarItem alloc] init];
     contactsItem.title = @"湾仔";
     contactsItem.titlePositionAdjustment = UIOffsetMake(0.0f, 2.0f);
-    [contactsItem setFinishedSelectedImage:[UIImage imageNamed:@"tabbar_5highlighted"] withFinishedUnselectedImage:[UIImage imageNamed:@"tabbar_5normal"]];
+    [contactsItem setFinishedSelectedImage:[UIImage imageNamed:@"tabbar_5highlighted"] withFinishedUnselectedImage:[UIImage imageNamed:@"Tabbar_b4_n"]];
     UIViewController *contactsNavigationController = [[UINavigationController alloc]
                                                       initWithRootViewController:contactsViewController];
     

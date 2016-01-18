@@ -10,6 +10,7 @@
 
 @interface TSWContactDetailViewController : CXNavigationBarController
 @property (nonatomic, copy) NSString *contectName;
+@property (nonatomic, copy) NSString *contectID;
 - (instancetype)initWithContactId:(NSString *)contactId;
 
 @end

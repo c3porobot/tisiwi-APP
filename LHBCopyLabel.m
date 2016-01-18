@@ -39,8 +39,8 @@
 
 -(void)attachTapHandler {
     self.userInteractionEnabled = YES;  //用户交互的总开关
-    UITapGestureRecognizer *touch = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
-    touch.numberOfTapsRequired = 2;
+    UILongPressGestureRecognizer *touch = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
+    touch.minimumPressDuration = 1;
     [self addGestureRecognizer:touch];
 }
 //绑定事件
@@ -63,9 +63,9 @@
 //接下来，我们需要处理这个tap，以便让菜单栏弹出来：
 -(void)handleTap:(UIGestureRecognizer*) recognizer {
     [self becomeFirstResponder];
-    UIMenuItem *copyLink = [[UIMenuItem alloc] initWithTitle:@"复制" action:@selector(copy:)];
+//    UIMenuItem *copyLink = [[UIMenuItem alloc] initWithTitle:@"复制" action:@selector(copy:)];
     
-    [[UIMenuController sharedMenuController] setMenuItems:[NSArray arrayWithObjects:copyLink, nil]];
+ //   [[UIMenuController sharedMenuController] setMenuItems:[NSArray arrayWithObjects:copyLink, nil]];
     
     [[UIMenuController sharedMenuController] setTargetRect:self.frame inView:self.superview];
     

@@ -20,7 +20,9 @@
 #import "TSWOther.h"
 #import "TSWFinanceDetailViewController.h"
 #import "TSWOtherDetailViewController.h"
-
+#import "GVUserDefaults+TSWProperties.h"
+#import "TSWSendRequest.h"
+#import "BeforeAuditFinaceViewController.h"
 static const CGFloat searchCellHeight = 50.0f+13.0f+3.0f+10.0f; // icon高+标题高+3px的间隙+10px的下边距
 
 @interface TSWServiceViewController ()<UICollectionViewDelegate, UICollectionViewDataSource,TSWServiceCellDelegate,TSWFinanceCellDelegate,TSWOtherCellDelegate>
@@ -30,7 +32,10 @@ static const CGFloat searchCellHeight = 50.0f+13.0f+3.0f+10.0f; // icon高+标�
 @property (nonatomic, strong) NSMutableArray *searchDataArray;
 @property (nonatomic, strong) TSWServiceList *serviceList;
 @property (nonatomic, strong) TSWResultList *resultList;
-
+@property (nonatomic, strong) TSWSendRequest *sendRequest; //发送请求
+@property (nonatomic, strong) NSString *tempStr;
+@property (nonatomic, strong) NSString *tempName; //姓名
+@property (nonatomic, strong) NSString *tempID; //ID
 @property (nonatomic, strong) UIView *searchBox;
 @property (nonatomic, strong) UIView *searchBoxView;
 @property (nonatomic, strong) UIView *searchResultBox;
@@ -75,7 +80,7 @@ static const CGFloat searchCellHeight = 50.0f+13.0f+3.0f+10.0f; // icon高+标�
     _textField.clearButtonMode = UITextFieldViewModeWhileEditing;
     _textField.backgroundColor = [UIColor clearColor];
     _textField.autocapitalizationType = NO;
-    _textField.placeholder = @"搜索公司、联系人";
+    _textField.placeholder = @"搜索公司、联系人、标签、服务地区";
     [_textField addTarget:self action:@selector(searchBegin) forControlEvents: UIControlEventEditingDidBegin];
     [_textField addTarget:self  action:@selector(valueChanged:)  forControlEvents:UIControlEventAllEditingEvents];
     [_searchBoxView addSubview:_textField];
@@ -126,11 +131,14 @@ static const CGFloat searchCellHeight = 50.0f+13.0f+3.0f+10.0f; // icon高+标�
                           options:NSKeyValueObservingOptionNew
                           context:nil];
     self.resultList = [[TSWResultList alloc] initWithBaseURL:TSW_API_BASE_URL path:RESULT_LIST];
+    
     [self.resultList addObserver:self
                        forKeyPath:kResourceLoadingStatusKeyPath
                           options:NSKeyValueObservingOptionNew
                           context:nil];
     
+    //新的接口
+   
     _dataArray = [NSMutableArray array];
     _searchDataArray = [NSMutableArray array];
     
@@ -201,25 +209,29 @@ static const CGFloat searchCellHeight = 50.0f+13.0f+3.0f+10.0f; // icon高+标�
                 //  [self.collectionView.pullToRefreshView stopAnimating];
                 [self showErrorMessage:[_serviceList.error localizedFailureReason]];
             }
+            
         }else if(object == _resultList){
             if (_resultList.isLoaded) {
-                NSLog(@"%@",_resultList.results);
-                NSMutableArray *tempArray = [[NSMutableArray alloc]init];
+                NSMutableArray *tempArray = [NSMutableArray array];
                 for (TSWResult *result in _resultList.results) {
+                    //self.tempStr = result.currentstatus;
+                    self.tempID = result.sid;
                     if([result.type isEqualToString:@"financing"]){
                         for(TSWFinance *finance in result.items){
                             [tempArray addObject:finance];
+//                            NSDictionary *dic = [result.items firstObject];
+//                            self.tempStr = [dic valueForKey:@"currentstatus"];
                         }
-                        
+                        [self.searchDataArray removeAllObjects];
+                        [self.searchDataArray addObject:tempArray];
                     }else{
                         for(TSWOther *other in result.items){
                             [tempArray addObject:other];
                         }
+                        [self.searchDataArray removeAllObjects];
+                        [self.searchDataArray addObject:tempArray];
                     }
-                }
-                [self.searchDataArray removeAllObjects];
-                [self.searchDataArray addObject:tempArray];
-                
+                                   }
                 [self.searchResultCollectionView reloadData];
             }
             else if (_serviceList.error) {
@@ -232,6 +244,7 @@ static const CGFloat searchCellHeight = 50.0f+13.0f+3.0f+10.0f; // icon高+标�
 - (void) refreshData{
     //[self showLoadingView]; //刷新视图提示
     [self.serviceList loadDataWithRequestMethodType:kHttpRequestMethodTypeGet parameters:nil];
+    //[self.resultList loadDataWithRequestMethodType:kHttpRequestMethodTypePost parameters:@{@"member":[GVUserDefaults standardUserDefaults].member, @"text": _textField.text}];
 }
 
 /*
@@ -356,8 +369,7 @@ static const CGFloat searchCellHeight = 50.0f+13.0f+3.0f+10.0f; // icon高+标�
     // 首先判断是融资服务还是其他服务（人才服务已经单独列出）
     if([service.type isEqualToString:@"financing"]){
         TSWFinanceViewController *financeController = [[TSWFinanceViewController alloc] init];
-        [self.navigationController pushViewController:financeController animated:YES];
-        //[self presentViewController:financeController animated:YES completion:nil];
+    [self.navigationController pushViewController:financeController animated:YES];
     }else{
         TSWOtherViewController *otherController = [[TSWOtherViewController alloc] initWithType:service.type withTitle:service.title];
         [self.navigationController pushViewController:otherController animated:YES];
@@ -418,16 +430,26 @@ static const CGFloat searchCellHeight = 50.0f+13.0f+3.0f+10.0f; // icon高+标�
 -(void)didStopAnimation2{
     
 }
-
 -(void)valueChanged:(id)sender{
     NSString *text = _textField.text;
-    [self.resultList loadDataWithRequestMethodType:kHttpRequestMethodTypeGet parameters:@{@"text":text}];
+    [self.resultList loadDataWithRequestMethodType:kHttpRequestMethodTypeGet parameters:@{@"text":text, @"member":[GVUserDefaults standardUserDefaults].member}];
 }
 
--(void) gotoFinanceDetail:(TSWFinanceCell *)cell withFinance:(TSWFinance *)finance{
-    [[self rdv_tabBarController] setTabBarHidden:YES animated:YES];
-    TSWFinanceDetailViewController *financeDetailController = [[TSWFinanceDetailViewController alloc] initWithFinanceId:finance.sid];
-    [self.navigationController pushViewController:financeDetailController animated:YES];
+-(void) gotoFinanceDetail:(TSWFinanceCell *)cell withFinance:(TSWFinance *)finance withResult:(TSWResult *)result{
+        [[self rdv_tabBarController] setTabBarHidden:YES animated:YES];
+    if ([finance.currentstatus isEqualToString:@"-2"] || [finance.currentstatus isEqualToString:@"-1"] || [finance.currentstatus isEqualToString:@"0"]) {
+        BeforeAuditFinaceViewController *BAVC = [[BeforeAuditFinaceViewController alloc] initWithFinanceId:finance.sid];
+       // BAVC.currentStatus = finance.currentstatus;
+        BAVC.investorName = self.tempName;
+        BAVC.sidValue = finance.sid;
+        [self.navigationController pushViewController:BAVC animated:YES];
+    } else if ([finance.currentstatus isEqualToString:@"1"]) {
+        TSWFinanceDetailViewController *financeDetailController = [[TSWFinanceDetailViewController alloc] initWithFinanceId:finance.sid];
+        financeDetailController.investorName = finance.name;
+        [self.navigationController pushViewController:financeDetailController animated:YES];
+        
+    }
+
 }
 
 -(void) gotoOtherDetail:(TSWOtherCell *)cell withOther:(TSWOther *)other{

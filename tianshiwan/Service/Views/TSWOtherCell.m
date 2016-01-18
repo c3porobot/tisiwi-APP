@@ -86,11 +86,11 @@
         _zanLabel.backgroundColor = [UIColor clearColor];
         _zanLabel.text = @"";
         CGSize size2 = [_zanLabel.text sizeWithAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:12.0f],NSFontAttributeName, nil]];
-        [titleView addSubview:_zanLabel];
+        //[titleView addSubview:_zanLabel];
         _goodImageView = [[UIImageView alloc] initWithFrame:CGRectMake(width - 15.0f-size2.width-15.0f-10.0f,12.0f+17.0f+8.0f+2*(12.0f+8.0f)-3.0f, 15.0f, 15.0f)];
         _goodImageView.image = [UIImage imageNamed:@"agree"];
         _goodImageView.backgroundColor = [UIColor clearColor];
-        [titleView addSubview:_goodImageView];
+        //[titleView addSubview:_goodImageView];
         
         [self.contentView addSubview:titleView];
         
@@ -118,12 +118,17 @@
     _other = other;
     
     _nameLabel.text = _other.name;
-    _positionLabel.text = [NSString stringWithFormat:@"%@  %@", _other.title, _other.company];
-    _stepLabel.text = [NSString stringWithFormat:@"服务地区: %@", _other.served_aera];
-    if ([_other.tags isEqualToString:@""] || [other.tags length] == 0) {
-        _sampleLabel.text = [NSString stringWithFormat:@""];
+    _positionLabel.text = [NSString stringWithFormat:@"%@  %@", _other.company, _other.title];
+    if ([_other.served_aera isEqualToString:@""] || [other.served_aera length] == 0) {
+        _stepLabel.text = [NSString stringWithFormat:@"服务地区: 暂无"];
     } else {
-        _sampleLabel.text = [NSString stringWithFormat:@"标签: %@", _other.tags];
+        _stepLabel.text = [NSString stringWithFormat:@"服务地区: %@", _other.served_aera];
+    
+    }
+    if ([_other.tags isEqualToString:@""] || [other.tags length] == 0) {
+        _sampleLabel.text = [NSString stringWithFormat:@"服务标签: 暂无"];
+    } else {
+        _sampleLabel.text = [NSString stringWithFormat:@"服务标签: %@", _other.tags];
     }
     
     NSArray *provinces = [[NSArray alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"area.plist" ofType:nil]];
