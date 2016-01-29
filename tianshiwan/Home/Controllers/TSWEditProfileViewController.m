@@ -242,7 +242,7 @@
     _emailVeri.font = [UIFont systemFontOfSize:12.0f];
     _emailVeri.backgroundColor = [UIColor clearColor];
     _emailVeri.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
-    _emailVeri.text = @"超出有效长度";
+    _emailVeri.text = @"请输入正确格式";
     _emailVeri.numberOfLines = 0;
     _emailVeri.hidden = YES;
     [self.details addSubview:_emailVeri];
@@ -474,6 +474,7 @@
             else if (_sendProfile.error) {
                 [self showErrorMessage:[_sendProfile.error localizedFailureReason]];
             }
+            
         }else if(object == _profile){
             if (_profile.isLoaded) {
                 [self setDetail:_profile];
@@ -556,28 +557,29 @@
 }
 
 -(void)finishProfile {
-    if(_dNameField.text.length>=0){
-        if(_dNameField.text.length<=32){
+    if(_dFace.image != nil) {
+    if(_dNameField.text.length > 0){
+        if(_dNameField.text.length <= 32){
             _nameVeri.hidden = YES;
-            if(_dPositionField.text.length>=0){
-                if(_dPositionField.text.length<=64){
+            if(_dPositionField.text.length > 0){
+                if(_dPositionField.text.length <= 64){
                     _positionVeri.hidden = YES;
-                    if(_dCompanyField.text.length>=0){
-                        if(_dCompanyField.text.length<=128){
+                    if(_dCompanyField.text.length>0){
+                        if(_dCompanyField.text.length <= 128){
                             _companyVeri.hidden = YES;
-                            if(_dEmailField.text.length>=0){
-                                if(_dEmailField.text.length<=128){
+                            if(_dEmailField.text.length>0){
+                                if(_dEmailField.text.length <= 128 && [_dEmailField.text containsString:@"@"]){
                                     _emailVeri.hidden = YES;
-                                    if(_dWechatField.text.length > 0 && _dWechatField.text.length<=128){
+                                    if(_dWechatField.text.length > 0 && _dWechatField.text.length <= 128){
                                             _wechatVeri.hidden = YES;
-                                            if(_dAddressField.text.length >= 0 && _dAddressField.text.length<=256){
+                                            if(_dAddressField.text.length > 0 && _dAddressField.text.length <= 256){
                                                     _addressVeri.hidden = YES;
                                                     [self showLoadingViewWithText:@"提交中..."];
                                                     [self.sendProfile loadDataWithRequestMethodType:kHttpRequestMethodTypePost parameters:@{@"name":_dNameField.text,@"title":_dPositionField.text,@"company":_dCompanyField.text,@"cityCode":_selectedCityCode,@"address":_dAddressField.text,@"email":_dEmailField.text,@"wechat":_dWechatField.text,@"avatar":self.dFace.image} dataType:kHttpRequestDataTypeMultipart];
                                             }else if(_dAddressField.text.length>256){
                                                 _addressVeri.hidden = NO;
                                             }
-                                    }else if(_dWechatField.text.length>128){
+                                            }else if(_dWechatField.text.length>128){
                                         _wechatVeri.hidden = NO;
                                     }
                                 }else{
@@ -607,6 +609,10 @@
     }else{
         _nameVeri.text = @"请填写有效姓名";
         _nameVeri.hidden = NO;
+    }
+    } else {
+        UIAlertView *alerView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请设置头像" delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [alerView show];
     }
     
 }

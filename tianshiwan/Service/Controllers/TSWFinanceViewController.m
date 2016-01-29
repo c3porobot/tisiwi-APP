@@ -14,6 +14,7 @@
 #import "TSWFinanceFilterViewController.h"
 #import "GVUserDefaults+TSWProperties.h"
 #import "BeforeAuditFinaceViewController.h"
+#import "TSWPassValue.h"
 @interface TSWFinanceViewController ()<UICollectionViewDelegate, UICollectionViewDataSource,TSWFinanceCellDelegate>
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, strong) NSMutableArray *dataArray;
@@ -59,7 +60,6 @@
     [GVUserDefaults standardUserDefaults].searchServiceRound = @"";
     [GVUserDefaults standardUserDefaults].searchServiceFields = (NSMutableArray *)@[];
     
-    [self refreshData];
     [self setupPullToRefresh];
     [self setupInfiniteScrolling];
     [self refreshData];
@@ -132,8 +132,12 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self refreshData];
-        
+    if ([TSWPassValue sharedValue].passvalue == 1) {
+        [self refreshData];
+    } else if([TSWPassValue sharedValue].passvalue == 0 ){
+     
+    }
+    
 }
 - (void)viewDidAppear:(BOOL)animated
 {

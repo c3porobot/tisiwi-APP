@@ -11,7 +11,7 @@
 #import "TSWGetPosition.h"
 #import "TSWTalentPosition.h"
 #import "GVUserDefaults+TSWProperties.h"
-
+#import "TSWPassValue.h"
 @interface TSWTalentFilterViewController ()<UITextFieldDelegate, ZHAreaPickerDelegate,UIPickerViewDataSource, UIPickerViewDelegate>
 @property (nonatomic, strong) UITextField *pickerViewTextField;
 @property (nonatomic, strong) UIPickerView *pickerView;
@@ -247,7 +247,7 @@
 
 -(void)dismiss{
     //    [[self getAppdelegate] removeTrackingArrayLastObject];
-    
+    [TSWPassValue sharedValue].passvalue = 1;
     [self.navigationController dismissViewControllerAnimated:YES completion:^{
         
     }];
@@ -332,11 +332,11 @@
     [GVUserDefaults standardUserDefaults].searchTalentSeniority = _yearsField.text;
     NSString *min = @"";
     if(_salaryAField.text!=nil && ![_salaryAField.text isEqualToString:@""]){
-        min = [_salaryAField.text stringByAppendingString:@"000"];
+        min = [_salaryAField.text stringByAppendingString:@""];
     }
     NSString *max = @"";
     if(_salaryBField.text!=nil && ![_salaryBField.text isEqualToString:@""]){
-        max = [_salaryBField.text stringByAppendingString:@"000"];
+        max = [_salaryBField.text stringByAppendingString:@""];
     }
     [GVUserDefaults standardUserDefaults].searchTalentSalaryMin = min;
     [GVUserDefaults standardUserDefaults].searchTalentSalaryMax = max;

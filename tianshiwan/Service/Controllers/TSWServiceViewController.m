@@ -23,6 +23,9 @@
 #import "GVUserDefaults+TSWProperties.h"
 #import "TSWSendRequest.h"
 #import "BeforeAuditFinaceViewController.h"
+#import "TSWPassValue.h"
+
+#import "TSWFinanceAndFilterViewController.h"
 static const CGFloat searchCellHeight = 50.0f+13.0f+3.0f+10.0f; // icon高+标题高+3px的间隙+10px的下边距
 
 @interface TSWServiceViewController ()<UICollectionViewDelegate, UICollectionViewDataSource,TSWServiceCellDelegate,TSWFinanceCellDelegate,TSWOtherCellDelegate>
@@ -368,8 +371,11 @@ static const CGFloat searchCellHeight = 50.0f+13.0f+3.0f+10.0f; // icon高+标�
     [[self rdv_tabBarController] setTabBarHidden:YES animated:YES];
     // 首先判断是融资服务还是其他服务（人才服务已经单独列出）
     if([service.type isEqualToString:@"financing"]){
-        TSWFinanceViewController *financeController = [[TSWFinanceViewController alloc] init];
-    [self.navigationController pushViewController:financeController animated:YES];
+        [TSWPassValue sharedValue].passvalue = 0;
+//        TSWFinanceViewController *financeController = [[TSWFinanceViewController alloc] init];
+        TSWFinanceAndFilterViewController *financeController = [[TSWFinanceAndFilterViewController alloc] init];
+//    [self.navigationController pushViewController:financeController animated:YES];
+        [self.navigationController pushViewController:financeController animated:YES];
     }else{
         TSWOtherViewController *otherController = [[TSWOtherViewController alloc] initWithType:service.type withTitle:service.title];
         [self.navigationController pushViewController:otherController animated:YES];

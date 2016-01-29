@@ -13,6 +13,7 @@
 #import "LHBTalentCheckController.h"
 #import "TSWTalentCheckViewController.h"
 #import "LHBCopyLabel.h"
+#import "TSWPassValue.h"
 @interface TSWTalentDetailViewController ()<UIAlertViewDelegate,MFMailComposeViewControllerDelegate>
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) NSString *sid;
@@ -288,6 +289,7 @@ static NSString * const reuseIdentifier = @"Cell";
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
+    [TSWPassValue sharedValue].passvalue = 0;
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
 }
 

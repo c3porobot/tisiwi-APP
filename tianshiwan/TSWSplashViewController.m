@@ -17,7 +17,7 @@
 #import "TSWContactsViewController.h"
 #import "TSWCommonTool.h"
 #import "TSWArticleDetailsViewController.h"
-
+#import "TSWTalentAndFilterViewController.h"
 @interface TSWSplashViewController ()
 
 @property (nonatomic, strong) UINavigationController *navigationController;
@@ -168,7 +168,7 @@
     UIViewController *publishNavigationController = [[UINavigationController alloc]
                                                      initWithRootViewController:publishViewController];
     
-    TSWTalentViewController *talentViewController = [[TSWTalentViewController alloc] init];
+    TSWTalentAndFilterViewController *talentViewController = [[TSWTalentAndFilterViewController alloc] init];
     talentViewController.title = @"人才";
     RDVTabBarItem *talentItem = [[RDVTabBarItem alloc] init];
     talentItem.title = @"人才";

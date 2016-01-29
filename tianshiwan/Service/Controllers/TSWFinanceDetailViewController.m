@@ -412,7 +412,7 @@ static NSString * const reuseIdentifier = @"Cell";
                 cityName = [[cities objectAtIndex:j] objectForKey:@"CityName"];
                 break;
             }
-            _positionLabel.text = [NSString stringWithFormat:@"%@ · %@  %@",  financeDetal.company,financeDetal.title, _locationLabel.text];
+            _positionLabel.text = [NSString stringWithFormat:@"%@ · %@    %@",  financeDetal.company,financeDetal.title, _locationLabel.text];
         }
     }
     

@@ -13,7 +13,7 @@
 #import "TSWServiceRound.h"
 #import "TSWServiceField.h"
 #import "GVUserDefaults+TSWProperties.h"
-
+#import "TSWPassValue.h"
 @interface TSWFinanceFilterViewController ()<ZHAreaPickerDelegate,UIPickerViewDataSource, UIPickerViewDelegate>
 @property (nonatomic, strong) UITextField *pickerViewTextField;
 @property (nonatomic, strong) UIPickerView *pickerView;
@@ -257,7 +257,7 @@
 
 - (void)dismiss{
     //    [[self getAppdelegate] removeTrackingArrayLastObject];
-    
+    [TSWPassValue sharedValue].passvalue = 1;
     [self.navigationController dismissViewControllerAnimated:YES completion:^{
         
     }];

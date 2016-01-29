@@ -37,7 +37,7 @@
     self.navigationBar.bottomLineView.hidden = YES;
     
     // 没有需求的提示
-    self.nullView = [[UIView alloc]initWithFrame:CGRectMake(0.0f, self.navigationBarHeight+100.0f, CGRectGetWidth(self.view.bounds), 100)];
+    self.nullView = [[UIView alloc]initWithFrame:CGRectMake(0.0f, self.navigationBarHeight + 100.0f, CGRectGetWidth(self.view.bounds), 100)];
     self.nullView.hidden = NO;
     UILabel *nullLabel = [[UILabel alloc]initWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.view.bounds), 12.0f)];
     nullLabel.textAlignment = NSTextAlignmentCenter;

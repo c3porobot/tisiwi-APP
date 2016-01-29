@@ -226,7 +226,11 @@
         }
     }
     
-    _domainContent.text = financeDetal.fields; //领域
+    _domainContent.text = financeDetal.domains; //领域
+    _domainContent.numberOfLines = 0;
+    CGSize titleSize = [financeDetal.domains boundingRectWithSize:CGSizeMake(width - 2 *20 - CGRectGetWidth(self.domainLabel.frame), MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15]} context:nil].size;
+    _domainContent.frame = CGRectMake(CGRectGetMaxX(self.domainLabel.frame), CGRectGetMinY(self.domainLabel.frame) - 2, titleSize.width, titleSize.height);
+    _periodLabel.frame = CGRectMake(CGRectGetMinX(self.domainLabel.frame), CGRectGetMaxY(self.domainContent.frame) + 15, 80, 15);
     _periodContent.text = financeDetal.rounds; //阶段
     _periodContent.numberOfLines = 0;
     CGSize titleSize1 = [financeDetal.rounds boundingRectWithSize:CGSizeMake(width - 2 *20 - CGRectGetWidth(self.periodLabel.frame), MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15]} context:nil].size;
@@ -242,7 +246,8 @@
     _informationLabel.frame = CGRectMake(CGRectGetMinX(self.caseLabel.frame), CGRectGetMaxY(self.caseContent.frame) + 30, titleSize3.width, titleSize3.height);
     self.contectBtn.frame = CGRectMake(CGRectGetMinX(self.periodLabel.frame), CGRectGetMaxY(self.informationLabel.frame) + 30,  width - 2 * 20, 50);
     
-    if ([_financeDetail.fields isEqualToString:@""] || [_financeDetail.fields length] == 0) {
+    if ([_financeDetail.domains isEqualToString:@""] || [_financeDetail.domains length] == 0) {
+        NSLog(@"####################%@", financeDetal.domains);
         _domainContent.text = @"暂无";
         self.domainContent.frame = CGRectMake(CGRectGetMaxX(self.domainLabel.frame), CGRectGetMinY(self.domainLabel.frame), width - CGRectGetMaxX(self.domainLabel.frame), 15);
     }

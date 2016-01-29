@@ -16,7 +16,7 @@
 #import "TSWTalentFilterViewController.h"
 #import "GVUserDefaults+TSWProperties.h"
 #import "TSWSendEmail.h"
-
+#import "TSWPassValue.h"
 @interface TSWTalentViewController ()<UICollectionViewDelegate, UICollectionViewDataSource,TSWTalentCellDelegate>
 
 @property (nonatomic, strong) UICollectionView *collectionView;
@@ -119,7 +119,11 @@
 {
     [super viewWillAppear:animated];
     [[self rdv_tabBarController] setTabBarHidden:NO animated:NO];
-    [self refreshData];
+    if ([TSWPassValue sharedValue].passvalue == 1) {
+        [self refreshData];
+    } else if ([TSWPassValue sharedValue].passvalue == 0) {
+    
+    }
 }
 - (void)viewDidAppear:(BOOL)animated
 {

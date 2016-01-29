@@ -22,7 +22,7 @@
 #import "TSWArticleDetailsViewController.h"
 #import "TSWLineCell.h"
 #import "ZButton.h"
-
+#import "TSWMineViewController.h"
 @interface TSWHomeRootController()<UICollectionViewDelegate, UICollectionViewDataSource,TSWBannersCellDelegate, TSWArticleCellDelegate, TSWLoginViewDelegate>
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, strong) NSMutableArray *dataArray;
@@ -307,8 +307,12 @@
 - (void)leftButtonTapped:(id)sender
 {
     [[self rdv_tabBarController] setTabBarHidden:YES animated:YES];
-    TSWProfileViewController *pushController = [[TSWProfileViewController alloc] init];
-    [self.navigationController pushViewController:pushController animated:YES];
+    
+    
+    //TSWProfileViewController *pushController = [[TSWProfileViewController alloc] init];
+    //[self.navigationController pushViewController:pushController animated:YES];
+    TSWMineViewController *TSWMine = [[TSWMineViewController alloc] init];
+    [self.navigationController pushViewController:TSWMine animated:YES];
 }
 
 #pragma mark Key-value observing

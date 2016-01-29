@@ -158,16 +158,15 @@
 {
     self.frame = CGRectMake(0, view.frame.size.height, [UIScreen mainScreen].bounds.size.width, self.frame.size.height);
     [view addSubview:self];
-    
     [UIView animateWithDuration:0.3 animations:^{
         self.frame = CGRectMake(0, view.frame.size.height - self.frame.size.height, self.frame.size.width, self.frame.size.height);
     }];
     
+   // self.superview.userInteractionEnabled = NO;
 }
 
 - (void)cancelPicker
 {
-    
     [UIView animateWithDuration:0.3
                      animations:^{
                          self.frame = CGRectMake(0, self.frame.origin.y+self.frame.size.height, self.frame.size.width, self.frame.size.height);
@@ -176,7 +175,6 @@
                          [self removeFromSuperview];
                          
                      }];
-    
 }
 
 - (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view{

@@ -25,8 +25,12 @@
 		A427806A1C33B31F00F3D3E0 /* btn_wechat_disable@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A42780621C33B31F00F3D3E0 /* btn_wechat_disable@2x.png */; };
 		A427806B1C33B31F00F3D3E0 /* btn_wechat_disable@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A42780631C33B31F00F3D3E0 /* btn_wechat_disable@3x.png */; };
 		A427807E1C3BA78F00F3D3E0 /* LHBCopyLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = A427807D1C3BA78F00F3D3E0 /* LHBCopyLabel.m */; };
+		A45608EF1C58B72A007D876F /* TSWTalentFilterView.m in Sources */ = {isa = PBXBuildFile; fileRef = A45608EE1C58B72A007D876F /* TSWTalentFilterView.m */; };
 		A47BBC971C451CBF00748482 /* TSWSendRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = A47BBC961C451CBF00748482 /* TSWSendRequest.m */; };
+		A481534E1C5226790083947B /* TSWEditMineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A481534D1C5226790083947B /* TSWEditMineViewController.m */; };
+		A48153511C54A7590083947B /* TSWMineTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A48153501C54A7590083947B /* TSWMineTableViewCell.m */; };
 		A48617D51C49534300EC65C5 /* TSWSendGet.m in Sources */ = {isa = PBXBuildFile; fileRef = A48617D41C49534300EC65C5 /* TSWSendGet.m */; };
+		A4AA08F71C575C8C00996251 /* TSWTalentAndFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4AA08F61C575C8C00996251 /* TSWTalentAndFilterViewController.m */; };
 		A4BAFDBD1C44D2A9006F05C5 /* Tabbar_b1_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4BAFDB51C44D2A9006F05C5 /* Tabbar_b1_n@2x.png */; };
 		A4BAFDBE1C44D2A9006F05C5 /* Tabbar_b1_n@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4BAFDB61C44D2A9006F05C5 /* Tabbar_b1_n@3x.png */; };
 		A4BAFDBF1C44D2A9006F05C5 /* Tabbar_b2_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4BAFDB71C44D2A9006F05C5 /* Tabbar_b2_n@2x.png */; };
@@ -68,6 +72,10 @@
 		A4DACE651C0C448500AF4234 /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = A4DACE531C0C448500AF4234 /* UIImageView+WebCache.m */; };
 		A4DACE661C0C448500AF4234 /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = A4DACE551C0C448500AF4234 /* UIView+WebCacheOperation.m */; };
 		A4DC2E011C44968E0071B5C0 /* BeforeAuditFinaceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4DC2E001C44968E0071B5C0 /* BeforeAuditFinaceViewController.m */; };
+		A4E2BC8A1C51014F00C010EC /* TSWPassValue.m in Sources */ = {isa = PBXBuildFile; fileRef = A4E2BC891C51014F00C010EC /* TSWPassValue.m */; };
+		A4E2BC8D1C5121B700C010EC /* MineController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4E2BC8C1C5121B700C010EC /* MineController.m */; };
+		A4E2BC901C520CFB00C010EC /* TSWMineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4E2BC8F1C520CFB00C010EC /* TSWMineViewController.m */; };
+		A4E5AA081C5608F500E90D54 /* TSWFinanceAndFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4E5AA071C5608F500E90D54 /* TSWFinanceAndFilterViewController.m */; };
 		B91B11AA1BA03BF9006BA502 /* TSWEditProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B91B11A91BA03BF9006BA502 /* TSWEditProfileViewController.m */; };
 		B92E1E9B1BFEC7EC001EBB74 /* login_bti_d@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B92E1E951BFEC7EC001EBB74 /* login_bti_d@2x.png */; };
 		B92E1E9C1BFEC7EC001EBB74 /* login_bti_d@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = B92E1E961BFEC7EC001EBB74 /* login_bti_d@3x.png */; };
@@ -432,10 +440,18 @@
 		A42780631C33B31F00F3D3E0 /* btn_wechat_disable@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_wechat_disable@3x.png"; sourceTree = "<group>"; };
 		A427807C1C3BA78F00F3D3E0 /* LHBCopyLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LHBCopyLabel.h; sourceTree = "<group>"; };
 		A427807D1C3BA78F00F3D3E0 /* LHBCopyLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LHBCopyLabel.m; sourceTree = "<group>"; };
+		A45608ED1C58B72A007D876F /* TSWTalentFilterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSWTalentFilterView.h; sourceTree = "<group>"; };
+		A45608EE1C58B72A007D876F /* TSWTalentFilterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSWTalentFilterView.m; sourceTree = "<group>"; };
 		A47BBC951C451CBF00748482 /* TSWSendRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSWSendRequest.h; sourceTree = "<group>"; };
 		A47BBC961C451CBF00748482 /* TSWSendRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSWSendRequest.m; sourceTree = "<group>"; };
+		A481534C1C5226790083947B /* TSWEditMineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSWEditMineViewController.h; sourceTree = "<group>"; };
+		A481534D1C5226790083947B /* TSWEditMineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSWEditMineViewController.m; sourceTree = "<group>"; };
+		A481534F1C54A7590083947B /* TSWMineTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSWMineTableViewCell.h; sourceTree = "<group>"; };
+		A48153501C54A7590083947B /* TSWMineTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSWMineTableViewCell.m; sourceTree = "<group>"; };
 		A48617D31C49534300EC65C5 /* TSWSendGet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSWSendGet.h; sourceTree = "<group>"; };
 		A48617D41C49534300EC65C5 /* TSWSendGet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSWSendGet.m; sourceTree = "<group>"; };
+		A4AA08F51C575C8C00996251 /* TSWTalentAndFilterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSWTalentAndFilterViewController.h; sourceTree = "<group>"; };
+		A4AA08F61C575C8C00996251 /* TSWTalentAndFilterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSWTalentAndFilterViewController.m; sourceTree = "<group>"; };
 		A4BAFDB51C44D2A9006F05C5 /* Tabbar_b1_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Tabbar_b1_n@2x.png"; path = "Resources/images/TabBar/Tabbar_b1_n@2x.png"; sourceTree = "<group>"; };
 		A4BAFDB61C44D2A9006F05C5 /* Tabbar_b1_n@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Tabbar_b1_n@3x.png"; path = "Resources/images/TabBar/Tabbar_b1_n@3x.png"; sourceTree = "<group>"; };
 		A4BAFDB71C44D2A9006F05C5 /* Tabbar_b2_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Tabbar_b2_n@2x.png"; path = "Resources/images/TabBar/Tabbar_b2_n@2x.png"; sourceTree = "<group>"; };
@@ -498,6 +514,14 @@
 		A4DACE551C0C448500AF4234 /* UIView+WebCacheOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WebCacheOperation.m"; sourceTree = "<group>"; };
 		A4DC2DFF1C44968E0071B5C0 /* BeforeAuditFinaceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeforeAuditFinaceViewController.h; sourceTree = "<group>"; };
 		A4DC2E001C44968E0071B5C0 /* BeforeAuditFinaceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeforeAuditFinaceViewController.m; sourceTree = "<group>"; };
+		A4E2BC881C51014F00C010EC /* TSWPassValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSWPassValue.h; sourceTree = "<group>"; };
+		A4E2BC891C51014F00C010EC /* TSWPassValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSWPassValue.m; sourceTree = "<group>"; };
+		A4E2BC8B1C5121B700C010EC /* MineController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MineController.h; path = Home/Controllers/MineController.h; sourceTree = "<group>"; };
+		A4E2BC8C1C5121B700C010EC /* MineController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MineController.m; path = Home/Controllers/MineController.m; sourceTree = "<group>"; };
+		A4E2BC8E1C520CFB00C010EC /* TSWMineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSWMineViewController.h; sourceTree = "<group>"; };
+		A4E2BC8F1C520CFB00C010EC /* TSWMineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSWMineViewController.m; sourceTree = "<group>"; };
+		A4E5AA061C5608F500E90D54 /* TSWFinanceAndFilterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSWFinanceAndFilterViewController.h; sourceTree = "<group>"; };
+		A4E5AA071C5608F500E90D54 /* TSWFinanceAndFilterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSWFinanceAndFilterViewController.m; sourceTree = "<group>"; };
 		B91B11A81BA03BF9006BA502 /* TSWEditProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TSWEditProfileViewController.h; path = Home/Controllers/TSWEditProfileViewController.h; sourceTree = "<group>"; };
 		B91B11A91BA03BF9006BA502 /* TSWEditProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TSWEditProfileViewController.m; path = Home/Controllers/TSWEditProfileViewController.m; sourceTree = "<group>"; };
 		B92E1E951BFEC7EC001EBB74 /* login_bti_d@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "login_bti_d@2x.png"; path = "Resources/images/LoginAndRegister/login_bti_d@2x.png"; sourceTree = "<group>"; };
@@ -1484,6 +1508,8 @@
 		B9EFEA331B9C0F84009132ED /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				A4E2BC8B1C5121B700C010EC /* MineController.h */,
+				A4E2BC8C1C5121B700C010EC /* MineController.m */,
 				B9EFEBBC1B9D3CBF009132ED /* TSWHomeRootController.h */,
 				B9EFEBBD1B9D3CBF009132ED /* TSWHomeRootController.m */,
 				B9EFEBCB1B9DA414009132ED /* TSWLoginViewController.h */,
@@ -1512,6 +1538,10 @@
 				B9F1B75E1BB28832002FFFAF /* TSWPersonelRequirementViewController.m */,
 				B9F1B7601BB28860002FFFAF /* TSWOtherRequirementViewController.h */,
 				B9F1B7611BB28860002FFFAF /* TSWOtherRequirementViewController.m */,
+				A4E2BC8E1C520CFB00C010EC /* TSWMineViewController.h */,
+				A4E2BC8F1C520CFB00C010EC /* TSWMineViewController.m */,
+				A481534C1C5226790083947B /* TSWEditMineViewController.h */,
+				A481534D1C5226790083947B /* TSWEditMineViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1596,6 +1626,8 @@
 				B93753A61BAD4AA800011EEB /* TSWLineCell.m */,
 				B9F1B7541BB252B8002FFFAF /* TSWMyRequirementsCell.h */,
 				B9F1B7551BB252B8002FFFAF /* TSWMyRequirementsCell.m */,
+				A481534F1C54A7590083947B /* TSWMineTableViewCell.h */,
+				A48153501C54A7590083947B /* TSWMineTableViewCell.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1748,6 +1780,8 @@
 			children = (
 				B9EFEBB31B9D3CA1009132ED /* TSWServiceViewController.h */,
 				B9EFEBB41B9D3CA1009132ED /* TSWServiceViewController.m */,
+				A4E5AA061C5608F500E90D54 /* TSWFinanceAndFilterViewController.h */,
+				A4E5AA071C5608F500E90D54 /* TSWFinanceAndFilterViewController.m */,
 				B937533D1BA9BFD600011EEB /* TSWFinanceViewController.h */,
 				B937533E1BA9BFD600011EEB /* TSWFinanceViewController.m */,
 				B93753401BA9BFF800011EEB /* TSWFinanceDetailViewController.h */,
@@ -1760,6 +1794,8 @@
 				B9E9424A1BBCCCDA0057B743 /* TSWOtherDetailViewController.m */,
 				A4DC2DFF1C44968E0071B5C0 /* BeforeAuditFinaceViewController.h */,
 				A4DC2E001C44968E0071B5C0 /* BeforeAuditFinaceViewController.m */,
+				A4E2BC881C51014F00C010EC /* TSWPassValue.h */,
+				A4E2BC891C51014F00C010EC /* TSWPassValue.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1781,6 +1817,8 @@
 				B937532C1BA9626B00011EEB /* TSWTalentCell.m */,
 				B93753311BA99B2800011EEB /* TSWTalentDetailCell.h */,
 				B93753321BA99B2800011EEB /* TSWTalentDetailCell.m */,
+				A45608ED1C58B72A007D876F /* TSWTalentFilterView.h */,
+				A45608EE1C58B72A007D876F /* TSWTalentFilterView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1807,6 +1845,8 @@
 		B9EFEAAE1B9C19A7009132ED /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				A4AA08F51C575C8C00996251 /* TSWTalentAndFilterViewController.h */,
+				A4AA08F61C575C8C00996251 /* TSWTalentAndFilterViewController.m */,
 				B9EFEBB01B9D3C98009132ED /* TSWTalentViewController.h */,
 				B9EFEBB11B9D3C98009132ED /* TSWTalentViewController.m */,
 				B9EFEBDA1B9DA833009132ED /* TSWTalentDetailViewController.h */,
@@ -2587,6 +2627,7 @@
 				B9EFEB891B9D3930009132ED /* DDDispatchQueueLogFormatter.m in Sources */,
 				B937534B1BAA58B600011EEB /* TSWFinanceList.m in Sources */,
 				B9EFEAE91B9C24AB009132ED /* SVIndefiniteAnimatedView.m in Sources */,
+				A4E2BC8A1C51014F00C010EC /* TSWPassValue.m in Sources */,
 				B9EFEBB21B9D3C98009132ED /* TSWTalentViewController.m in Sources */,
 				B937530C1BA6FA7A00011EEB /* TSWContactsLetterCell.m in Sources */,
 				B9EFEB841B9D3930009132ED /* DDASLLogger.m in Sources */,
@@ -2603,6 +2644,7 @@
 				B9EFEBBE1B9D3CBF009132ED /* TSWHomeRootController.m in Sources */,
 				B9E80C081BA16F7E00A271CB /* TSWClearReusableView.m in Sources */,
 				B9E942421BBCCC550057B743 /* TSWOtherList.m in Sources */,
+				A4AA08F71C575C8C00996251 /* TSWTalentAndFilterViewController.m in Sources */,
 				B9E942A81BC2E42D0057B743 /* TSWServiceRound.m in Sources */,
 				B9EFEC0B1B9EDA82009132ED /* UIScrollView+TPKeyboardAvoidingAdditions.m in Sources */,
 				B9EFEBE31B9DA8E8009132ED /* TSWContactsViewController.m in Sources */,
@@ -2626,10 +2668,12 @@
 				B93753151BA7022A00011EEB /* TSWContactList.m in Sources */,
 				A4DACE5D1C0C448500AF4234 /* SDWebImageDownloaderOperation.m in Sources */,
 				B9EFEB971B9D3A05009132ED /* UIImage+CXExtensions.m in Sources */,
+				A4E5AA081C5608F500E90D54 /* TSWFinanceAndFilterViewController.m in Sources */,
 				B9EFEAA01B9C1608009132ED /* CXNavigationBarController.m in Sources */,
 				B9EFEBC51B9D79DC009132ED /* GVUserDefaults.m in Sources */,
 				B9E9424E1BBE09740057B743 /* TSWSendProfile.m in Sources */,
 				B9DE8B0B1BA311E5003E3DFC /* TSWFinancingRequirement.m in Sources */,
+				A4E2BC8D1C5121B700C010EC /* MineController.m in Sources */,
 				B9EFEB961B9D3A05009132ED /* UIColor+CXExtensions.m in Sources */,
 				B9DE8B111BA313D0003E3DFC /* TSWOtherRequirement.m in Sources */,
 				B9EFEA2D1B9C0C3D009132ED /* TSWSplashViewController.m in Sources */,
@@ -2678,7 +2722,9 @@
 				B9EFEBD61B9DA49E009132ED /* TSWMyRequirementsViewController.m in Sources */,
 				B9E942541BBE1E930057B743 /* TSWSendTalent.m in Sources */,
 				B9DE8B051BA310B3003E3DFC /* TSWProfile.m in Sources */,
+				A45608EF1C58B72A007D876F /* TSWTalentFilterView.m in Sources */,
 				B9E942911BC21B850057B743 /* HanyuPinyinOutputFormat.m in Sources */,
+				A481534E1C5226790083947B /* TSWEditMineViewController.m in Sources */,
 				B9EFEB271B9D340A009132ED /* AFNetworkReachabilityManager.m in Sources */,
 				B93753451BAA534E00011EEB /* TSWFinanceCell.m in Sources */,
 				B9DE8B021BA30FE9003E3DFC /* TSWArticleDetail.m in Sources */,
@@ -2693,6 +2739,7 @@
 				B9DE8B141BA31469003E3DFC /* TSWService.m in Sources */,
 				B937530F1BA6FB2500011EEB /* TSWContactsCell.m in Sources */,
 				B9EFEC091B9EDA82009132ED /* TPKeyboardAvoidingScrollView.m in Sources */,
+				A48153511C54A7590083947B /* TSWMineTableViewCell.m in Sources */,
 				B9E80BF61BA1248100A271CB /* TSWValidate.m in Sources */,
 				B9E942A21BC2E4060057B743 /* TSWGetRound.m in Sources */,
 				B9E942951BC21B850057B743 /* PinyinHelper.m in Sources */,
@@ -2704,6 +2751,7 @@
 				B9E9426E1BC13E8B0057B743 /* ZHScrollView.m in Sources */,
 				B9E942991BC21BCA0057B743 /* ChineseInclude.m in Sources */,
 				B9EFEB1B1B9D33A1009132ED /* AFHTTPRequestOperationManager.m in Sources */,
+				A4E2BC901C520CFB00C010EC /* TSWMineViewController.m in Sources */,
 				B937536B1BAB211600011EEB /* TSWArticleDetailCell.m in Sources */,
 				B9EFEB221B9D33D9009132ED /* AFHTTPSessionManager.m in Sources */,
 				B9EFEB4B1B9D3457009132ED /* UIRefreshControl+AFNetworking.m in Sources */,
