@@ -7,9 +7,10 @@
 //
 
 #import "GVUserDefaults+TSWProperties.h"
-
 @implementation GVUserDefaults (TSWProperties)
 
+@dynamic member;
+@dynamic selectNum;
 @dynamic token;
 @dynamic refreshToken;
 @dynamic expire;
@@ -20,7 +21,8 @@
 @dynamic bookName;
 @dynamic searchServiceCityCode;
 @dynamic searchServiceRound;
-@dynamic searchServiceFields;
+//@dynamic searchServiceFields;
+@dynamic searchServiceField;
 
 @dynamic searchTalentCityCode;
 @dynamic searchTalentSeniority;
@@ -32,7 +34,8 @@
     return @{
              @"searchServiceCityCode":@"",
              @"searchServiceRound":@"",
-             @"searchServiceFields":@[],
+//             @"searchServiceFields":@[],
+             @"searchServiceField":@"",
              @"searchTalentCityCode":@"",
              @"searchTalentSeniority":@"",
              @"searchTalentSalaryMin":@"",

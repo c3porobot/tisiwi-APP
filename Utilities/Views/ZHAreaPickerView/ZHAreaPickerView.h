@@ -19,8 +19,11 @@
 @end
 
 @interface ZHAreaPickerView : UIView <UIPickerViewDelegate, UIPickerViewDataSource>
-
+// NSArray *provinces, *cities, *areas;
 @property (assign, nonatomic) id <ZHAreaPickerDelegate> delegate;
+@property (nonatomic, strong) NSArray *provinces;
+@property (nonatomic, strong) NSArray *cities;
+@property (nonatomic, strong) NSArray *areas;
 @property (strong, nonatomic) IBOutlet UIPickerView *locatePicker;
 @property (strong, nonatomic) ZHLocation *locate;
 - (id)initWithDelegate:(id<ZHAreaPickerDelegate>)delegate;

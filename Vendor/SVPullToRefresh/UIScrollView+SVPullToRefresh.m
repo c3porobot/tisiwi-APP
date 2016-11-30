@@ -81,6 +81,7 @@ static char UIScrollViewPullToRefreshView;
                 return;
         }
         SVPullToRefreshView *view = [[SVPullToRefreshView alloc] initWithFrame:CGRectMake(0, yOrigin, self.bounds.size.width, SVPullToRefreshViewHeight)];
+//        view.backgroundColor = [UIColor redColor];
         view.pullToRefreshActionHandler = actionHandler;
         view.scrollView = self;
         [self addSubview:view];

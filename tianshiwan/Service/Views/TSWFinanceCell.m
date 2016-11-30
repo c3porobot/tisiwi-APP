@@ -144,7 +144,13 @@
     CGSize size = [_cityLabel.text sizeWithAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:12.0f],NSFontAttributeName, nil]];
     _mapImageView.frame = CGRectMake(width - 15.0f-size.width-11.0f-3.0f, 12, 11.0f, 15.0f);
     _stepLabel.text = [NSString stringWithFormat:@"投资阶段: %@",_finance.rounds];
-    _sampleLabel.text = [NSString stringWithFormat:@"投资案例: %@",_finance.cases];
+    if ([_finance.fields isEqualToString:@""] || [_finance.fields length] == 0) {
+        _sampleLabel.text = [NSString stringWithFormat:@"投资领域: 暂无"];
+
+    } else {
+        _sampleLabel.text = [NSString stringWithFormat:@"投资领域: %@",_finance.fields];
+
+    }
     _zanLabel.text = [NSString stringWithFormat:@"%ld",(long)_finance.like];
     CGSize size2 = [_zanLabel.text sizeWithAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:12.0f],NSFontAttributeName, nil]];
     _goodImageView.frame = CGRectMake(width - 15.0f-size2.width-15.0f-6.0f,12.0f+14.0f+8.0f+2*(12.0f+8.0f)-3.0f, 15.0f, 15.0f);

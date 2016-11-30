@@ -26,12 +26,14 @@
 
 @property (nonatomic, weak) NSString *searchServiceCityCode;
 @property (nonatomic, weak) NSString *searchServiceRound;
-@property (nonatomic, weak) NSMutableArray *searchServiceFields;
-
+//@property (nonatomic, weak) NSMutableArray *searchServiceFields;
+@property (nonatomic, weak) NSString *searchServiceField;
 @property (nonatomic, weak) NSString *searchTalentCityCode;
 @property (nonatomic, weak) NSString *searchTalentSeniority;
 @property (nonatomic, weak) NSString *searchTalentSalaryMin;
 @property (nonatomic, weak) NSString *searchTalentSalaryMax;
 @property (nonatomic, weak) NSString *searchTalentTitle;
 
+
+@property (nonatomic, assign) NSUInteger selectNum;
 @end

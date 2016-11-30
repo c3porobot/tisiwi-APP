@@ -17,6 +17,7 @@
         CGFloat width = CGRectGetWidth(self.bounds);
         UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(10.0f, 10.0f, width-20.0f, 0.5f)];
         lineView.backgroundColor = RGB(206, 206, 206);
+        lineView.backgroundColor = [UIColor clearColor];
         [self.contentView addSubview:lineView];
         
     }

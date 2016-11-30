@@ -9,5 +9,8 @@
 #import "CXNavigationBarController.h"
 
 @interface TSWFinanceAndFilterViewController : CXNavigationBarController
+@property (nonatomic, assign) NSUInteger changeRow;
+@property (nonatomic, assign) NSUInteger changeCompoent;
+@property (nonatomic, copy) void(^passValueBlock)(NSUInteger pickerRow, NSUInteger pickerComponent);
 
 @end

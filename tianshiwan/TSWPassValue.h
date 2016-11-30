@@ -9,7 +9,8 @@
 #import <Foundation/Foundation.h>
 
 @interface TSWPassValue : NSObject
-@property (nonatomic, assign) NSInteger passvalue;
+@property (nonatomic, assign) NSInteger passvalue; //人才界面传值
+@property (nonatomic, assign) NSInteger serviceValue; //服务界面传值
 
 +(instancetype)sharedValue;
 @end

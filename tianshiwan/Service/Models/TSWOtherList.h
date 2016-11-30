@@ -7,6 +7,7 @@
 //
 
 #import "CXResource.h"
+#define OTHER_LISTCollection @"v1/service/getstores/"
 #define OTHER_LIST @"v1/service/"
 @interface TSWOtherList : CXResource
 @property (nonatomic, strong) NSMutableArray *others;

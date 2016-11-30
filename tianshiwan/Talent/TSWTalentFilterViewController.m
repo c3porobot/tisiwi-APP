@@ -41,7 +41,7 @@
     self.view.backgroundColor = RGB(234, 234, 234);
     _selectedPosition = @"";
     _selectedCityCode = @"";
-    
+    self.locatePicker.delegate = self;
     if ([self.navigationController.viewControllers indexOfObject:self] == 0) {
         CGRect dismissButtonFrame = CGRectMake(00.0f, 0.0f, 21.0f, 44.0f);
         
@@ -263,10 +263,15 @@
     [self.locatePicker showInView:self.view];
 }
 
-#pragma mark - HZAreaPicker delegate
--(void)pickerDidChaneStatus:(ZHAreaPickerView *)picker
-{
-    [self.cityBtn setTitle:[NSString stringWithFormat:@"%@", picker.locate.city] forState:UIControlStateNormal];
+#pragma mark - ZHAreaPicker delegate
+- (void)pickerDidChaneStatus:(ZHAreaPickerView *)picker {
+    NSString *name = @"";
+    if(picker.locate.city){
+        name = picker.locate.city;
+    }else{
+        name = picker.locate.state;
+    }
+   [self.cityBtn setTitle:[NSString stringWithFormat:@"%@", name] forState:UIControlStateNormal];
     self.selectedCityCode = picker.locate.cityCode;
 }
 
@@ -329,6 +334,7 @@
 -(void)filterTalent {
     // 把搜索条件存到公共区域，然后在人才列表页面willAppear的时候重新搜索
     [GVUserDefaults standardUserDefaults].searchTalentCityCode = _selectedCityCode;
+    [GVUserDefaults standardUserDefaults].searchTalentTitle = 
     [GVUserDefaults standardUserDefaults].searchTalentSeniority = _yearsField.text;
     NSString *min = @"";
     if(_salaryAField.text!=nil && ![_salaryAField.text isEqualToString:@""]){

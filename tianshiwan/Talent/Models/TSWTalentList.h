@@ -8,6 +8,7 @@
 
 #import "CXResource.h"
 #define TALENT_LIST @"v1/service/personnel"
+#define TALENT_DETAIL @"v1/service/personnel/mberid/"
 
 @interface TSWTalentList : CXResource
 @property (nonatomic, strong) NSMutableArray *talents;

@@ -10,7 +10,7 @@
 #import "TSWSendTalent.h"
 #import "ZHAreaPickerView.h"
 #import "ZHScrollView.h"
-
+#import "TSWSendTalent.h"
 static const CGFloat labelWidth = 80.0f; //左边UILabel的宽度
 
 @interface TSWPublishTalentController ()<UITextFieldDelegate, UITextViewDelegate, ZHAreaPickerDelegate>
@@ -39,6 +39,7 @@ static const CGFloat labelWidth = 80.0f; //左边UILabel的宽度
 @property (nonatomic, strong) UILabel *hremailVeri;
 @property (nonatomic, strong) UILabel *dutyVeri;
 @property (nonatomic, strong) UILabel *askVeri;
+
 @end
 
 @implementation TSWPublishTalentController

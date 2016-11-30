@@ -93,7 +93,7 @@ static const float kNavigationBarDefaultHeight = 44.0F;
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    [super viewWillAppear:animated];
+    //[super viewWillAppear:animated];
     
     if (self.navigationController) {
         [self.navigationController setNavigationBarHidden:YES animated:NO];

@@ -14,7 +14,9 @@
 #import "GeTuiSdk.h"
 #import "RDVTabBarController.h"
 #import "TSWArticleDetailsViewController.h"
+#import "TSWPassValue.h"
 
+#import <Instabug/Instabug.h>
 #define NotifyActionKey "NotifyAction"
 //生成静态的, 不可被改变的字符串
 NSString* const NotificationCategoryIdent  = @"ACTIONABLE";
@@ -142,7 +144,10 @@ NSString* const NotificationActionTwoIdent = @"ACTION_TWO";
     self.window.backgroundColor = [UIColor clearColor];
     //   [self setupViewControllers];
     TSWSplashViewController *splashViewController = [[TSWSplashViewController alloc] init];
+    
     [self.window setRootViewController:splashViewController];
+    NSLog(@"*********************deviceToken:%@",_deviceToken);
+
     [self.window makeKeyAndVisible];
     
     
@@ -227,7 +232,7 @@ NSString* const NotificationActionTwoIdent = @"ACTION_TWO";
     
     _deviceToken = [token stringByReplacingOccurrencesOfString:@" " withString:@""];
     
-    NSLog(@"deviceToken:%@",_deviceToken);
+    NSLog(@"*********************deviceToken:%@",_deviceToken);
     
     // [3]:向个推服务器注册deviceToken
     

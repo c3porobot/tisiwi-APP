@@ -11,6 +11,8 @@
 #import "AFNetworking.h"
 #define kCheckInfoURL @"http://120.132.70.218/v1/service/personnel/%@/mail_attachment/"
 #define kURL @"http://7xl8p4.com2.z0.glb.qiniucdn.com/resume_lirui.pdf"
+#define SYSTEM_VERSION_LESS_THAN(v) ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedAscending)
+
 @interface LHBTalentCheckController ()<QLPreviewControllerDelegate, QLPreviewControllerDataSource>
 @property (nonatomic, strong) NSMutableArray *PDFArray; //存储PDF文档的数据源
 @property (nonatomic, copy) NSString *pdfPath; //PDF文件路径
@@ -26,19 +28,23 @@
 }
 
 
+
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     // Do any additional setup after loading the view.
     QLPreviewController * qlPreview = [[QLPreviewController alloc]init];
-    
+    if (SYSTEM_VERSION_LESS_THAN(@"10.0")) {
+        [self addChildViewController:qlPreview];
+    }
     qlPreview.dataSource = self; //需要打开的文件的信息要实现dataSource中的方法
     qlPreview.delegate = self;  //视图显示的控制
-//    [self presentViewController:qlPreview animated:YES completion:^{
-//        //需要用模态化的方式进行展示
-//    }];
-    [self.navigationController pushViewController:qlPreview animated:YES];
- 
+    [self presentViewController:qlPreview animated:YES completion:^{
+        //需要用模态化的方式进行展示
+    }];
+//    [self.navigationController pushViewController:qlPreview animated:YES];
     //创建一个文件路径
     //获取沙盒路径
     NSString *cachesPath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)firstObject];
@@ -69,6 +75,7 @@
     } else {
         //存在文件进行播放
     }
+    
 }
 
 
@@ -107,6 +114,7 @@
 {
         //返回要打开文件的地址，包括网络或者本地的地址
     NSURL * url = [NSURL fileURLWithPath:self.pdfPath];
+    [controller reloadData];
     return url;
 }
 #pragma mark - previewControllerDelegate

@@ -9,6 +9,7 @@
 #import "CXResource.h"
 //#define FINANCE_LIST @"v1/service/financing"
 #define FINANCE_LIST @"v1/service/financing/"
+#define FINANCE_LISTCollection @"v1/service/financing/getstorelists/"
 @interface TSWFinanceList : CXResource
 @property (nonatomic, strong) NSMutableArray *finances;
 @property (nonatomic, assign) NSInteger page;

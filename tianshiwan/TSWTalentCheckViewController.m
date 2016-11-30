@@ -7,9 +7,9 @@
 //
 
 #import "TSWTalentCheckViewController.h"
-#import <QuickLook/QuickLook.h>
 #import "AFNetworking.h"
 #define kURL @"http://120.132.70.218/attachments/"
+#define SYSTEM_VERSION_LESS_THAN(v) ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedAscending)
 
 @interface TSWTalentCheckViewController ()<QLPreviewControllerDelegate, QLPreviewControllerDataSource>
 @property (nonatomic, copy) NSString *pdfPath; //PDF文件路径
@@ -23,18 +23,31 @@
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
     // Do any additional setup after loading the view.
-    
+    [self createNewController];
+   
+}
+
+- (void)createNewController {
     QLPreviewController * qlPreview = [[QLPreviewController alloc]init];
     qlPreview.view.backgroundColor = [UIColor whiteColor];
     [[UINavigationBar appearanceWhenContainedIn:[QLPreviewController class], nil] setTintColor:[UIColor whiteColor]];
     [UINavigationBar appearanceWhenContainedIn:[QLPreviewController class], nil].barTintColor = [UIColor colorWithRed:33.0f/255.0f green:159.0f/255.0f blue:218.0f/255.0f alpha:1.0f];
-     NSDictionary *dic = @{NSFontAttributeName:[UIFont boldSystemFontOfSize:20], NSForegroundColorAttributeName:[UIColor whiteColor]};
+    NSDictionary *dic = @{NSFontAttributeName:[UIFont boldSystemFontOfSize:20], NSForegroundColorAttributeName:[UIColor whiteColor]};
     [UINavigationBar appearanceWhenContainedIn:[QLPreviewController class], nil].titleTextAttributes = dic;
     qlPreview.dataSource = self; //需要打开的文件的信息要实现dataSource中的方法
     qlPreview.delegate = self;  //视图显示的控制
     [self presentViewController:qlPreview animated:NO completion:^{
-            //需要用模态化的方式进行展示
+        //需要用模态化的方式进行展示
     }];
+    if(SYSTEM_VERSION_LESS_THAN(@"10.0"))
+    {
+        [self addChildViewController:qlPreview];
+    }
+    CGFloat width = self.view.frame.size.width;
+    CGFloat height = self.view.frame.size.height;
+    qlPreview.view.frame = CGRectMake(0, 350, width, height-300);
+    [qlPreview didMoveToParentViewController:self];
+    [self.view addSubview:qlPreview.view];
     //创建一个文件路径
     //获取沙盒路径
     NSString *cachesPath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)firstObject];
@@ -62,7 +75,6 @@
     }
     [self reloadData];
 }
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -102,16 +114,16 @@
     return CGRectMake(110, 190, 100, 100);
 }
 
+-(void)previewControllerWillDismiss:(QLPreviewController *)controller
+{
+    //控制器消失后调用
+    //[self.navigationController popToRootViewControllerAnimated:YES];
+}
 -(void)previewControllerDidDismiss:(QLPreviewController *)controller
 {
     //控制器消失后调用
     //[self.navigationController popToRootViewControllerAnimated:YES];
     [self dismissViewControllerAnimated:NO completion:nil];
-}
--(void)previewControllerWillDismiss:(QLPreviewController *)controller
-{
-    //控制器在即将消失后调用
-
 }
 
 /*

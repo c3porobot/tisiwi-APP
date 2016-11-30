@@ -24,6 +24,7 @@
 #import "RDVTabBarController.h"
 #import "RDVTabBarItem.h"
 #import <objc/runtime.h>
+#import "GVUserDefaults+TSWProperties.h"
 
 @interface UIViewController (RDVTabBarControllerItemInternal)
 
@@ -66,7 +67,7 @@
     return self.selectedViewController.preferredStatusBarUpdateAnimation;
 }
 
-- (NSUInteger)supportedInterfaceOrientations {
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
     UIInterfaceOrientationMask orientationMask = UIInterfaceOrientationMaskAll;
     for (UIViewController *viewController in [self viewControllers]) {
         if (![viewController respondsToSelector:@selector(supportedInterfaceOrientations)]) {

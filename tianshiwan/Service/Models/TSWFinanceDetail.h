@@ -7,7 +7,8 @@
 //
 
 #import "CXResource.h"
-#define FINANCE_DETAIL @"v1/service/financing"
+//#define FINANCE_DETAIL @"v1/service/financing"
+#define FINANCE_DETAIL @"v1/service/financing/id"
 @interface TSWFinanceDetail : CXResource
 
 @property (nonatomic, strong) NSString *sid;
@@ -30,4 +31,6 @@
 @property (nonatomic, strong) NSString *email; //邮箱
 @property (nonatomic, strong) NSString *domains; //投资领域
 @property (nonatomic, strong) NSString *currentstatus;
+@property (nonatomic, strong) NSString *status;
+@property (nonatomic, strong) NSString *storestatus;
 @end

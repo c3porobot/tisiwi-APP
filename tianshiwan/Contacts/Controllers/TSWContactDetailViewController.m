@@ -89,7 +89,7 @@ static NSString * const reuseIdentifier = @"Cell";
     _faceImageView.layer.cornerRadius = 30;
     [_headerView addSubview:_faceImageView];
     
-    _nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.faceImageView.frame) + 20,30.0f, width - (15.0f+60.0f+15.0f+15.0f), 14.0f)];
+    _nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.faceImageView.frame) + 20,30.0f, width - (15.0f+60.0f+15.0f+15.0f), 22.0f)];
     _nameLabel.textAlignment = NSTextAlignmentLeft;
     _nameLabel.textColor = RGB(90, 90, 90);
     _nameLabel.font = [UIFont systemFontOfSize:22.0f];
@@ -97,7 +97,7 @@ static NSString * const reuseIdentifier = @"Cell";
     _nameLabel.text = @"";
     [_headerView addSubview:_nameLabel];
     
-    _projectInfoLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMinX(self.nameLabel.frame), CGRectGetMaxY(self.nameLabel.frame) + 22, width - (15.0f+60.0f+15.0f+15.0f), 12.0f)];
+    _projectInfoLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMinX(self.nameLabel.frame), CGRectGetMaxY(self.nameLabel.frame) + 15, width - (15.0f+60.0f+15.0f+15.0f), 12.0f)];
     _projectInfoLabel.backgroundColor = [UIColor redColor];
     _projectInfoLabel.textAlignment = NSTextAlignmentLeft;
     _projectInfoLabel.textColor = RGB(132, 132, 132);
@@ -284,7 +284,7 @@ static NSString * const reuseIdentifier = @"Cell";
     _positionLabel.text = [NSString stringWithFormat:@"%@ %@", contactDetail.title,contactDetail.company];
     NSString *newStr = contactDetail.companyCityName;
     newStr = [newStr stringByReplacingOccurrencesOfString:@" " withString:@" · "];
-    _projectInfoLabel.text = [NSString stringWithFormat:@"%@ · %@     %@", contactDetail.project, contactDetail.title, newStr];
+    _projectInfoLabel.text = [NSString stringWithFormat:@"%@ · %@     %@", contactDetail.title, contactDetail.project, newStr];
     _companyLabel.text = contactDetail.companyFullName;
     
     _addressLabel.text = contactDetail.companyAddress;

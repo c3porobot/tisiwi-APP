@@ -120,15 +120,15 @@
     _nameLabel.text = _other.name;
     _positionLabel.text = [NSString stringWithFormat:@"%@  %@", _other.company, _other.title];
     if ([_other.served_aera isEqualToString:@""] || [other.served_aera length] == 0) {
-        _stepLabel.text = [NSString stringWithFormat:@"服务地区: 暂无"];
+        _stepLabel.text = [NSString stringWithFormat:@"地区: 暂无"];
     } else {
-        _stepLabel.text = [NSString stringWithFormat:@"服务地区: %@", _other.served_aera];
+        _stepLabel.text = [NSString stringWithFormat:@"地区: %@", _other.served_aera];
     
     }
     if ([_other.tags isEqualToString:@""] || [other.tags length] == 0) {
-        _sampleLabel.text = [NSString stringWithFormat:@"服务标签: 暂无"];
+        _sampleLabel.text = [NSString stringWithFormat:@"标签: 暂无"];
     } else {
-        _sampleLabel.text = [NSString stringWithFormat:@"服务标签: %@", _other.tags];
+        _sampleLabel.text = [NSString stringWithFormat:@"标签: %@", _other.tags];
     }
     
     NSArray *provinces = [[NSArray alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"area.plist" ofType:nil]];

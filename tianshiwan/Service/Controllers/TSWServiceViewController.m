@@ -244,7 +244,7 @@ static const CGFloat searchCellHeight = 50.0f+13.0f+3.0f+10.0f; // icon高+标�
     }
 }
 
-- (void) refreshData{
+- (void)refreshData{
     //[self showLoadingView]; //刷新视图提示
     [self.serviceList loadDataWithRequestMethodType:kHttpRequestMethodTypeGet parameters:nil];
     //[self.resultList loadDataWithRequestMethodType:kHttpRequestMethodTypePost parameters:@{@"member":[GVUserDefaults standardUserDefaults].member, @"text": _textField.text}];
@@ -367,8 +367,7 @@ static const CGFloat searchCellHeight = 50.0f+13.0f+3.0f+10.0f; // icon高+标�
     [_collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
    }
 
-- (void) gotoServiceList:(TSWServiceCell *)cell withService:(TSWService *)service{
-    [[self rdv_tabBarController] setTabBarHidden:YES animated:YES];
+- (void)gotoServiceList:(TSWServiceCell *)cell withService:(TSWService *)service {
     // 首先判断是融资服务还是其他服务（人才服务已经单独列出）
     if([service.type isEqualToString:@"financing"]){
         [TSWPassValue sharedValue].passvalue = 0;
@@ -436,29 +435,55 @@ static const CGFloat searchCellHeight = 50.0f+13.0f+3.0f+10.0f; // icon高+标�
 -(void)didStopAnimation2{
     
 }
--(void)valueChanged:(id)sender{
+
+/*
+ * 向后台传入搜索数据
+ **/
+
+- (void)valueChanged:(id)sender{
     NSString *text = _textField.text;
     [self.resultList loadDataWithRequestMethodType:kHttpRequestMethodTypeGet parameters:@{@"text":text, @"member":[GVUserDefaults standardUserDefaults].member}];
 }
 
--(void) gotoFinanceDetail:(TSWFinanceCell *)cell withFinance:(TSWFinance *)finance withResult:(TSWResult *)result{
+- (void)gotoFinanceDetail:(TSWFinanceCell *)cell withFinance:(TSWFinance *)finance withResult:(TSWResult *)result{
         [[self rdv_tabBarController] setTabBarHidden:YES animated:YES];
-    if ([finance.currentstatus isEqualToString:@"-2"] || [finance.currentstatus isEqualToString:@"-1"] || [finance.currentstatus isEqualToString:@"0"]) {
-        BeforeAuditFinaceViewController *BAVC = [[BeforeAuditFinaceViewController alloc] initWithFinanceId:finance.sid];
-       // BAVC.currentStatus = finance.currentstatus;
-        BAVC.investorName = self.tempName;
-        BAVC.sidValue = finance.sid;
-        [self.navigationController pushViewController:BAVC animated:YES];
-    } else if ([finance.currentstatus isEqualToString:@"1"]) {
+//    if ([finance.currentstatus isEqualToString:@"-2"] || [finance.currentstatus isEqualToString:@"-1"] || [finance.currentstatus isEqualToString:@"0"]) {
+//        BeforeAuditFinaceViewController *BAVC = [[BeforeAuditFinaceViewController alloc] initWithFinanceId:finance.sid];
+//       // BAVC.currentStatus = finance.currentstatus;
+//        BAVC.investorName = self.tempName;
+//        BAVC.sidValue = finance.sid;
+//        [self.navigationController pushViewController:BAVC animated:YES];
+//    } else if ([finance.currentstatus isEqualToString:@"1"]) {
+//        TSWFinanceDetailViewController *financeDetailController = [[TSWFinanceDetailViewController alloc] initWithFinanceId:finance.sid];
+//        financeDetailController.investorName = finance.name;
+//        [self.navigationController pushViewController:financeDetailController animated:YES];
+//        
+//        
+//    }
+    NSLog(@"$$$$$$$$$$$$$$$$$$$$$%@", finance.currentstatus);
+    if (![finance.currentstatus isEqualToString:@"2"]) {
+        if ([finance.currentstatus isEqualToString:@"-2"] || [finance.currentstatus isEqualToString:@"-1"] || [finance.currentstatus isEqualToString:@"0"]) {
+            BeforeAuditFinaceViewController *BAVC = [[BeforeAuditFinaceViewController alloc] initWithFinanceId:finance.sid];
+            BAVC.investorName = finance.name;
+            BAVC.sidValue = finance.sid;
+            BAVC.currentStatus = finance.currentstatus;
+            [self.navigationController pushViewController:BAVC animated:YES];
+        } else if ([finance.currentstatus isEqualToString:@"1"]) {
+            TSWFinanceDetailViewController *financeDetailController = [[TSWFinanceDetailViewController alloc] initWithFinanceId:finance.sid];
+            financeDetailController.investorName = finance.name;
+            [self.navigationController pushViewController:financeDetailController animated:YES];
+            
+        }
+    } else if([finance.currentstatus isEqualToString:@"2"]){
         TSWFinanceDetailViewController *financeDetailController = [[TSWFinanceDetailViewController alloc] initWithFinanceId:finance.sid];
         financeDetailController.investorName = finance.name;
         [self.navigationController pushViewController:financeDetailController animated:YES];
-        
     }
 
+    
 }
 
--(void) gotoOtherDetail:(TSWOtherCell *)cell withOther:(TSWOther *)other{
+- (void)gotoOtherDetail:(TSWOtherCell *)cell withOther:(TSWOther *)other{
     [[self rdv_tabBarController] setTabBarHidden:YES animated:YES];
     TSWOtherDetailViewController *otherDetailController = [[TSWOtherDetailViewController alloc] initWithType:other.type OtherId:other.sid withName:other.name];
     [self.navigationController pushViewController:otherDetailController animated:YES];

@@ -36,6 +36,7 @@
 @property (nonatomic, strong) NSString *selectedRound;
 
 @property (nonatomic, strong) NSMutableArray *selectedFields;
+@property (nonatomic, strong) NSString *selectField;
 
 @end
 
@@ -121,6 +122,8 @@
     self.pickerView.dataSource = self;
     self.pickerView.delegate = self;
     
+    
+    //self.locatePicker.delegate = self;
     // set change the inputView (default is keyboard) to UIPickerView
     self.pickerViewTextField.inputView = self.pickerView;
     
@@ -275,8 +278,9 @@
 }
 
 #pragma mark - HZAreaPicker delegate
--(void)pickerDidChaneStatus:(ZHAreaPickerView *)picker
+- (void)pickerDidChaneStatus:(ZHAreaPickerView *)picker
 {
+    picker = self.locatePicker;
     NSString *name = @"";
     if(picker.locate.city){
         name = picker.locate.city;
@@ -347,7 +351,7 @@
     // 把搜索条件存到公共区域，然后在人才列表页面willAppear的时候重新搜索
     [GVUserDefaults standardUserDefaults].searchServiceCityCode = _selectedCityCode;
     [GVUserDefaults standardUserDefaults].searchServiceRound = _selectedRound;
-    [GVUserDefaults standardUserDefaults].searchServiceFields = _selectedFields;
+    [GVUserDefaults standardUserDefaults].searchServiceField = _selectField;
     [self dismiss];
 }
 

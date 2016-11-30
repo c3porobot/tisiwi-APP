@@ -9,8 +9,8 @@
 #import "CXResource.h"
 #import "TSWArticle.h"
 
-#define ARTICLE_LIST @"v1/article"
-
+#define ARTICLE_LIST @"v1/article/mberid/"
+#define ARTICLE_LIST1 @"v1/article"
 @interface TSWArticleList : CXResource
 
 @property (nonatomic, strong) NSMutableArray *articles;

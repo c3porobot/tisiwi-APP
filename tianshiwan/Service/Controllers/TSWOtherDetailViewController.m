@@ -13,7 +13,8 @@
 #import "CXImageLoader.h"
 #import "LHBPicBrowser.h" //放大图片类
 #import "LHBCopyLabel.h"
-
+#import "GVUserDefaults+TSWProperties.h"
+#import "TSWCollectionList.h"
 @interface TSWOtherDetailViewController () <MFMailComposeViewControllerDelegate>
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) NSString *sid;
@@ -62,6 +63,9 @@
 @property (nonatomic, strong) NSString *namex;
 
 @property (nonatomic, strong) UILabel *personInfo;
+
+@property (nonatomic, strong) UIButton *collectionBtn;
+@property (nonatomic, strong)TSWCollectionList *sendCollection;
 @end
 
 @implementation TSWOtherDetailViewController
@@ -72,6 +76,7 @@ static NSString * const reuseIdentifier = @"Cell";
     [_otherDetail removeObserver:self forKeyPath:kResourceLoadingStatusKeyPath];
     [_sendZan removeObserver:self forKeyPath:kResourceLoadingStatusKeyPath];
     [_sendEmail removeObserver:self forKeyPath:kResourceLoadingStatusKeyPath];
+    [_sendCollection removeObserver:self forKeyPath:kResourceLoadingStatusKeyPath];
 }
 
 - (instancetype)initWithType:(NSString *)type OtherId:(NSString *)otherId withName:(NSString *)name{
@@ -81,7 +86,7 @@ static NSString * const reuseIdentifier = @"Cell";
         self.type = type;
         _namex = name;
         
-        self.otherDetail = [[TSWOtherDetail alloc] initWithBaseURL:TSW_API_BASE_URL path:[[[OTHER_DETAIL stringByAppendingString:type] stringByAppendingString:@"/"] stringByAppendingString:self.sid]];
+        self.otherDetail = [[TSWOtherDetail alloc] initWithBaseURL:TSW_API_BASE_URL path:[[[[[OTHER_DETAIL stringByAppendingString:type] stringByAppendingString:@"/"] stringByAppendingString:self.sid] stringByAppendingString:@"/"] stringByAppendingString:[GVUserDefaults standardUserDefaults].member]];
         
         [self.otherDetail addObserver:self
                              forKeyPath:kResourceLoadingStatusKeyPath
@@ -100,6 +105,14 @@ static NSString * const reuseIdentifier = @"Cell";
     _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0.0f, self.navigationBarHeight, width, height-self.navigationBarHeight)];
     _scrollView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:_scrollView];
+    /**
+     *
+     */
+    self.collectionBtn = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.view.frame) - 50, 20, 44, 44)];
+    _collectionBtn.backgroundColor = [UIColor clearColor];
+    [_collectionBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_collectionBtn addTarget:self action:@selector(collection:) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationBar.rightButton = _collectionBtn;
     
     //头部
     //_headerView = [[UIView alloc]initWithFrame:CGRectMake(15.0f, 22.0f, width-2*15.0f, 22.0f)];
@@ -225,12 +238,12 @@ static NSString * const reuseIdentifier = @"Cell";
     /**
      * 服务地区
      */
-    _stepLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMinX(self.refererLabel.frame), CGRectGetMaxY(self.refererLabel.frame) + 30, 90, 15.0f)];
+    _stepLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMinX(self.refererLabel.frame), CGRectGetMaxY(self.refererLabel.frame) + 30, 50, 15.0f)];
     _stepLabel.textAlignment = NSTextAlignmentLeft;
     _stepLabel.textColor = RGB(90, 90, 90);
     _stepLabel.font = [UIFont systemFontOfSize:15.0f];
     _stepLabel.backgroundColor = [UIColor clearColor];
-    _stepLabel.text = @"服务创业者:";
+    _stepLabel.text = @"地区:";
     [_scrollView addSubview:_stepLabel];
     
     self.stepContent = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.stepLabel.frame), CGRectGetMinY(self.stepLabel.frame), width - CGRectGetMaxX(self.stepLabel.frame), 15.0f)];
@@ -243,12 +256,12 @@ static NSString * const reuseIdentifier = @"Cell";
     /**
      * 成功案例
      */
-    self.sucessfulCase = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(self.stepLabel.frame), CGRectGetMaxY(self.stepLabel.frame) + 10, 80, 15)];
+    self.sucessfulCase = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(self.stepLabel.frame), CGRectGetMaxY(self.stepLabel.frame) + 10, 50, 15)];
     _sucessfulCase.textAlignment = NSTextAlignmentLeft;
     _sucessfulCase.textColor = RGB(90, 90, 90);
     _sucessfulCase.font = [UIFont systemFontOfSize:15.0f];
     _sucessfulCase.backgroundColor = [UIColor clearColor];
-    _sucessfulCase.text = @"成功案例:";
+    _sucessfulCase.text = @"案例:";
     [_scrollView addSubview:_sucessfulCase];
     
     self.sucessfulContent = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.sucessfulCase.frame), CGRectGetMinY(self.sucessfulCase.frame), width - CGRectGetMaxX(self.sucessfulCase.frame), 15)];
@@ -262,12 +275,12 @@ static NSString * const reuseIdentifier = @"Cell";
     /**
      *服务标签
      */
-    _sampleLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMinX(self.sucessfulCase.frame), CGRectGetMaxY(self.sucessfulCase.frame) + 10, 80, 15.0f)];
+    _sampleLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMinX(self.sucessfulCase.frame), CGRectGetMaxY(self.sucessfulCase.frame) + 10, 50, 15.0f)];
     _sampleLabel.textAlignment = NSTextAlignmentLeft;
     _sampleLabel.textColor = RGB(90, 90, 90);
     _sampleLabel.font = [UIFont systemFontOfSize:15.0f];
     _sampleLabel.backgroundColor = [UIColor clearColor];
-    _sampleLabel.text = @"服务标签:";
+    _sampleLabel.text = @"标签:";
     [_scrollView addSubview:_sampleLabel];
     
     self.sampleContent = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.sampleLabel.frame), CGRectGetMinY(self.sampleLabel.frame), width, 15.0f)];
@@ -344,7 +357,26 @@ static NSString * const reuseIdentifier = @"Cell";
 //                     forKeyPath:kResourceLoadingStatusKeyPath
 //                        options:NSKeyValueObservingOptionNew
 //                        context:nil];
+    
+    self.sendCollection = [[TSWCollectionList alloc] initWithBaseURL:TSW_API_BASE_URL path:SEND_COLLECTIONLIST];
+    [self.sendCollection addObserver:self forKeyPath:kResourceLoadingStatusKeyPath options:NSKeyValueObservingOptionNew context:nil];
     [self refreshData];
+}
+
+#pragma mark -- 收藏按钮
+- (void)collection:(UIButton *)sender {
+    sender.selected = !sender.selected;
+    if (sender.selected) {
+        [sender setImage:[UIImage imageNamed:@"Favorites_btnp"] forState:UIControlStateNormal];
+        [_sendCollection loadDataWithRequestMethodType:kHttpRequestMethodTypePost parameters:@{@"memberid":[GVUserDefaults standardUserDefaults].member, @"type": @"service", @"storeid": self.sid}];
+        [self showSuccessMessage:@"收藏成功"];
+    } else {
+         [sender setImage:[UIImage imageNamed:@"Favorites_btn"] forState:UIControlStateNormal];
+        [_sendCollection loadDataWithRequestMethodType:kHttpRequestMethodTypePost parameters:@{@"memberid":[GVUserDefaults standardUserDefaults].member, @"type": @"service", @"storeid": self.sid}];
+        [self showSuccessMessage:@"取消收藏"];
+        
+    }
+    
 }
 
 #pragma mark -- 跳转进入图片放大界面
@@ -408,6 +440,14 @@ static NSString * const reuseIdentifier = @"Cell";
 
 -(void) setDetail:(TSWOtherDetail *)otherDetal{
     _otherDetail = otherDetal;
+    if ([otherDetal.status isEqualToString:@"ok"]) {
+    [self.collectionBtn setImage:[UIImage imageNamed:@"Favorites_btnp"] forState:UIControlStateNormal];
+    self.collectionBtn.selected = YES;
+    } else if ([otherDetal.status isEqualToString:@"no"]) {
+    [self.collectionBtn setImage:[UIImage imageNamed:@"Favorites_btn"] forState:UIControlStateNormal];
+    self.collectionBtn.selected = NO;
+
+    }
     CGFloat width = CGRectGetWidth(self.view.bounds);
     // 布局，塞数据
     _weixinContent.text = [NSString stringWithFormat:@"%@", otherDetal.wechat];
@@ -425,7 +465,7 @@ static NSString * const reuseIdentifier = @"Cell";
             if([code isEqualToString: otherDetal.cityCode]){
                 _locationLabel.text = [[cities objectAtIndex:j] objectForKey:@"CityName"];
                 
-                _positionLabel.text = [NSString stringWithFormat:@"%@ · %@    %@", otherDetal.company,otherDetal.title, _locationLabel.text];
+                _positionLabel.text = [NSString stringWithFormat:@"%@ · %@    %@",otherDetal.title, otherDetal.company, _locationLabel.text];
                 _positionLabel.numberOfLines = 0;
                 CGSize titleSize6 = [_positionLabel.text boundingRectWithSize:CGSizeMake(width - 30, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15]} context:nil].size;
                 _positionLabel.frame = CGRectMake(CGRectGetMinX(self.nameLabel.frame), CGRectGetMaxY(self.nameLabel.frame) + 15, width - 30, titleSize6.height);
@@ -459,7 +499,7 @@ static NSString * const reuseIdentifier = @"Cell";
     } else {
         _sampleContent.text = otherDetal.tags; //标签
         _sampleContent.numberOfLines = 0;
-        _sampleLabel.frame = CGRectMake(CGRectGetMinX(self.sucessfulCase.frame), CGRectGetMaxY(self.sucessfulCase.frame) + 10, 80, 15.0f);
+        _sampleLabel.frame = CGRectMake(CGRectGetMinX(self.sucessfulCase.frame), CGRectGetMaxY(self.sucessfulCase.frame) + 10, 50, 15.0f);
         CGSize titleSize4 = [otherDetal.tags boundingRectWithSize:CGSizeMake(width - CGRectGetWidth(self.sampleLabel.frame) - 30, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15]} context:nil].size;
         _sampleContent.frame = CGRectMake(CGRectGetMaxX(self.sampleLabel.frame), CGRectGetMinY(self.sampleLabel.frame) - 2, titleSize4.width, titleSize4.height);
     }
@@ -484,7 +524,7 @@ static NSString * const reuseIdentifier = @"Cell";
     if ([otherDetal.wechat isEqualToString:@""] || otherDetal.wechat == nil) {
         _weixinContent.text = @"暂无";
         self.wechatBtn.userInteractionEnabled = NO;
-        [self.wechatBtn setImage:[UIImage imageNamed:@"btn_copy_diasble"] forState:UIControlStateNormal];
+        [self.wechatBtn setImage:[UIImage imageNamed:@"btn_copy_disable"] forState:UIControlStateNormal];
 //            _weixinLabel.frame = CGRectZero;
 //            _wechatBtn.frame = CGRectZero;
 //            _phoneLabel.frame = CGRectMake(CGRectGetMinX(self.faceImageView.frame), CGRectGetMaxY(self.headerView.frame) + 20, 50, 20);

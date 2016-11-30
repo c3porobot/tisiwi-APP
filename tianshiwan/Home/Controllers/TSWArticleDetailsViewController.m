@@ -11,7 +11,8 @@
 #import "TSWArticleDetailCell.h"
 #import "TSWRating.h"
 #import "CXImageLoader.h"
-
+#import "TSWCollectionList.h"
+#import "GVUserDefaults+TSWProperties.h"
 static const CGFloat margin = 10.0f;
 static const CGFloat contentMargin = 16.0f;
 static const CGFloat gap = 20.0f;
@@ -34,6 +35,9 @@ static const CGFloat gap = 20.0f;
 
 @property (nonatomic, strong) UIView *lineView;
 @property (nonatomic) CGSize titleSize;
+
+@property (nonatomic, strong) TSWCollectionList *sendCollection;
+@property (nonatomic, strong) UIButton *collectionBtn;
 @end
 
 @implementation TSWArticleDetailsViewController
@@ -42,6 +46,7 @@ static const CGFloat gap = 20.0f;
 {
     [_articleDetail removeObserver:self forKeyPath:kResourceLoadingStatusKeyPath];
     [_rating removeObserver:self forKeyPath:kResourceLoadingStatusKeyPath];
+    [_sendCollection removeObserver:self forKeyPath:kResourceLoadingStatusKeyPath];
 }
 
 - (instancetype)initWithArticleId:(NSString *)articleId {
@@ -49,8 +54,8 @@ static const CGFloat gap = 20.0f;
     if (self) {
         self.sid = articleId;
         
-        self.articleDetail = [[TSWArticleDetail alloc] initWithBaseURL:TSW_API_BASE_URL path:[[[ARTICLE_DETAIL stringByAppendingString:@"/"] stringByAppendingString:self.sid]stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-        
+        //self.articleDetail = [[TSWArticleDetail alloc] initWithBaseURL:TSW_API_BASE_URL path:[[[ARTICLE_DETAIL stringByAppendingString:@"/"] stringByAppendingString:self.sid]stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+        self.articleDetail = [[TSWArticleDetail alloc] initWithBaseURL:TSW_API_BASE_URL path:[[[[ARTICLE_DETAIL stringByAppendingString:[GVUserDefaults standardUserDefaults].member] stringByAppendingString:@"/id/"] stringByAppendingString:self.sid] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
         [self.articleDetail addObserver:self
                              forKeyPath:kResourceLoadingStatusKeyPath
                                 options:NSKeyValueObservingOptionNew
@@ -76,8 +81,7 @@ static const CGFloat gap = 20.0f;
 - (void)viewDidLoad {
     [super viewDidLoad];
     CGFloat width = CGRectGetWidth(self.view.bounds);
-    self.navigationBar.title = @"文章详情";
-    
+    self.navigationBar.title = @"资讯详情";
     _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0.0f, self.navigationBarHeight, width, CGRectGetHeight(self.view.bounds)-self.navigationBarHeight)];
     _scrollView.backgroundColor = [UIColor whiteColor];
     
@@ -96,9 +100,15 @@ static const CGFloat gap = 20.0f;
             [dismissButton addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
             
             self.navigationBar.leftButton = dismissButton;
+            
         }
 
     }
+    self.collectionBtn = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.view.bounds) - 50, 20, 44, 44)];
+    _collectionBtn.backgroundColor = [UIColor clearColor];
+    [_collectionBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_collectionBtn addTarget:self action:@selector(collection:) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationBar.rightButton = _collectionBtn;
     
     //头部 (文章详情上边的图片)
     self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(margin, margin, width-2*margin, (width-2*margin)*17/30)];
@@ -170,11 +180,16 @@ static const CGFloat gap = 20.0f;
                          forKeyPath:kResourceLoadingStatusKeyPath
                             options:NSKeyValueObservingOptionNew
                             context:nil];
+    self.sendCollection = [[TSWCollectionList alloc] initWithBaseURL:TSW_API_BASE_URL path:SEND_COLLECTIONLIST];
+    [self.sendCollection addObserver:self forKeyPath:kResourceLoadingStatusKeyPath options:NSKeyValueObservingOptionNew context:nil];
+    
+//    self.sendCollection = [[TSWCollectionList alloc] initWithBaseURL:TSW_API_BASE_URL path:[[[COLLECTIONLIST stringByAppendingString:[GVUserDefaults standardUserDefaults].member] stringByAppendingString:@"/id/"] stringByAppendingString:self.sid]];
+//    [self.sendCollection addObserver:self forKeyPath:kResourceLoadingStatusKeyPath options:NSKeyValueObservingOptionNew context:nil];
     
     [self refreshData];
     
 }
-
+#pragma mark -- Button Action
 -(void)dismiss{
     //    [[self getAppdelegate] removeTrackingArrayLastObject];
     
@@ -183,6 +198,21 @@ static const CGFloat gap = 20.0f;
     }];
 }
 
+- (void)collection:(UIButton *)sender {
+    sender.selected = !sender.selected;
+    if (sender.selected) {
+//        [sender setTitle:@"已收藏" forState:UIControlStateNormal];
+        [sender setImage:[UIImage imageNamed:@"Favorites_btnp"] forState:UIControlStateNormal];
+        [_sendCollection loadDataWithRequestMethodType:kHttpRequestMethodTypePost parameters:@{@"memberid":[GVUserDefaults standardUserDefaults].member, @"type": @"article", @"storeid": self.sid}];
+        [self showSuccessMessage:@"收藏成功"];
+    } else {
+//        [sender setTitle:@"收藏" forState:UIControlStateNormal];
+        [sender setImage:[UIImage imageNamed:@"Favorites_btn"] forState:UIControlStateNormal];
+        [_sendCollection loadDataWithRequestMethodType:kHttpRequestMethodTypePost parameters:@{@"memberid":[GVUserDefaults standardUserDefaults].member, @"type": @"article", @"storeid": self.sid}];
+        [self showSuccessMessage:@"取消收藏"];
+
+    }
+}
 - (void)viewDidUnload {
     [super viewDidUnload];
 }
@@ -218,6 +248,8 @@ static const CGFloat gap = 20.0f;
                        context:(void *)context
 {
     if ([keyPath isEqualToString:kResourceLoadingStatusKeyPath]) {
+        
+        
         if (object == _articleDetail) {
             if (_articleDetail.isLoaded) {
                 [self setDetail:_articleDetail];
@@ -233,7 +265,6 @@ static const CGFloat gap = 20.0f;
             
             if (_rating.isLoaded) {
                 _articleDetail.rating = _rating.rating;
-                
                 // info已评分（而不是alert），尽量避免刷新页面。
                 [self refreshData];
             }
@@ -242,11 +273,33 @@ static const CGFloat gap = 20.0f;
             }
         }
     }
+    if (object == _sendCollection) {
+        
+        if (_sendCollection.isLoaded) {
+            //可以在这里写加载成功的方法
+        }
+        else if (_sendCollection.error) {
+            [self showErrorMessage:[_sendCollection.error localizedFailureReason]];
+        }
+    }
 }
+
+
 
 - (void)setDetail:(TSWArticleDetail *)articleDetail{
     CGFloat width = CGRectGetWidth(self.view.bounds);
     _articleDetail = articleDetail;
+    
+    if ([articleDetail.status isEqualToString:@"ok"]) {
+//        [self.collectionBtn setTitle:@"已收藏" forState:UIControlStateNormal];
+        [self.collectionBtn setImage:[UIImage imageNamed:@"Favorites_btnp"] forState:UIControlStateNormal];
+        self.collectionBtn.selected = YES;
+    } else if ([articleDetail.status isEqualToString:@"no"]) {
+//        [self.collectionBtn setTitle:@"收藏" forState:UIControlStateNormal];
+        [self.collectionBtn setImage:[UIImage imageNamed:@"Favorites_btn"] forState:UIControlStateNormal];
+        self.collectionBtn.selected = NO;
+    }
+    NSLog(@"*************%@", articleDetail.status);
     
     // 设置所有控件的值
     if(articleDetail.imgUrl_3x){

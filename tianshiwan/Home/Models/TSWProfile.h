@@ -22,5 +22,7 @@
 @property (nonatomic, strong) NSString *companyFullName;
 @property (nonatomic, strong) NSString *imgUrl_2x;
 @property (nonatomic, strong) NSString *imgUrl_3x;
-
+@property (nonatomic, strong) NSString *projectName; //项目名称
+@property (nonatomic, strong) NSString *projectSummary; //项目介绍
+@property (nonatomic, strong) NSString *unviewnum; //未读消息数
 @end

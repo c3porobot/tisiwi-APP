@@ -28,4 +28,5 @@
 @property (nonatomic, copy) NSString *served_aera; //服务地区
 @property (nonatomic, copy) NSString *tags; //标签
 @property (nonatomic, copy) NSString *cases;
+@property (nonatomic, copy) NSString *status;
 @end

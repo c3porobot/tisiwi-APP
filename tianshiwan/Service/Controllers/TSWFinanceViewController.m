@@ -15,6 +15,7 @@
 #import "GVUserDefaults+TSWProperties.h"
 #import "BeforeAuditFinaceViewController.h"
 #import "TSWPassValue.h"
+#import "RDVTabBarController.h"
 @interface TSWFinanceViewController ()<UICollectionViewDelegate, UICollectionViewDataSource,TSWFinanceCellDelegate>
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, strong) NSMutableArray *dataArray;
@@ -58,7 +59,7 @@
     
     [GVUserDefaults standardUserDefaults].searchServiceCityCode = @"";
     [GVUserDefaults standardUserDefaults].searchServiceRound = @"";
-    [GVUserDefaults standardUserDefaults].searchServiceFields = (NSMutableArray *)@[];
+    [GVUserDefaults standardUserDefaults].searchServiceField =@"";
     
     [self setupPullToRefresh];
     [self setupInfiniteScrolling];
@@ -103,10 +104,10 @@
     if(self.financeList.finances){
         [self.financeList.finances removeAllObjects];
     }
-    NSData *jsonFields = [NSJSONSerialization dataWithJSONObject:[GVUserDefaults standardUserDefaults].searchServiceFields options:NSJSONWritingPrettyPrinted error:nil];
-    NSString *text =[[NSString alloc] initWithData:jsonFields encoding:NSUTF8StringEncoding];
+//    NSData *jsonFields = [NSJSONSerialization dataWithJSONObject:[GVUserDefaults standardUserDefaults].searchServiceField options:NSJSONWritingPrettyPrinted error:nil];
+//    NSString *text =[[NSString alloc] initWithData:jsonFields encoding:NSUTF8StringEncoding];
     
-    [self.financeList loadDataWithRequestMethodType:kHttpRequestMethodTypePost parameters:@{@"page":@(self.financeList.page),@"cityCode":[GVUserDefaults standardUserDefaults].searchServiceCityCode,@"round":[GVUserDefaults standardUserDefaults].searchServiceRound,@"field":text, @"member": [GVUserDefaults standardUserDefaults].member}];
+    [self.financeList loadDataWithRequestMethodType:kHttpRequestMethodTypePost parameters:@{@"page":@(self.financeList.page),@"cityCode":[GVUserDefaults standardUserDefaults].searchServiceCityCode,@"round":[GVUserDefaults standardUserDefaults].searchServiceRound,@"field":[GVUserDefaults standardUserDefaults].searchServiceField, @"member": [GVUserDefaults standardUserDefaults].member}];
     //[self refreshData];
 }
 
@@ -137,7 +138,7 @@
     } else if([TSWPassValue sharedValue].passvalue == 0 ){
      
     }
-    
+    [[self rdv_tabBarController] setTabBarHidden:NO animated:YES];
 }
 - (void)viewDidAppear:(BOOL)animated
 {
@@ -146,6 +147,8 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:NO];
+//    [[self rdv_tabBarController] setTabBarHidden:YES animated:YES];
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -183,7 +186,8 @@
                 
                 [GVUserDefaults standardUserDefaults].searchServiceCityCode = @"";
                 [GVUserDefaults standardUserDefaults].searchServiceRound = @"";
-                [GVUserDefaults standardUserDefaults].searchServiceFields =(NSMutableArray *)@[];
+//                [GVUserDefaults standardUserDefaults].searchServiceFields =(NSMutableArray *)@[];
+                [GVUserDefaults standardUserDefaults].searchServiceField = @"";
             }
             else if (_financeList.error) {
                 [self.collectionView.infiniteScrollingView stopAnimating];

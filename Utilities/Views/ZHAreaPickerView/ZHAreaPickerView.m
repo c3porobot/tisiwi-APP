@@ -8,13 +8,13 @@
 
 #import "ZHAreaPickerView.h"
 #import <QuartzCore/QuartzCore.h>
-
+#import "GVUserDefaults+TSWProperties.h"
 #define kDuration 0.3
 
 @interface ZHAreaPickerView ()
-{
-    NSArray *provinces, *cities, *areas;
-}
+//{
+//    NSArray *provinces, *cities, *areas;
+//}
 
 @end
 
@@ -51,11 +51,11 @@
         self.locatePicker.delegate = self;
         
         //加载数据
-        provinces = [[NSArray alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"area.plist" ofType:nil]];
-        cities = [[provinces objectAtIndex:0] objectForKey:@"cities"];
-        self.locate.state = [[provinces objectAtIndex:0] objectForKey:@"ProvinceName"];
-        self.locate.city = [[cities objectAtIndex:0] objectForKey:@"CityName"];
-        self.locate.cityCode = [[cities objectAtIndex:0] objectForKey:@"code"];
+        _provinces = [[NSArray alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"area.plist" ofType:nil]];
+        _cities = [[_provinces objectAtIndex:0] objectForKey:@"cities"];
+        self.locate.state = [[_provinces objectAtIndex:0] objectForKey:@"ProvinceName"];
+        self.locate.city = [[_cities objectAtIndex:0] objectForKey:@"CityName"];
+        self.locate.cityCode = [[_cities objectAtIndex:0] objectForKey:@"code"];
     }
     
     return self;
@@ -73,12 +73,13 @@
         
         //加载数据
         NSMutableArray *tempProvinces = [[NSMutableArray alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"area.plist" ofType:nil]];
-        [tempProvinces insertObject:@{@"ID":@"",@"code":@"",@"ProvinceName":@"全部城市"} atIndex:0];
-        provinces = [tempProvinces copy];
-        cities = [[provinces objectAtIndex:0] objectForKey:@"cities"];
-        self.locate.state = [[provinces objectAtIndex:0] objectForKey:@"ProvinceName"];
-        self.locate.city = [[cities objectAtIndex:0] objectForKey:@"CityName"];
-        self.locate.cityCode = [[cities objectAtIndex:0] objectForKey:@"code"];
+        [tempProvinces insertObject:@{@"ID":@"",@"code":@"",@"ProvinceName":@"城市"} atIndex:0];
+        _provinces = [tempProvinces copy];
+        _cities = [[_provinces objectAtIndex:0] objectForKey:@"cities"];
+        self.locate.state = [[_provinces objectAtIndex:0] objectForKey:@"ProvinceName"];
+        self.locate.city = [[_cities objectAtIndex:0] objectForKey:@"CityName"];
+        self.locate.cityCode = [[_cities objectAtIndex:0] objectForKey:@"code"];
+        
     }
     
     return self;
@@ -98,10 +99,10 @@
 {
     switch (component) {
         case 0:
-            return [provinces count];
+            return [_provinces count];
             break;
         case 1:
-            return [cities count];
+            return [_cities count];
             break;
         default:
             return 0;
@@ -113,10 +114,10 @@
 {
         switch (component) {
             case 0:
-                return [[provinces objectAtIndex:row] objectForKey:@"ProvinceName"];
+                return [[_provinces objectAtIndex:row] objectForKey:@"ProvinceName"];
                 break;
             case 1:
-                return [[cities objectAtIndex:row] objectForKey:@"CityName"];
+                return [[_cities objectAtIndex:row] objectForKey:@"CityName"];
                 break;
             default:
                 return @"";
@@ -128,19 +129,25 @@
 {
     
         switch (component) {
-            case 0:
-                cities = [[provinces objectAtIndex:row] objectForKey:@"cities"];
+            case 0:{
+                //第二个随第一个改变
+                _cities = [[_provinces objectAtIndex:row] objectForKey:@"cities"];
                 [self.locatePicker selectRow:0 inComponent:1 animated:YES];
+                if (component == 0 && row == 0) {
+                 
+                }
                 [self.locatePicker reloadComponent:1];
                 
-                self.locate.state = [[provinces objectAtIndex:row] objectForKey:@"ProvinceName"];
-                self.locate.city = [[cities objectAtIndex:0] objectForKey:@"CityName"];
-                self.locate.cityCode = [[cities objectAtIndex:0] objectForKey:@"code"];
+                self.locate.state = [[_provinces objectAtIndex:row] objectForKey:@"ProvinceName"];
+                self.locate.city = [[_cities objectAtIndex:0] objectForKey:@"CityName"];
+                self.locate.cityCode = [[_cities objectAtIndex:0] objectForKey:@"code"];
                 break;
-            case 1:
-                self.locate.city = [[cities objectAtIndex:row] objectForKey:@"CityName"];
-                self.locate.cityCode = [[cities objectAtIndex:0] objectForKey:@"code"];
+            }
+            case 1:{
+                self.locate.city = [[_cities objectAtIndex:row] objectForKey:@"CityName"];
+                self.locate.cityCode = [[_cities objectAtIndex:row] objectForKey:@"code"];
                 break;
+            }
             default:
                 break;
         }
@@ -156,25 +163,36 @@
 
 - (void)showInView:(UIView *) view
 {
-    self.frame = CGRectMake(0, view.frame.size.height, [UIScreen mainScreen].bounds.size.width, self.frame.size.height);
-    [view addSubview:self];
+        self.frame = CGRectMake(0, view.frame.size.height, [UIScreen mainScreen].bounds.size.width, 230);
     [UIView animateWithDuration:0.3 animations:^{
-        self.frame = CGRectMake(0, view.frame.size.height - self.frame.size.height, self.frame.size.width, self.frame.size.height);
+        self.frame = CGRectMake(0, view.frame.size.height - self.frame.size.height+40, self.frame.size.width, 230);
+        [view addSubview:self];
     }];
+    //首尾式动画
+//    [UIView beginAnimations:nil context:nil];
+//    //执行动画
+//    [view addSubview:self];
+//    //设置动画执行时间
+//    [UIView setAnimationDuration:1];
+//    //设置代理
+//    [UIView setAnimationDelegate:self];
+//    self.frame = CGRectMake(0, view.frame.size.height - self.frame.size.height, self.frame.size.width, self.frame.size.height);
+//    //设置动画执行完毕调用的事件
+//    [UIView commitAnimations];
     
    // self.superview.userInteractionEnabled = NO;
 }
 
 - (void)cancelPicker
 {
-    [UIView animateWithDuration:0.3
-                     animations:^{
-                         self.frame = CGRectMake(0, self.frame.origin.y+self.frame.size.height, self.frame.size.width, self.frame.size.height);
-                     }
-                     completion:^(BOOL finished){
-                         [self removeFromSuperview];
-                         
-                     }];
+//    [UIView animateWithDuration:0.3
+//                     animations:^{
+//                         self.frame = CGRectMake(0, self.frame.origin.y+self.frame.size.height, self.frame.size.width, self.frame.size.height);
+//                     }
+//                     completion:^(BOOL finished){
+//                         [self removeFromSuperview];
+//                         
+//                     }];
 }
 
 - (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view{

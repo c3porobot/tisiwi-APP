@@ -15,6 +15,10 @@
 #import "LHBPicBrowser.h"
 #import "LHBCopyLabel.h"
 #import "TSWFinanceFilterViewController.h"
+#import "TSWCollectionList.h"
+#import "GVUserDefaults+TSWProperties.h"
+#import "TSWPassValue.h"
+#import "RDVTabBarController.h"
 @interface TSWFinanceDetailViewController () <MFMailComposeViewControllerDelegate>
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) NSString *sid;
@@ -57,6 +61,9 @@
 @property (nonatomic, strong) UIButton *phoneBtn;
 @property (nonatomic, strong) UIButton *emailBtn;
 @property (nonatomic, strong) UIButton *wechatBtn;
+
+@property (nonatomic, strong) UIButton *collectionBtn;
+@property (nonatomic, strong) TSWCollectionList *sendCollection;
 @end
 
 @implementation TSWFinanceDetailViewController
@@ -67,6 +74,7 @@ static NSString * const reuseIdentifier = @"Cell";
     [_financeDetail removeObserver:self forKeyPath:kResourceLoadingStatusKeyPath];
     [_sendZan removeObserver:self forKeyPath:kResourceLoadingStatusKeyPath];
     [_sendEmail removeObserver:self forKeyPath:kResourceLoadingStatusKeyPath];
+    [_sendCollection removeObserver:self forKeyPath:kResourceLoadingStatusKeyPath];
 }
 
 - (instancetype)initWithFinanceId:(NSString *)financeId {
@@ -74,7 +82,7 @@ static NSString * const reuseIdentifier = @"Cell";
     if (self) {
         self.sid = financeId;
         
-        self.financeDetail = [[TSWFinanceDetail alloc] initWithBaseURL:TSW_API_BASE_URL path:[[FINANCE_DETAIL stringByAppendingString:@"/"] stringByAppendingString:self.sid]];
+        self.financeDetail = [[TSWFinanceDetail alloc] initWithBaseURL:TSW_API_BASE_URL path:[[[[FINANCE_DETAIL stringByAppendingString:@"/"] stringByAppendingString:self.sid] stringByAppendingString:@"/member/"] stringByAppendingString:[GVUserDefaults standardUserDefaults].member]];
         
         [self.financeDetail addObserver:self
                             forKeyPath:kResourceLoadingStatusKeyPath
@@ -93,6 +101,12 @@ static NSString * const reuseIdentifier = @"Cell";
     _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0.0f, self.navigationBarHeight, width, height-self.navigationBarHeight)];
     _scrollView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:_scrollView];
+    
+    self.collectionBtn = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.view.frame) - 50, 20, 44, 44)];
+    _collectionBtn.backgroundColor = [UIColor clearColor];
+    [_collectionBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_collectionBtn addTarget:self action:@selector(collection:) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationBar.rightButton = _collectionBtn;
     
     _headerView = [[UIView alloc]initWithFrame:CGRectMake(15.0f, 22.0f, width-2*15.0f, 22.0f)];
     _nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(0.0f, 0.0f, (width-2*15.0f)/2, 22.0f)];
@@ -232,28 +246,9 @@ static NSString * const reuseIdentifier = @"Cell";
     [_scrollView addSubview:_refererContent];
     
      /**
-     * 投资领域
-     */
-    self.fieldLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(self.refererLabel.frame), CGRectGetMaxY(self.refererLabel.frame) + 30, 80, 15)];
-    _fieldLabel.textAlignment = NSTextAlignmentLeft;
-    _fieldLabel.textColor = RGB(90, 90, 90);
-    _fieldLabel.font = [UIFont systemFontOfSize:15.0f];
-    _fieldLabel.backgroundColor = [UIColor clearColor];
-    _fieldLabel.text = @"投资领域:";
-    [_scrollView addSubview:_fieldLabel];
-    
-    self.fieldContent = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.fieldLabel.frame), CGRectGetMinY(self.fieldLabel.frame), width - CGRectGetMaxX(self.fieldLabel.frame), 15)];
-    _fieldContent.textAlignment = NSTextAlignmentLeft;
-    _fieldContent.textColor = RGB(127, 127, 127);
-    _fieldContent.font = [UIFont systemFontOfSize:15.0f];
-    _fieldContent.backgroundColor = [UIColor clearColor];
-    _fieldContent.text = @"";
-    [_scrollView addSubview:_fieldContent];
-    
-    /**
      * 投资阶段
      */
-    self.stepLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMinX(self.fieldLabel.frame), CGRectGetMaxY(self.fieldLabel.frame) + 15, 80, 15.0f)];
+    self.stepLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(self.refererLabel.frame), CGRectGetMaxY(self.refererLabel.frame) + 30, 80, 15)];
     _stepLabel.textAlignment = NSTextAlignmentLeft;
     _stepLabel.textColor = RGB(90, 90, 90);
     _stepLabel.font = [UIFont systemFontOfSize:15.0f];
@@ -261,7 +256,7 @@ static NSString * const reuseIdentifier = @"Cell";
     _stepLabel.text = @"投资阶段:";
     [_scrollView addSubview:_stepLabel];
     
-    self.stepContent = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.stepLabel.frame), CGRectGetMinY(self.stepLabel.frame), width, 15.0f)];
+    self.stepContent = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.stepLabel.frame), CGRectGetMinY(self.stepLabel.frame), width - CGRectGetMaxX(self.stepLabel.frame), 15)];
     _stepContent.textAlignment = NSTextAlignmentLeft;
     _stepContent.textColor = RGB(127, 127, 127);
     _stepContent.font = [UIFont systemFontOfSize:15.0f];
@@ -270,9 +265,28 @@ static NSString * const reuseIdentifier = @"Cell";
     [_scrollView addSubview:_stepContent];
     
     /**
+     * 投资领域
+     */
+    self.fieldLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMinX(self.stepLabel.frame), CGRectGetMaxY(self.stepLabel.frame) + 15, 80, 15.0f)];
+    _fieldLabel.textAlignment = NSTextAlignmentLeft;
+    _fieldLabel.textColor = RGB(90, 90, 90);
+    _fieldLabel.font = [UIFont systemFontOfSize:15.0f];
+    _fieldLabel.backgroundColor = [UIColor clearColor];
+    _fieldLabel.text = @"投资领域:";
+    [_scrollView addSubview:_fieldLabel];
+    
+    self.fieldContent = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.stepLabel.frame), CGRectGetMinY(self.fieldLabel.frame), width, 15.0f)];
+    _fieldContent.textAlignment = NSTextAlignmentLeft;
+    _fieldContent.textColor = RGB(127, 127, 127);
+    _fieldContent.font = [UIFont systemFontOfSize:15.0f];
+    _fieldContent.backgroundColor = [UIColor clearColor];
+    _fieldContent.text = @"";
+    [_scrollView addSubview:_fieldContent];
+    
+    /**
      * 投资案例
      */
-    self.sampleLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMinX(self.stepLabel.frame), CGRectGetMaxY(self.stepLabel.frame) + 15, 80, 15.0f)];
+    self.sampleLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMinX(self.stepLabel.frame), CGRectGetMaxY(self.fieldLabel.frame) + 15, 80, 15.0f)];
     _sampleLabel.textAlignment = NSTextAlignmentLeft;
     _sampleLabel.textColor = RGB(90, 90, 90);
     _sampleLabel.font = [UIFont systemFontOfSize:15.0f];
@@ -326,9 +340,30 @@ static NSString * const reuseIdentifier = @"Cell";
                    forKeyPath:kResourceLoadingStatusKeyPath
                       options:NSKeyValueObservingOptionNew
                       context:nil];
-    
+    self.sendCollection = [[TSWCollectionList alloc] initWithBaseURL:TSW_API_BASE_URL path:SEND_COLLECTIONLIST];
+    [self.sendCollection addObserver:self forKeyPath:kResourceLoadingStatusKeyPath options:NSKeyValueObservingOptionNew context:nil];
     [self refreshData];
 }
+
+
+#pragma mark -- 收藏按钮
+- (void)collection:(UIButton *)sender {
+    sender.selected = !sender.selected;
+    if (sender.selected) {
+//        [sender setTitle:@"已收藏" forState:UIControlStateNormal];
+        [sender setImage:[UIImage imageNamed:@"Favorites_btnp"] forState:UIControlStateNormal];
+        [_sendCollection loadDataWithRequestMethodType:kHttpRequestMethodTypePost parameters:@{@"memberid":[GVUserDefaults standardUserDefaults].member, @"type": @"investor", @"storeid": self.sid}];
+        [self showSuccessMessage:@"收藏成功"];
+    } else {
+//        [sender setTitle:@"收藏" forState:UIControlStateNormal];
+        [sender setImage:[UIImage imageNamed:@"Favorites_btn"] forState:UIControlStateNormal];
+        [_sendCollection loadDataWithRequestMethodType:kHttpRequestMethodTypePost parameters:@{@"memberid":[GVUserDefaults standardUserDefaults].member, @"type": @"investor", @"storeid": self.sid}];
+        [self showSuccessMessage:@"取消收藏"];
+        
+    }
+    
+}
+
 
 #pragma mark -- 轻拍手势操作
 - (void)gotoFaceImageDetail:(UITapGestureRecognizer *)gesture {
@@ -340,10 +375,10 @@ static NSString * const reuseIdentifier = @"Cell";
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
     //    if (!self.contactDetail.isLoaded) {
     //        [self.contactDetail loadDataWithRequestMethodType:kHttpRequestMethodTypeGet parameters:nil];
     //    }
+    [[self rdv_tabBarController] setTabBarHidden:YES animated:NO];
 }
 
 - (void) refreshData{
@@ -352,6 +387,8 @@ static NSString * const reuseIdentifier = @"Cell";
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    [TSWPassValue sharedValue].serviceValue = 0;
+
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -397,6 +434,18 @@ static NSString * const reuseIdentifier = @"Cell";
     _emailContent.text = [NSString stringWithFormat:@"%@", financeDetal.email];
     _phoneContent.text = [NSString stringWithFormat:@"%@", financeDetal.tel];
     _financeDetail = financeDetal;
+    
+    if ([financeDetal.storestatus isEqualToString:@"ok"]) {
+//        [self.collectionBtn setTitle:@"已收藏" forState:UIControlStateNormal];
+        [self.collectionBtn setImage:[UIImage imageNamed:@"Favorites_btnp"] forState:UIControlStateNormal];
+        self.collectionBtn.selected = YES;
+    } else if ([financeDetal.storestatus isEqualToString:@"no"]) {
+//        [self.collectionBtn setTitle:@"收藏" forState:UIControlStateNormal];
+        [self.collectionBtn setImage:[UIImage imageNamed:@"Favorites_btn"] forState:UIControlStateNormal];
+        self.collectionBtn.selected = NO;
+        
+    }
+    
     CGFloat width = CGRectGetWidth(self.view.bounds);
     // 布局，塞数据
     _nameLabel.text = financeDetal.name;
@@ -416,38 +465,38 @@ static NSString * const reuseIdentifier = @"Cell";
         }
     }
     
-
     
     _personContent.text = financeDetal.introduction;
     _personContent.numberOfLines = 0;
-        _fieldContent.text = financeDetal.domains;
+        _fieldContent.text = financeDetal.fields; //投资领域
         _fieldContent.numberOfLines = 0;
-        CGSize titleSize2 = [financeDetal.domains boundingRectWithSize:CGSizeMake(width - 20*2 - CGRectGetWidth(self.fieldLabel.frame), MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15]} context:nil].size;
+    _fieldLabel.frame = CGRectMake(CGRectGetMinX(self.stepLabel.frame) ,CGRectGetMaxY(self.stepContent.frame) + 15, 80, 15.0f); //领域新布局
+        CGSize titleSize2 = [financeDetal.fields boundingRectWithSize:CGSizeMake(width - 20*2 - CGRectGetWidth(self.fieldLabel.frame), MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15]} context:nil].size;
         _fieldContent.frame = CGRectMake(CGRectGetMaxX(self.fieldLabel.frame), CGRectGetMinY(self.fieldLabel.frame) - 2, titleSize2.width, titleSize2.height);
     /**
      *  布局判断
      */
     
     if ([_financeDetail.domains isEqualToString:@""] || [_financeDetail.domains length] == 0) {
-        _stepLabel.frame = CGRectMake(CGRectGetMinX(self.fieldLabel.frame) ,CGRectGetMaxY(self.fieldLabel.frame) + 15, 80, 15.0f);
+       // _stepLabel.frame = CGRectMake(CGRectGetMinX(self.fieldLabel.frame) ,CGRectGetMaxY(self.fieldLabel.frame) + 15, 80, 15.0f);
     } else {
-        _stepLabel.frame = CGRectMake(CGRectGetMinX(self.fieldLabel.frame) ,CGRectGetMaxY(self.fieldContent.frame) + 15, 80, 15.0f);
+//        _stepLabel.frame = CGRectMake(CGRectGetMinX(self.fieldLabel.frame) ,CGRectGetMaxY(self.fieldContent.frame) + 15, 80, 15.0f);
     }
         _stepContent.text = financeDetal.rounds;
         _stepContent.numberOfLines = 0;
         CGSize titleSize3 = [financeDetal.rounds boundingRectWithSize:CGSizeMake(width - 20*2- CGRectGetWidth(self.stepLabel.frame), MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15]} context:nil].size;
         _stepContent.frame = CGRectMake(CGRectGetMaxX(self.stepLabel.frame), CGRectGetMinY(self.stepLabel.frame) - 2, titleSize3.width, titleSize3.height);
     if ([_financeDetail.rounds isEqualToString:@""] || [_financeDetail.rounds length] == 0) {
-        _sampleLabel.frame = CGRectMake(CGRectGetMinX(self.stepLabel.frame), CGRectGetMaxY(self.stepLabel.frame) + 15, 80, 15.0f);
+        _sampleLabel.frame = CGRectMake(CGRectGetMinX(self.fieldLabel.frame), CGRectGetMaxY(self.fieldLabel.frame) + 15, 80, 15.0f);
     } else {
-        _sampleLabel.frame = CGRectMake(CGRectGetMinX(self.stepLabel.frame), CGRectGetMaxY(self.stepContent.frame) + 15, 80, 15.0f);
+        _sampleLabel.frame = CGRectMake(CGRectGetMinX(self.fieldLabel.frame), CGRectGetMaxY(self.fieldContent.frame) + 15, 80, 15.0f);
     }
         _sampleContent.text = financeDetal.cases;
         _sampleContent.numberOfLines = 0;
         CGSize titleSize4 = [financeDetal.cases boundingRectWithSize:CGSizeMake(width - 20*2 - CGRectGetWidth(self.sampleLabel.frame), MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15]} context:nil].size;
         _sampleContent.frame = CGRectMake(CGRectGetMaxX(self.sampleLabel.frame), CGRectGetMinY(self.sampleLabel.frame) - 2, titleSize4.width, titleSize4.height);
     
-    if ([_financeDetail.domains isEqualToString:@""] || [_financeDetail.domains length] == 0) {
+    if ([_financeDetail.fields isEqualToString:@""] || [_financeDetail.fields length] == 0) {
         _fieldContent.text = @"暂无";
          self.fieldContent.frame = CGRectMake(CGRectGetMaxX(self.fieldLabel.frame), CGRectGetMinY(self.fieldLabel.frame), width - CGRectGetMaxX(self.fieldLabel.frame), 15);
     }

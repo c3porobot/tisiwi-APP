@@ -16,6 +16,7 @@
 #import "TSWSendRequest.h"
 #import "TSWSendGet.h"
 #import "GVUserDefaults+TSWProperties.h"
+#import "TSWCollectionList.h"
 @interface BeforeAuditFinaceViewController ()<UIAlertViewDelegate>
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) NSString *sid;
@@ -33,19 +34,23 @@
 @property (nonatomic, strong) UILabel *informationLabel; //个人信息
 @property (nonatomic, strong) UILabel *locationLabel;
 @property (nonatomic, strong) UIButton *contectBtn; //获取联系人按钮
+
+@property (nonatomic, strong) UIButton *collectionBtn;
+@property (nonatomic, strong) TSWCollectionList *sendCollection;
 @end
 
 @implementation BeforeAuditFinaceViewController
 - (void)dealloc {
     [self.financeDetail removeObserver:self forKeyPath:kResourceLoadingStatusKeyPath];
     [self.sendRequest removeObserver:self forKeyPath:kResourceLoadingStatusKeyPath];
+    [self.sendCollection removeObserver:self forKeyPath:kResourceLoadingStatusKeyPath];
 }
 - (instancetype)initWithFinanceId:(NSString *)financeId {
     self = [super init];
     if (self) {
         self.sid = financeId;
         
-        self.financeDetail = [[TSWFinanceDetail alloc] initWithBaseURL:TSW_API_BASE_URL path:[[[[FINANCE_DETAIL stringByAppendingString:@"/id/"] stringByAppendingString:self.sid] stringByAppendingString:@"/member/"] stringByAppendingString:[GVUserDefaults standardUserDefaults].member]];
+        self.financeDetail = [[TSWFinanceDetail alloc] initWithBaseURL:TSW_API_BASE_URL path:[[[[FINANCE_DETAIL stringByAppendingString:@"/"] stringByAppendingString:self.sid] stringByAppendingString:@"/member/"] stringByAppendingString:[GVUserDefaults standardUserDefaults].member]];
         
         [self.financeDetail addObserver:self
                              forKeyPath:kResourceLoadingStatusKeyPath
@@ -70,6 +75,11 @@
     _scrollView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:_scrollView];
     
+    self.collectionBtn = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.view.frame) - 50, 20, 44, 44)];;
+    _collectionBtn.backgroundColor = [UIColor clearColor];
+    [_collectionBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_collectionBtn addTarget:self action:@selector(collection:) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationBar.rightButton = _collectionBtn;
     self.nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 22, width, 22)];
     _nameLabel.textAlignment = NSTextAlignmentLeft;
     _nameLabel.textColor = RGB(90, 90, 90);
@@ -157,9 +167,27 @@
                        forKeyPath:kResourceLoadingStatusKeyPath
                           options:NSKeyValueObservingOptionNew
                           context:nil];
-
+    self.sendCollection = [[TSWCollectionList alloc] initWithBaseURL:TSW_API_BASE_URL path:SEND_COLLECTIONLIST];
+    [self.sendCollection addObserver:self forKeyPath:kResourceLoadingStatusKeyPath options:NSKeyValueObservingOptionNew context:nil];
     [self refreshData];
 }
+
+#pragma mark -- 收藏按钮
+- (void)collection:(UIButton *)sender {
+    sender.selected = !sender.selected;
+    if (sender.selected) {
+        [sender setImage:[UIImage imageNamed:@"Favorites_btnp"] forState:UIControlStateNormal];
+        [_sendCollection loadDataWithRequestMethodType:kHttpRequestMethodTypePost parameters:@{@"memberid":[GVUserDefaults standardUserDefaults].member, @"type": @"investor", @"storeid": self.sid}];
+        [self showSuccessMessage:@"收藏成功"];
+    } else {
+        [sender setImage:[UIImage imageNamed:@"Favorites_btn"] forState:UIControlStateNormal];
+        [_sendCollection loadDataWithRequestMethodType:kHttpRequestMethodTypePost parameters:@{@"memberid":[GVUserDefaults standardUserDefaults].member, @"type": @"investor", @"storeid": self.sid}];
+        [self showSuccessMessage:@"取消收藏"];
+        
+    }
+    
+}
+
 
 - (void) refreshData{
     [self.financeDetail loadDataWithRequestMethodType:kHttpRequestMethodTypeGet parameters:nil];
@@ -208,6 +236,14 @@
 }
 -(void) setDetail:(TSWFinanceDetail *)financeDetal {
     _financeDetail = financeDetal;
+    if ([financeDetal.storestatus isEqualToString:@"ok"]) {
+        [self.collectionBtn setImage:[UIImage imageNamed:@"Favorites_btnp"] forState:UIControlStateNormal];
+        self.collectionBtn.selected = YES;
+    } else if ([financeDetal.storestatus isEqualToString:@"no"]) {
+        [self.collectionBtn setImage:[UIImage imageNamed:@"Favorites_btn"] forState:UIControlStateNormal];
+        self.collectionBtn.selected = NO;
+        
+    }
     CGFloat width = CGRectGetWidth(self.view.bounds);
     // 布局，塞数据
     _nameLabel.text = financeDetal.name;

@@ -14,6 +14,10 @@
 #import "TSWTalentCheckViewController.h"
 #import "LHBCopyLabel.h"
 #import "TSWPassValue.h"
+#import "TSWCollectionList.h"
+#import "GVUserDefaults+TSWProperties.h"
+#import "TSWCheckTalentInfoViewController.h"
+
 @interface TSWTalentDetailViewController ()<UIAlertViewDelegate,MFMailComposeViewControllerDelegate>
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) NSString *sid;
@@ -22,6 +26,7 @@
 
 @property (nonatomic, strong) UILabel *nameLabel;
 @property (nonatomic, strong) UILabel *locationLabel;
+@property (nonatomic, strong) UILabel *renewLabel; //更新时间
 @property (nonatomic, strong) UILabel *baseLabel2; //工作经验
 @property (nonatomic, strong) UILabel *workExperience; //工作经验(传值)
 @property (nonatomic, strong) UILabel *baseLabel3; //薪水
@@ -48,6 +53,9 @@
 @property (nonatomic, strong) UIButton *wechatBtn; //微信按钮
 @property (nonatomic, strong) UIButton *checkBtn;  //查看简历按钮
 @property (nonatomic, copy) NSString *attachment;
+
+@property (nonatomic, strong) UIButton *collectionBtn;
+@property (nonatomic, strong) TSWCollectionList *sendCollection;
 @end
 
 @implementation TSWTalentDetailViewController
@@ -57,6 +65,7 @@ static NSString * const reuseIdentifier = @"Cell";
 {
     [_talentDetail removeObserver:self forKeyPath:kResourceLoadingStatusKeyPath];
     [_sendEmail removeObserver:self forKeyPath:kResourceLoadingStatusKeyPath];
+    [_sendCollection removeObserver:self forKeyPath:kResourceLoadingStatusKeyPath];
 }
 
 - (instancetype)initWithTalentId:(NSString *)talentId {
@@ -64,8 +73,8 @@ static NSString * const reuseIdentifier = @"Cell";
     if (self) {
         self.sid = talentId;
         
-        self.talentDetail = [[TSWTalentDetail alloc] initWithBaseURL:TSW_API_BASE_URL path:[[TALENT_DETAIL stringByAppendingString:@"/"] stringByAppendingString:self.sid]];
-        
+        //self.talentDetail = [[TSWTalentDetail alloc] initWithBaseURL:TSW_API_BASE_URL path:[[TALENT_DETAIL stringByAppendingString:@"/"] stringByAppendingString:self.sid]];
+        self.talentDetail = [[TSWTalentDetail alloc] initWithBaseURL:TSW_API_BASE_URL path:[[[TALENT_DETAIL stringByAppendingString:[GVUserDefaults standardUserDefaults].member] stringByAppendingString:@"/id/"] stringByAppendingString:self.sid]];
         [self.talentDetail addObserver:self
                              forKeyPath:kResourceLoadingStatusKeyPath
                                 options:NSKeyValueObservingOptionNew
@@ -83,6 +92,12 @@ static NSString * const reuseIdentifier = @"Cell";
     _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0.0f, self.navigationBarHeight, width, height-self.navigationBarHeight)];
     _scrollView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:_scrollView];
+    
+    self.collectionBtn = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.view.frame) - 50, 20, 44, 44)];
+    _collectionBtn.backgroundColor = [UIColor clearColor];
+    [_collectionBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_collectionBtn addTarget:self action:@selector(collection:) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationBar.rightButton = _collectionBtn;
     
     //头部
     _nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, 22, (width-2*15.0f)/2, 14.0f)];
@@ -109,6 +124,14 @@ static NSString * const reuseIdentifier = @"Cell";
     _locationLabel.text = @"";
     [_scrollView addSubview:_locationLabel];
 
+    _renewLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_locationLabel.frame) + 38, CGRectGetMinY(_locationLabel.frame) - 4, 300, CGRectGetHeight(_checkBtn.frame))];
+    _renewLabel.text = @"";
+    _renewLabel.textColor = RGB(155, 155, 155);
+    _renewLabel.font = [UIFont systemFontOfSize:15];
+    [_scrollView addSubview:_renewLabel];
+    
+    
+    
     _baseLabel2 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMinX(self.locationLabel.frame), CGRectGetMaxY(self.locationLabel.frame) + 30, 70, 15)];
     _baseLabel2.textAlignment = NSTextAlignmentLeft;
     _baseLabel2.textColor = RGB(90, 90, 90);
@@ -267,7 +290,8 @@ static NSString * const reuseIdentifier = @"Cell";
                      forKeyPath:kResourceLoadingStatusKeyPath
                         options:NSKeyValueObservingOptionNew
                         context:nil];
-
+    self.sendCollection = [[TSWCollectionList alloc] initWithBaseURL:TSW_API_BASE_URL path:SEND_COLLECTIONLIST];
+    [self.sendCollection addObserver:self forKeyPath:kResourceLoadingStatusKeyPath options:NSKeyValueObservingOptionNew context:nil];
     [self refreshData];
 }
 
@@ -285,11 +309,12 @@ static NSString * const reuseIdentifier = @"Cell";
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    [TSWPassValue sharedValue].passvalue = 0;
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
-    [TSWPassValue sharedValue].passvalue = 0;
+    
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
 }
 
@@ -316,10 +341,32 @@ static NSString * const reuseIdentifier = @"Cell";
             }
         }
     }
+    if (object == _sendCollection) {
+        
+        if (_sendCollection.isLoaded) {
+            //可以在这里写加载成功的方法
+        }
+        else if (_sendCollection.error) {
+            [self showErrorMessage:[_sendCollection.error localizedFailureReason]];
+        }
+    }
+
 }
 
 - (void) setDetail:(TSWTalentDetail *)talentDetail{
     _talentDetail = talentDetail;
+    
+    if ([talentDetail.storestatus isEqualToString:@"ok"]) {
+//        [self.collectionBtn setTitle:@"已收藏" forState:UIControlStateNormal];
+        [self.collectionBtn setImage:[UIImage imageNamed:@"Favorites_btnp"] forState:UIControlStateNormal];
+        self.collectionBtn.selected = YES;
+    } else if ([talentDetail.storestatus isEqualToString:@"no"]) {
+//        [self.collectionBtn setTitle:@"收藏" forState:UIControlStateNormal];
+        [self.collectionBtn setImage:[UIImage imageNamed:@"Favorites_btn"] forState:UIControlStateNormal];
+        self.collectionBtn.selected = NO;
+    }
+
+    
     _weixinContent.text = [NSString stringWithFormat:@"%@", talentDetail.wechat];
     _emailContent.text = [NSString stringWithFormat:@"%@", talentDetail.email];
     _phoneContent.text = [NSString stringWithFormat:@"%@", talentDetail.tel];
@@ -346,6 +393,13 @@ static NSString * const reuseIdentifier = @"Cell";
         }
     }
     _workExperience.text = [NSString stringWithFormat:@"%@年",talentDetail.seniority];
+    if ([talentDetail.updated_at isEqualToString:@""] || talentDetail.updated_at == nil) {
+        _renewLabel.text = [NSString stringWithFormat:@"更新时间:%@", talentDetail.created_at];
+    } else {
+        NSString *a = [NSString stringWithFormat:@"更新时间:%@", talentDetail.updated_at];
+        _renewLabel.text = [a substringToIndex:15];
+    }
+    
     
     if ([talentDetail.salary isEqualToString:@"0"]) {
         _salary.text = [NSString stringWithFormat:@"面议"];
@@ -362,19 +416,22 @@ static NSString * const reuseIdentifier = @"Cell";
      */
     _scrollView.contentSize = CGSizeMake(width, 22.0f+CGRectGetHeight(self.nameLabel.frame) + CGRectGetHeight(self.locationLabel.frame) + CGRectGetHeight(self.baseLabel2.frame) + CGRectGetHeight(self.baseLabel3.frame)+ CGRectGetHeight(self.jianLabel1.frame) + CGRectGetHeight(self.directLabel1.frame) + CGRectGetHeight(self.emailLabel.frame) + CGRectGetHeight(self.phoneLabel.frame) + CGRectGetHeight(self.weixinLabel.frame) + titleSize.height + 250);
     
-    if(_talentDetail.tel ==nil && [_talentDetail.tel isEqualToString:@""]){
+    if(_talentDetail.tel == nil || [_talentDetail.tel isEqualToString:@""]){
         [_phoneBtn setImage:[UIImage imageNamed:@"btn_phone_disable"] forState:UIControlStateNormal];
         _phoneBtn.userInteractionEnabled = NO;
     }
     
-    if(_talentDetail.email ==nil && [_talentDetail.email isEqualToString:@""]){
+    if(_talentDetail.email ==nil || [_talentDetail.email isEqualToString:@""]){
         [_emailBtn setImage:[UIImage imageNamed:@"btn_mail_diasble"] forState:UIControlStateNormal];
         _emailBtn.userInteractionEnabled = NO;
         
     }
-    if (talentDetail.wechat == nil && [_talentDetail.email isEqualToString:@""]) {
+    
+    if (_talentDetail.wechat == nil || [_talentDetail.wechat isEqualToString:@""]) {
+        
         [_wechatBtn setImage:[UIImage imageNamed:@"btn_copy_disable"] forState:UIControlStateNormal];
         _wechatBtn.userInteractionEnabled = NO;
+        _weixinContent.text = @"暂无";
     }
     
 //    if(_talentDetail.hasAttachment == 1){
@@ -391,11 +448,11 @@ static NSString * const reuseIdentifier = @"Cell";
 }
 #pragma mark -- 按钮响应事件
 - (void)handleCheck:(UIButton *)sender {
-    TSWTalentCheckViewController *talentCheckViewController = [[TSWTalentCheckViewController alloc] init];
+    TSWCheckTalentInfoViewController *talentCheckViewController = [[TSWCheckTalentInfoViewController alloc] init];
     talentCheckViewController.PDFid = self.sid; //赋值
     talentCheckViewController.attachment = _talentDetail.attachment;
     talentCheckViewController.name = _talentDetail.name;
-    //[self.navigationController pushViewController:talentCheckViewController animated:YES];
+//    [self.navigationController pushViewController:talentCheckViewController animated:YES];
     [self presentViewController:talentCheckViewController animated:NO completion:nil];
 }
 
@@ -449,5 +506,22 @@ static NSString * const reuseIdentifier = @"Cell";
     if (1 == buttonIndex) {
         [self.sendEmail loadDataWithRequestMethodType:kHttpRequestMethodTypeGet parameters:@{@"serviceType":@"personnel",@"sid":self.sid}];
     }
+}
+
+- (void)collection:(UIButton *)sender {
+    sender.selected = !sender.selected;
+    if (sender.selected) {
+//        [sender setTitle:@"已收藏" forState:UIControlStateNormal];
+        [sender setImage:[UIImage imageNamed:@"Favorites_btnp"] forState:UIControlStateNormal];
+        [_sendCollection loadDataWithRequestMethodType:kHttpRequestMethodTypePost parameters:@{@"memberid":[GVUserDefaults standardUserDefaults].member, @"type": @"person", @"storeid": self.sid}];
+        [self showSuccessMessage:@"收藏成功"];
+    } else {
+//        [sender setTitle:@"收藏" forState:UIControlStateNormal];
+        [sender setImage:[UIImage imageNamed:@"Favorites_btn"] forState:UIControlStateNormal];
+        [_sendCollection loadDataWithRequestMethodType:kHttpRequestMethodTypePost parameters:@{@"memberid":[GVUserDefaults standardUserDefaults].member, @"type": @"person", @"storeid": self.sid}];
+        [self showSuccessMessage:@"取消收藏"];
+        
+    }
+
 }
 @end

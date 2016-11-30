@@ -7,7 +7,8 @@
 //
 
 #import "CXResource.h"
-#define TALENT_DETAIL @"v1/service/personnel"
+//#define TALENT_DETAIL @"v1/service/personnel"
+#define TALENT_DETAIL @"v1/service/personnel/mberid/"
 @interface TSWTalentDetail: CXResource
 
 @property (nonatomic, strong) NSString *sid;
@@ -23,7 +24,9 @@
 @property (nonatomic, strong) NSString *wechat; //微信
 @property (nonatomic, strong) NSString *email;  //email
 @property (nonatomic, assign) NSInteger hasAttachment;
-
+@property (nonatomic, copy) NSString *storestatus;
 @property (nonatomic, copy) NSString *attachment; //测试
 
+@property (nonatomic, copy) NSString *updated_at; //更新时间
+@property (nonatomic, copy) NSString *created_at; //创建时间
 @end

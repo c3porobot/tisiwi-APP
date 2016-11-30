@@ -416,6 +416,7 @@
 {
     [self.dCityBtn setTitle:[NSString stringWithFormat:@"%@", picker.locate.city] forState:UIControlStateNormal];
     self.selectedCityCode = picker.locate.cityCode;
+    NSLog(@"***************%@", self.selectedCityCode);
 }
 
 -(void)hidePicker{

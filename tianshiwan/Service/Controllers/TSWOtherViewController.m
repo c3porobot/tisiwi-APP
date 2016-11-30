@@ -11,7 +11,8 @@
 #import "TSWOtherList.h"
 #import "TSWOtherCell.h"
 #import "TSWOtherDetailViewController.h"
-
+#import "GVUserDefaults+TSWProperties.h"
+#import "RDVTabBarController.h"
 @interface TSWOtherViewController ()<UICollectionViewDelegate, UICollectionViewDataSource,TSWOtherCellDelegate>
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, strong) NSMutableArray *dataArray;
@@ -106,6 +107,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [[self rdv_tabBarController] setTabBarHidden:YES animated:YES];
 }
 - (void)viewDidAppear:(BOOL)animated
 {

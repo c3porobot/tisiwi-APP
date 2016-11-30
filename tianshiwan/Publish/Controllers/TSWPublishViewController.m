@@ -11,7 +11,8 @@
 #import "TSWPublishFinanceController.h"
 #import "TSWPublishTalentController.h"
 #import "TSWPublishOtherController.h"
-
+#import "TSWNewAddFinanceViewController.h"
+#import "TSWNewAddTalentViewController.h"
 @interface TSWPublishViewController ()
 
 @end
@@ -112,13 +113,13 @@
 
 - (void) publishFinance{
     [[self rdv_tabBarController] setTabBarHidden:YES animated:NO];
-    TSWPublishFinanceController *financeController = [[TSWPublishFinanceController alloc] init];
+    TSWNewAddFinanceViewController *financeController = [[TSWNewAddFinanceViewController alloc] init];
     [self.navigationController pushViewController:financeController animated:YES];
 }
 
 - (void) publishTalent{
     [[self rdv_tabBarController] setTabBarHidden:YES animated:NO];
-    TSWPublishTalentController *talentController = [[TSWPublishTalentController alloc] init];
+    TSWNewAddTalentViewController *talentController = [[TSWNewAddTalentViewController alloc] init];
     [self.navigationController pushViewController:talentController animated:YES];
 }
 

@@ -7,6 +7,8 @@
 //
 
 #import "TSWTalentFilterView.h"
+#define kWidth [UIScreen mainScreen].bounds.size.width    //屏幕宽
+#define kHeight [UIScreen mainScreen].bounds.size.height  //屏幕高
 
 @implementation TSWTalentFilterView
 
@@ -51,7 +53,7 @@
 }
 - (UILabel *)yearLabel {
     if (!_yearLabel) {
-        self.yearLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.expTextField.frame) + 30, CGRectGetMinY(self.expirceLabel.frame), 50, CGRectGetHeight(self.expirceLabel.frame))];
+        self.yearLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.expTextField.frame) + 10, CGRectGetMinY(self.expirceLabel.frame), 50, CGRectGetHeight(self.expirceLabel.frame))];
         self.yearLabel.text = @"年";
         self.yearLabel.textColor = RGB(127, 127, 127);
     }
@@ -81,7 +83,7 @@
 
 - (UILabel *)KLabel {
     if (!_KLabel) {
-        self.KLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.salaryTextField.frame) + 30, CGRectGetMinY(self.salaryTextField.frame), CGRectGetWidth(self.yearLabel.frame), CGRectGetHeight(self.yearLabel.frame))];
+        self.KLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.salaryTextField.frame) + 10, CGRectGetMinY(self.salaryTextField.frame), CGRectGetWidth(self.yearLabel.frame), CGRectGetHeight(self.yearLabel.frame))];
         self.KLabel.text = @"K";
         self.KLabel.textColor = RGB(127, 127, 127);
     }
@@ -91,7 +93,8 @@
 - (UIButton *)resettingBtn {
     if (!_resettingBtn) {
         self.resettingBtn = [UIButton buttonWithType:UIButtonTypeSystem];
-        self.resettingBtn.frame = CGRectMake(30, CGRectGetMaxY(self.salaryLabel.frame) + 50, 100, 30);
+        self.resettingBtn.frame = CGRectMake(0.25 * kWidth - 0.5 * 100, CGRectGetMaxY(self.salaryLabel.frame) + 30, 100, 30);
+        self.resettingBtn.tag = 101;
         [self.resettingBtn setTitle:@"重 置" forState:UIControlStateNormal];
         self.tintColor = RGB(127, 127, 127);
 
@@ -100,7 +103,6 @@
         [self.resettingBtn.layer setCornerRadius:10];
         
         [self.resettingBtn.layer setBorderWidth:1];//设置边界的宽度
-        
         //设置按钮的边界颜色
         CGColorSpaceRef colorSpaceRef = CGColorSpaceCreateDeviceRGB();
         //{r, g, b, alpha}
@@ -115,7 +117,8 @@
     CGFloat width = [UIScreen mainScreen].bounds.size.width;
     if (!_completeBtn) {
         self.completeBtn = [UIButton buttonWithType:UIButtonTypeSystem];
-        self.completeBtn.frame = CGRectMake(width / 2 + CGRectGetWidth(self.resettingBtn.frame) / 2, CGRectGetMinY(self.resettingBtn.frame), 100, 30);
+        self.completeBtn.frame = CGRectMake(width / 2 + 0.25 * kWidth - 0.5 * 100, CGRectGetMinY(self.resettingBtn.frame), 100, 30);
+        self.completeBtn.tag = 102;
         [self.completeBtn setTitle:@"完 成" forState:UIControlStateNormal];
         self.tintColor = RGB(127, 127, 127);
         
@@ -134,4 +137,5 @@
     }
     return _completeBtn;
 }
+
 @end

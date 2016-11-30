@@ -18,6 +18,7 @@
 #import "TSWCommonTool.h"
 #import "TSWArticleDetailsViewController.h"
 #import "TSWTalentAndFilterViewController.h"
+#import "TSWFinanceAndFilterViewController.h"
 @interface TSWSplashViewController ()
 
 @property (nonatomic, strong) UINavigationController *navigationController;
@@ -142,38 +143,37 @@
 - (void)setupViewControllers {
     self.view.backgroundColor = RGB(255, 255, 255);
     TSWHomeRootController *homeRootController = [[TSWHomeRootController alloc] init];
-    homeRootController.title = @"天使湾";
+    homeRootController.title = @"资讯";
     RDVTabBarItem *homeItem = [[RDVTabBarItem alloc] init];
-    homeItem.title = @"天使湾";
+    homeItem.title = @"资讯";
     homeItem.titlePositionAdjustment = UIOffsetMake(0.0f, 2.0f);
     [homeItem setFinishedSelectedImage:[UIImage imageNamed:@"tabbar_1highlighted"] withFinishedUnselectedImage:[UIImage imageNamed:@"Tabbar_b1_n"]];
     UIViewController *homeNavigationController = [[UINavigationController alloc]
                                                   initWithRootViewController:homeRootController];
     
-    TSWServiceViewController *serviceViewController = [[TSWServiceViewController alloc] init];
-    serviceViewController.title = @"服务";
+    TSWFinanceAndFilterViewController *serviceViewController = [[TSWFinanceAndFilterViewController alloc] init];
+    serviceViewController.title = @"投资机构";
     RDVTabBarItem *serviceItem = [[RDVTabBarItem alloc] init];
-    serviceItem.title = @"服务";
+    serviceItem.title = @"融资";
     serviceItem.titlePositionAdjustment = UIOffsetMake(0.0f, 2.0f);
-    [serviceItem setFinishedSelectedImage:[UIImage imageNamed:@"tabbar_2highlighted"] withFinishedUnselectedImage:[UIImage imageNamed:@"Tabbar_b2_n"]];
+    [serviceItem setFinishedSelectedImage:[UIImage imageNamed:@"Tabbar_b2_p"] withFinishedUnselectedImage:[UIImage imageNamed:@"Tabbar_b2_n"]];
     UIViewController *serviceNavigationController = [[UINavigationController alloc]
                                                         initWithRootViewController:serviceViewController];
     
-    TSWPublishViewController *publishViewController = [[TSWPublishViewController alloc] init];
-    publishViewController.title = @"";
+    TSWServiceViewController *publishViewController = [[TSWServiceViewController alloc] init];
+    publishViewController.title = @"服务";
     RDVTabBarItem *publishItem = [[RDVTabBarItem alloc] init];
-    publishItem.title = @"";
+    publishItem.title = @"服务";
     publishItem.titlePositionAdjustment = UIOffsetMake(0.0f, 2.0f);
-    [publishItem setFinishedSelectedImage:[UIImage imageNamed:@"tabbar_3highlighted"] withFinishedUnselectedImage:[UIImage imageNamed:@"tabbar_3normal"]];
+    [publishItem setFinishedSelectedImage:[UIImage imageNamed:@"Tabbar_b3_p"] withFinishedUnselectedImage:[UIImage imageNamed:@"Tabbar_b3_n"]];
     UIViewController *publishNavigationController = [[UINavigationController alloc]
                                                      initWithRootViewController:publishViewController];
-    
     TSWTalentAndFilterViewController *talentViewController = [[TSWTalentAndFilterViewController alloc] init];
     talentViewController.title = @"人才";
     RDVTabBarItem *talentItem = [[RDVTabBarItem alloc] init];
     talentItem.title = @"人才";
     talentItem.titlePositionAdjustment = UIOffsetMake(0.0f, 2.0f);
-    [talentItem setFinishedSelectedImage:[UIImage imageNamed:@"tabbar_4highlighted"] withFinishedUnselectedImage:[UIImage imageNamed:@"Tabbar_b3_n"]];
+    [talentItem setFinishedSelectedImage:[UIImage imageNamed:@"tabbar_4highlighted"] withFinishedUnselectedImage:[UIImage imageNamed:@"tabbar_b3_np"]];
     UIViewController *talentNavigationController = [[UINavigationController alloc]
                                                       initWithRootViewController:talentViewController];
     

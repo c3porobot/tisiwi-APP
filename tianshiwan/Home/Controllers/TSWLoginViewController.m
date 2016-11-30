@@ -43,7 +43,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationBar.title = @"登录";
+    self.navigationBar.title = @"天使湾";
     self.view.backgroundColor = RGB(235, 235, 235);
     self.navigationBar.bottomLineView.hidden = YES;
     CGFloat width = CGRectGetWidth(self.view.bounds);
@@ -63,19 +63,20 @@
     [_phoneField setTextColor:RGB(132, 132, 132)];
     _phoneField.placeholder = @"手机号";
     _phoneField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    _phoneField.keyboardType = UIKeyboardTypeNumberPad;
     _phoneField.clearButtonMode = UITextFieldViewModeWhileEditing;
     _phoneField.backgroundColor = [UIColor whiteColor];
     _phoneField.autocapitalizationType = NO;
     [loginView addSubview:_phoneField];
     
     // 校验按钮
-    _yanBtn = [[UIButton alloc]initWithFrame:CGRectMake(width-30.0f-74.0f, 13.0f, 74.0f, 24.0f)];
+    _yanBtn = [[UIButton alloc]initWithFrame:CGRectMake(width-30.0f-74.0f, 13.0f, 84.0f, 24.0f)];
 //    _yanBtn.backgroundColor = RGB(33, 158, 217);
     [_yanBtn setBackgroundImage:[UIImage imageNamed:@"login_bti_n"]forState:UIControlStateNormal];
     [_yanBtn setBackgroundImage:[UIImage imageNamed:@"login_bti_h"]forState:UIControlStateHighlighted];
     [_yanBtn setBackgroundImage:[UIImage imageNamed:@"login_bti_d"]forState:UIControlStateDisabled];
     [_yanBtn setTitleColor:RGB(255, 255, 255) forState:UIControlStateNormal];
-    [_yanBtn setTitle:@"验证" forState:UIControlStateNormal];
+    [_yanBtn setTitle:@"发送验证码" forState:UIControlStateNormal];
     _yanBtn.titleLabel.font = [UIFont systemFontOfSize:14.0f];
     [_yanBtn addTarget:self action:@selector(sendCode) forControlEvents:UIControlEventTouchUpInside];
     [loginView addSubview: _yanBtn];
@@ -92,6 +93,7 @@
     _verifyCodeField.placeholder = @"验证码";
     _verifyCodeField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
     _verifyCodeField.clearButtonMode = UITextFieldViewModeWhileEditing;
+    _verifyCodeField.keyboardType = UIKeyboardTypeNumberPad;
     _verifyCodeField.backgroundColor = [UIColor whiteColor];
     _verifyCodeField.autocapitalizationType = NO;
     [loginView addSubview:_verifyCodeField];
@@ -101,7 +103,7 @@
     _loginBtn.backgroundColor = RGB(199, 199, 199);
     _loginBtn.layer.cornerRadius = 4.0f;
     [_loginBtn setTitleColor:RGB(255, 255, 255) forState:UIControlStateNormal];
-    [_loginBtn setTitle:@"确 定" forState:UIControlStateNormal];
+    [_loginBtn setTitle:@"登 录" forState:UIControlStateNormal];
     _loginBtn.titleLabel.font = [UIFont systemFontOfSize:18.0f];
     [_loginBtn addTarget:self action:@selector(login) forControlEvents:UIControlEventTouchUpInside];
     [_scrollView addSubview: _loginBtn];
@@ -195,7 +197,8 @@
                 [_verifyCodeField becomeFirstResponder];
             }
             else if (_loginVeriCode.error) {
-                [self showErrorMessage:[_loginVeriCode.error localizedFailureReason]];
+//                [self showErrorMessage:[_loginVeriCode.error localizedFailureReason]];
+                [self showErrorMessage:@"账号未激活,请联系天使湾"];
             }
         }else if (object == _accountLogin) {
             if (_accountLogin.isLoaded) {
@@ -210,9 +213,10 @@
                 [self.navigationController dismissViewControllerAnimated:YES completion:^{
                     
                 }];
-            }
-            else if (_accountLogin.error) {
-                [self showErrorMessage:[_accountLogin.error localizedFailureReason]];
+            } else if (_accountLogin.error) {
+//                [self showErrorMessage:[_accountLogin.error localizedFailureReason]];
+                [self showErrorMessage:@"登录失败,请检查手机号或验证码是否正确"];
+
             }
         }
     }else if([keyPath isEqualToString:@"surplusTime"]){
@@ -261,12 +265,12 @@
             [self showLoadingView];
             [self.checkPhoneExist loadDataWithRequestMethodType:kHttpRequestMethodTypeGet parameters:@{@"phone": _phoneField.text}];
         }else{
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请输入有效的11位数字手机号!" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"亲，去tisiwi.com提交你的项目，就有加入湾仔码头的机会哦!" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
             [alertView show];
             return;
         }
     }else{
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"亲，去tisiwi.com提交你的项目，就有加入湾仔码头的机会哦!" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请输入有效的11位数字手机号!" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         [alertView show];
         return;
     }
@@ -275,16 +279,16 @@
 #pragma mark 登录操作
 -(void)login{
     if(_verifyCodeField.text.length > 0){
-        if(_verifyCodeField.text.length == 6){
+        if(_verifyCodeField.text.length == 4){
             [self showLoadingViewWithText:@"登录中..."];
             [self.accountLogin loadDataWithRequestMethodType:kHttpRequestMethodTypeGet parameters:@{@"phone":_phoneField.text, @"veriCode":_verifyCodeField.text}];
         }else{
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请输入有效的6位数字验证码!" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请输入有效的4位数字验证码!" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
             [alertView show];
             return;
         }
     }else{
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"亲，请输入正确的6位数字校验码!" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"亲，请输入正确的4位数字校验码!" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         [alertView show];
         return;
     }

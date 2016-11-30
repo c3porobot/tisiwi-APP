@@ -55,9 +55,9 @@
     CGFloat width = CGRectGetWidth(self.view.bounds);
     CGFloat height = CGRectGetHeight(self.view.bounds);
     self.navigationBar.title = @"人才需求";
-    self.navigationBar.titleView.textColor = RGB(90, 90, 90);
-    self.navigationBar.backgroundView.backgroundColor = [UIColor whiteColor];
-    [self.navigationBar.leftButton setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
+//    self.navigationBar.titleView.textColor = RGB(90, 90, 90);
+//    self.navigationBar.backgroundView.backgroundColor = [UIColor whiteColor];
+//    [self.navigationBar.leftButton setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
     
     self.navigationBar.bottomLineView.hidden = YES;
     

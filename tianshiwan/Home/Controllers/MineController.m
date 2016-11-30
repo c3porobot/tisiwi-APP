@@ -61,7 +61,8 @@
     NSArray *picArray = @[@[@""], @[@"gongguan", @"gongguan"], @[@"gongguan", @"gongguan", @"gongguan"], @[@""]];
     cell.textLabel.text = titleArray[indexPath.section][indexPath.row];
     cell.imageView.image =[UIImage imageNamed:picArray[indexPath.section][indexPath.row]];
-    if ([cell.textLabel.text isEqualToString:@"退出登录"]) {
+    
+    if (indexPath.section == 3) {
         cell.textLabel.textColor = [UIColor redColor];
         cell.textLabel.textAlignment = NSTextAlignmentCenter;
     }

@@ -19,6 +19,7 @@
 @property (nonatomic, strong) NSString *rounds;
 @property (nonatomic, strong) NSString *fields;
 @property (nonatomic, strong) NSString *cases;
+@property (nonatomic, strong) NSString *domains;
 @property (nonatomic, strong) NSString *currentstatus; //当前状态
 
 @end

@@ -44,7 +44,7 @@
     [super viewDidLoad];
     self.isFilterBarDisplay = NO;
     self.view.backgroundColor = [UIColor clearColor];
-    self.navigationBar.title = @"天使湾";
+    self.navigationBar.title = @"资讯";
     // 判断用户是否已登录，如果没有登录，则跳登录，如果登录再进首页
 //    [GVUserDefaults standardUserDefaults].token = nil;
 //    if (![GVUserDefaults standardUserDefaults].token) {
@@ -82,7 +82,8 @@
                        forKeyPath:kResourceLoadingStatusKeyPath
                           options:NSKeyValueObservingOptionNew
                           context:nil];
-    self.articleList = [[TSWArticleList alloc] initWithBaseURL:TSW_API_BASE_URL path:ARTICLE_LIST];
+    
+    self.articleList = [[TSWArticleList alloc] initWithBaseURL:TSW_API_BASE_URL path:ARTICLE_LIST1];
     [self.articleList addObserver:self
                        forKeyPath:kResourceLoadingStatusKeyPath
                           options:NSKeyValueObservingOptionNew

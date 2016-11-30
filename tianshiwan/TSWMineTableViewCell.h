@@ -12,4 +12,5 @@
 @property (nonatomic, strong) UIImageView *avatarView; //头像
 @property (nonatomic, strong) UILabel *nameLabel;
 @property (nonatomic, strong) UILabel *positionLabel;
+@property (nonatomic, strong) UIImageView *enterView; //进入下一界面的小箭头
 @end

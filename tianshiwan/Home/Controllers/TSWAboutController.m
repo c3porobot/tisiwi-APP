@@ -18,9 +18,10 @@
     CGFloat width = CGRectGetWidth(self.view.bounds);
     CGFloat height = CGRectGetHeight(self.view.bounds);
     self.navigationBar.title = @"天使湾App使用协议";
-    self.navigationBar.titleView.textColor = RGB(90, 90, 90);
-    self.navigationBar.backgroundView.backgroundColor = [UIColor whiteColor];
-    [self.navigationBar.leftButton setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
+//    self.navigationBar.titleView.textColor = RGB(90, 90, 90);
+    self.navigationBar.titleView.textColor = [UIColor whiteColor];
+    //self.navigationBar.backgroundView.backgroundColor = [UIColor whiteColor];
+    //[self.navigationBar.leftButton setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
     self.navigationBar.bottomLineView.hidden = YES;
     
     UIScrollView *top = [[UIScrollView alloc]initWithFrame:CGRectMake(0.0f, self.navigationBarHeight, width, height - self.navigationBarHeight)];
